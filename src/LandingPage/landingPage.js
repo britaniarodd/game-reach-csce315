@@ -9,11 +9,11 @@ class LandingPage extends Component {
     render() {
         return (
             <div className="background">
-                <img className="landinglogo" src={landinglogo}></img>
-                <a className="signupbutton" href="/signup">
+                <img className="landinglogo center" src={landinglogo}></img>
+                <a className="signupbutton center" href="/signup">
                     Signup
                 </a>
-                <a className="logintext" href="/login">
+                <a className="logintext center" href="/login">
                     Already have an account? Sign in here
                 </a>
             </div>

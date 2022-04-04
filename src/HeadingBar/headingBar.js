@@ -9,9 +9,15 @@ class HeadingBar extends Component {
     render() {
         return (
             <div className="headingBar">
-                <img className="cornerlogo" src={cornerlogo}></img>
-                <img className="headinglogo" src={headinglogo}></img>
-                <img className="profile" src={profile}></img>
+                <a className="cornerlogo" href="/">
+                    <img src={cornerlogo}></img>
+                </a>
+                <a className="headinglogo" href="/">
+                    <img src={headinglogo}></img>
+                </a>
+                <a className="profile" href="/profile">
+                    <img src={profile}></img>
+                </a>
             </div>
         );
     }

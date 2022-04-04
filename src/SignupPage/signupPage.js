@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import "../shared.css";
+import "./signupPage.css";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDcoNZgAg0KvZeX8c_OIss__Nyi9JYs7Yw",
@@ -19,7 +21,17 @@ const analytics = getAnalytics(app);
 class SignupPage extends Component {
     state = {};
     render() {
-        return <p>SignupPage</p>;
+        return (
+            <div className="background center">
+                <p className="usernametext">Username</p>
+                <input type="text"></input>
+                <p>Email</p>
+                <input type="email"></input>
+                <p>Password</p>
+                <input type="password"></input>
+                <button className="signupbutton center">Sign Up</button>
+            </div>
+        );
     }
 }
 

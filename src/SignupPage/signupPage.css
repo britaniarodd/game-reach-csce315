@@ -1,0 +1,12 @@
+.background {
+    color: white;
+}
+
+.usernametext {
+    margin-top: 0;
+    padding-top: 15vh;
+}
+
+.signupbutton {
+    display: block;
+}
