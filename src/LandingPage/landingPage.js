@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../shared.css";
 import "./landingPage.css";
-import landinglogo from "./landinglogo.png";
+import landinglogo from "./Reach_logo.png";
 
 class LandingPage extends Component {
     state = {};

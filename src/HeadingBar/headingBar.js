@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./headingBar.css";
-import cornerlogo from "./cornerlogo.png";
-import headinglogo from "./headinglogo.png";
+import cornerlogo from "./Reach_mini_logo.png";
+import headinglogo from "./Reach_heading_logo.png";
 import profile from "./profile.png";
 
 class HeadingBar extends Component {
