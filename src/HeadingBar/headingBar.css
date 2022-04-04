@@ -4,19 +4,23 @@
     display: flex;
     flex-direction: row;
     background-color: black;
+    border-bottom: 2px solid grey;
 }
 
 .cornerlogo {
     height: 100%;
     width: 10%;
+    text-align: center;
 }
 
 .headinglogo {
     height: 100%;
     width: 80%;
+    text-align: center;
 }
 
 .profile {
     height: 100%;
     width: 10%;
+    text-align: center;
 }
