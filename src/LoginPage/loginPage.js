@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./loginPage.css";
+import {Link } from "react-router-dom";
 
 class LoginPage extends Component {
     state = {};
@@ -10,7 +11,7 @@ class LoginPage extends Component {
                 <input type="email"></input>
                 <p>Password</p>
                 <input type="password"></input>
-                <button className="signupbutton center">Login</button>
+                <Link to="/dashboard"><button className="signupbutton center">Login</button></Link>
             </div>
         );
     }
