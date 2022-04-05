@@ -11,41 +11,39 @@ class DashboardPage extends Component {
         return (
             <React.Fragment>
             <NavigationBar />
-            <div class="background">
+            <div className="background">
             
-            <div class="row">
-                <div class="column box--league center">
+            <div className="row">
+                <div className="column box--league center">
                     
-                    <a href={DashboardPage} class="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
-                    <div class="overlay">
+                    <a href="/leaguestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
+                    <div className="overlay">
                         <h2>League of Legends</h2>
                     </div>
-                    <div class="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
+                    <div className="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
             
                     </a>
                 </div>
             
-                
-                
-                <div class="column box--csgo">
-                    <div class="overlay">
+                <div className="column box--csgo">
+                    <div className="overlay">
                         <h2>CS:GO</h2>
                     </div>
-                    <a href={DashboardPage} class="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
-                    <div class="trn-button center" id="bottom">View Stats</div>
+                    <a href="" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
+                    <div className="trn-button center" id="bottom">View Stats</div>
             
                     </a>
                     
                 </div>
                 
 
-                <div class="column box--smite center">
-                    <div class="overlay text">
+                <div className="column box--smite center">
+                    <div className="overlay text">
                         <h2>SMITE</h2>
                     </div>
-                    <a href={DashboardPage} class="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
+                    <a href="" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     
-                    <div class="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
+                    <div className="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
 
                     </a>
                     
