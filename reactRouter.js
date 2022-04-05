@@ -22,7 +22,7 @@ export default function App() {
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/viewConnections" element={<ViewConnectionsPage />} />
                 <Route path="/findConnections" element={<FindConnectionsPage />} />
-                <Route path="/leaguestats" element={<LeagueStatsPage />} />
+                <Route path="/leaguestatistics" element={<LeagueStatsPage />} />
             </Routes>
         </Router>
     );
