@@ -15,11 +15,12 @@ class DashboardPage extends Component {
             
             <div className="row">
                 <div className="column box--league center">
-                    
-                    <a href="/leaguestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     <div className="overlay">
                         <h2>League of Legends</h2>
                     </div>
+
+                    <a href="/leaguestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
+                    
                     <div className="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
             
                     </a>
