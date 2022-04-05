@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../shared.css";
 import "./dashboardPage.css";
+import NavigationBar from "./../NavigationBar/navBar";
 
 
 class DashboardPage extends Component {
@@ -8,6 +9,8 @@ class DashboardPage extends Component {
     
     render() {
         return (
+            <React.Fragment>
+            <NavigationBar />
             <div class="background">
             
             <div class="row">
@@ -21,6 +24,7 @@ class DashboardPage extends Component {
             
                     </a>
                 </div>
+            
                 
                 
                 <div class="column box--csgo">
@@ -50,6 +54,7 @@ class DashboardPage extends Component {
             </div>
 
             </div>
+            </React.Fragment>
         );
     }
 
