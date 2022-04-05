@@ -10,13 +10,13 @@ class HeadingBar extends Component {
         return (
             <div className="headingBar">
                 <a className="cornerlogo" href="/">
-                    <img src={cornerlogo}></img>
+                    <img src={cornerlogo} height="80px"></img>
                 </a>
                 <a className="headinglogo" href="/">
-                    <img src={headinglogo}></img>
+                    <img src={headinglogo} height="80px"></img>
                 </a>
                 <a className="profile" href="/profile">
-                    <img src={profile}></img>
+                    <img src={profile} height="80px"></img>
                 </a>
             </div>
         );

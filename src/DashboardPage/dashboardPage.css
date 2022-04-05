@@ -33,7 +33,9 @@
     text-decoration: none;
     height: 85vh;
 }
-
+h2 {
+  color: white;
+}
 .box--league {
     background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(9, 184, 243, 1)), url(./league_logo.jpg);
     background-repeat: no-repeat;
@@ -67,6 +69,7 @@
     opacity: 0;
     transition: .5s ease;
     background-color: #7f6d90;
+    color: white;
 }
   
   .column:hover .overlay {
@@ -113,6 +116,7 @@
     backface-visibility: hidden;
     -webkit-appearance: none;
     backdrop-filter: saturate(150%);
+    color:white;
 }
 #bottom{
 	position:absolute;
