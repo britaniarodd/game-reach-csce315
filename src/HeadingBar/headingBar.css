@@ -21,6 +21,8 @@
 .profilea {
     text-align: center;
     width: 10vw;
+    position: relative;
+    display: inline-block;
 }
 
 .cornerlogo {
@@ -33,4 +35,7 @@
 
 .profile {
     height: 100%;
+    margin-top: 5px;
+    position: relative;
+    display: inline-block;
 }

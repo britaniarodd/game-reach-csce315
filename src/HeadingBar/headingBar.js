@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Avatar, { ConfigProvider } from 'react-avatar';
 import "./headingBar.css";
 import cornerlogo from "./Reach_mini_logo.png";
 import headinglogo from "./Reach_heading_logo.png";
@@ -16,7 +17,14 @@ class HeadingBar extends Component {
                     <img className="headinglogo" src={headinglogo}></img>
                 </a>
                 <a className="profilea" href="/profile">
-                    <img className="profile" src={profile}></img>
+                <div className='profile'>
+                    <Avatar 
+                        name={'John Doe'}
+                        color={'#7F00FF'}
+                        round={true}
+                        size="70">
+                    </Avatar>
+                </div>
                 </a>
             </div>
         );
