@@ -3,3 +3,13 @@
     font-weight: bold;
     padding-left: 50px;
 }
+
+.navbar-expand-lg{
+    background-color: rgb(167, 85, 243);
+}
+
+.nav-item{
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-weight: bold;
+    padding-left: 50px;
+}
