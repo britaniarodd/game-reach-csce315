@@ -10,3 +10,7 @@
     margin-right: auto;
     text-align: center;
 }
+
+.noblueunderlinelink {
+    text-decoration: none;
+}
