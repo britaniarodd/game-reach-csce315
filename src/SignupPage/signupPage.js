@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import "../shared.css";
@@ -29,7 +30,7 @@ class SignupPage extends Component {
                 <input type="email"></input>
                 <p>Password</p>
                 <input type="password"></input>
-                <button className="signupbutton center">Sign Up</button>
+                <Link className="noblueunderlinelink" to="/dashboard"><button className="signupbutton center">Sign Up</button></Link>
             </div>
         );
     }
