@@ -9,6 +9,7 @@ import emblem_iron from "./Emblem_Iron.png";
 import emblem_master from "./Emblem_Master.png";
 import emblem_platinum from "./Emblem_Platinum.png";
 import emblem_silver from "./Emblem_Silver.png";
+import NavigationBar from "./../NavigationBar/navBar";
 
 class LeagueStatsPage extends Component {
     state = {
@@ -31,7 +32,10 @@ class LeagueStatsPage extends Component {
 
     render() {
         return (
+            <React.Fragment>
+            <NavigationBar/>
             <div className="background">
+                <br/>
                 <input
                     type="text"
                     onKeyDown={this.lookupUser.bind(this)}
@@ -46,6 +50,7 @@ class LeagueStatsPage extends Component {
                     <img src={this.state.rank}></img>
                 </div>
             </div>
+            </React.Fragment>
         );
     }
 
