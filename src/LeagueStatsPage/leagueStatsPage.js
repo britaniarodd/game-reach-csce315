@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { apiKey, naApiRoute, americasApiRoute, apiRequest } from "./leagueApi";
 import "../shared.css";
 import emblem_bronze from "./Emblem_Bronze.png";
 import emblem_challenger from "./Emblem_Challenger.png";
@@ -9,6 +10,7 @@ import emblem_iron from "./Emblem_Iron.png";
 import emblem_master from "./Emblem_Master.png";
 import emblem_platinum from "./Emblem_Platinum.png";
 import emblem_silver from "./Emblem_Silver.png";
+import MatchComponent from "./matchComponent";
 
 class LeagueStatsPage extends Component {
     state = {
@@ -21,13 +23,6 @@ class LeagueStatsPage extends Component {
         rankStr: "",
         matches: [],
     };
-
-    constructor(props) {
-        super(props);
-        this.leagueAPIKey = "RGAPI-2253e6a5-31b7-4756-9c74-2cb377699762";
-        this.apiRoute = "https://na1.api.riotgames.com";
-        this.americasApiRoute = "https://americas.api.riotgames.com";
-    }
 
     render() {
         return (
@@ -42,39 +37,43 @@ class LeagueStatsPage extends Component {
                     <p>Account Level: {this.state.account_level}</p>
                     <p>Wins: {this.state.wins}</p>
                     <p>Losses: {this.state.losses}</p>
-                    <p>{this.state.tier} {this.state.rankStr}</p>
+                    <p>
+                        {this.state.tier} {this.state.rankStr}
+                    </p>
                     <img src={this.state.rank}></img>
+                    {this.state.matches.map((match, idx) => {
+                        return (
+                            <MatchComponent
+                                key={match.metadata.matchId}
+                                match_info={match}
+                                leagueApiKey={this.apiKey}
+                                apiRoute={this.apiRoute}
+                            />
+                        );
+                    })}
                 </div>
             </div>
         );
     }
 
-    async apiRequest(request) {
-        console.log(request);
-        const response = await fetch(request);
-        const json = await response.json();
-        console.log(json);
-        return Promise.resolve(json);
-    }
-
     async getRankInfo(encrypted_id) {
         let request =
-            this.apiRoute +
+            naApiRoute +
             "/lol/league/v4/entries/by-summoner/" +
             encrypted_id +
             "?api_key=" +
-            this.leagueAPIKey;
-        return Promise.resolve(await this.apiRequest(request));
+            apiKey;
+        return apiRequest(request);
     }
 
     async getSummonerInfo(summoner_name) {
         let request =
-            this.apiRoute +
+            naApiRoute +
             "/lol/summoner/v4/summoners/by-name/" +
             summoner_name +
             "?api_key=" +
-            this.leagueAPIKey;
-        return Promise.resolve(await this.apiRequest(request));
+            apiKey;
+        return apiRequest(request);
     }
 
     setTier(tier) {
@@ -92,7 +91,10 @@ class LeagueStatsPage extends Component {
                 this.setState({ rank: emblem_gold, tier: "Gold" });
                 break;
             case "GRANDMASTER":
-                this.setState({ rank: emblem_grandmaster, tier: "Grandmaster" });
+                this.setState({
+                    rank: emblem_grandmaster,
+                    tier: "Grandmaster",
+                });
                 break;
             case "IRON":
                 this.setState({ rank: emblem_iron, tier: "Iron" });
@@ -110,13 +112,24 @@ class LeagueStatsPage extends Component {
     }
 
     async getMatches(summoner_puuid) {
-        let request = this.americasApiRoute + "/lol/match/v5/matches/by-puuid/" + summoner_puuid + "/ids" + "?start=0&count=20&api_key=" + this.leagueAPIKey;
-        return Promise.resolve(await this.apiRequest(request));
+        let request =
+            americasApiRoute +
+            "/lol/match/v5/matches/by-puuid/" +
+            summoner_puuid +
+            "/ids" +
+            "?start=0&count=20&api_key=" +
+            apiKey;
+        return apiRequest(request);
     }
 
     async getMatchInfo(match_id) {
-        let request = this.americasApiRoute + "/lol/match/v5/matches/" + match_id + "?api_key=" + this.leagueAPIKey;
-        return Promise.resolve(await this.apiRequest(request));
+        let request =
+            americasApiRoute +
+            "/lol/match/v5/matches/" +
+            match_id +
+            "?api_key=" +
+            apiKey;
+        return apiRequest(request);
     }
 
     async lookupUser(e) {
@@ -132,14 +145,17 @@ class LeagueStatsPage extends Component {
 
             const rankJson = await this.getRankInfo(encrypted_id);
             const rankInfo = rankJson[0];
-            this.setState({ wins: rankInfo.wins, losses: rankInfo.losses, rankStr: rankInfo.rank });
+            this.setState({
+                wins: rankInfo.wins,
+                losses: rankInfo.losses,
+                rankStr: rankInfo.rank,
+            });
             this.setTier(rankInfo.tier);
 
             const matchIdsJson = await this.getMatches(puuid);
-            for(let i = 0; i < 20; i++) {
+            for (let i = 0; i < 1; i++) {
                 const match_info = await this.getMatchInfo(matchIdsJson[i]);
-                console.log(match_info);
-                await new Promise(r => setTimeout(r, 100));
+                this.setState({ matches: [...this.state.matches, match_info] });
             }
         }
     }
