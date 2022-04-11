@@ -1,4 +1,4 @@
-export let apiKey = "RGAPI-2253e6a5-31b7-4756-9c74-2cb377699762";
+export let apiKey = "RGAPI-90590121-fd00-4260-926c-74e2b8d58ae5";
 export let naApiRoute = "https://na1.api.riotgames.com";
 export let americasApiRoute = "https://americas.api.riotgames.com";
 
