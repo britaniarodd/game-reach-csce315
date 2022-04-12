@@ -9,6 +9,7 @@ import NavigationBar from "./NavigationBar/navBar";
 import ViewConnectionsPage from "./ViewConnections/viewConnectionsPage";
 import FindConnectionsPage from "./FindConnections/findConnectionsPage";
 import LeagueStatsPage from "./LeagueStatsPage/leagueStatsPage";
+import ProfilePage from "./ProfilePage/profilePage";
 
 export default function App() {
     return (
@@ -23,6 +24,7 @@ export default function App() {
                 <Route path="/viewConnections" element={<ViewConnectionsPage />} />
                 <Route path="/findConnections" element={<FindConnectionsPage />} />
                 <Route path="/leaguestats" element={<LeagueStatsPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </Router>
     );

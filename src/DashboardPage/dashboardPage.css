@@ -43,6 +43,7 @@ h2 {
     background-position: center;
     text-align: center;
     position:relative;
+    
 }
 .box--csgo {
     background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgb(82, 50, 24)), url(./csgo_logo.png);
@@ -73,7 +74,7 @@ h2 {
 }
   
   .column:hover .overlay {
-    opacity: 1;
+    opacity: 0.6;
   }
 .text {
     position: absolute;
