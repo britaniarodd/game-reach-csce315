@@ -1,0 +1,8 @@
+.statColumn {
+    float: left;
+    width: 50%;
+}
+
+.clearBoth {
+    clear: both;
+}

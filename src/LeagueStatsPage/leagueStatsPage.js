@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { apiKey, naApiRoute, americasApiRoute, apiRequest } from "./leagueApi";
+import "./leagueStatsPage.css"
 import "../shared.css";
 import emblem_bronze from "./Emblem_Bronze.png";
 import emblem_challenger from "./Emblem_Challenger.png";
@@ -27,31 +28,37 @@ class LeagueStatsPage extends Component {
     render() {
         return (
             <div className="background">
+                <p>League Stats</p>
                 <input
                     type="text"
                     onKeyDown={this.lookupUser.bind(this)}
                 ></input>
-                <p>League Stats</p>
-                <div className="">
-                    <p>Account Name: {this.state.account_name}</p>
-                    <p>Account Level: {this.state.account_level}</p>
-                    <p>Wins: {this.state.wins}</p>
-                    <p>Losses: {this.state.losses}</p>
-                    <p>
-                        {this.state.tier} {this.state.rankStr}
-                    </p>
-                    <img src={this.state.rank}></img>
-                    {this.state.matches.map((match, idx) => {
-                        return (
-                            <MatchComponent
-                                key={match.metadata.matchId}
-                                match_info={match}
-                                leagueApiKey={this.apiKey}
-                                apiRoute={this.apiRoute}
-                            />
-                        );
-                    })}
+
+                <div>
+                    <div className="statColumn">
+                        <p>Account Name: {this.state.account_name}</p>
+                        <p>Account Level: {this.state.account_level}</p>
+                        <p>Wins: {this.state.wins}</p>
+                        <p>Losses: {this.state.losses}</p>
+                        {this.state.matches.map((match, idx) => {
+                            return (
+                                <MatchComponent
+                                    key={match.metadata.matchId}
+                                    match_info={match}
+                                    leagueApiKey={this.apiKey}
+                                    apiRoute={this.apiRoute}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className="statColumn">
+                        <p>
+                            {this.state.tier} {this.state.rankStr}
+                        </p>
+                        <img src={this.state.rank}></img>
+                    </div>
                 </div>
+                <div className="clearBoth" />
             </div>
         );
     }
@@ -111,13 +118,13 @@ class LeagueStatsPage extends Component {
         }
     }
 
-    async getMatches(summoner_puuid) {
+    async getMatches(summoner_puuid, count) {
         let request =
             americasApiRoute +
             "/lol/match/v5/matches/by-puuid/" +
             summoner_puuid +
             "/ids" +
-            "?start=0&count=20&api_key=" +
+            "?start=0&count=" + count + "&api_key=" +
             apiKey;
         return apiRequest(request);
     }
@@ -152,8 +159,8 @@ class LeagueStatsPage extends Component {
             });
             this.setTier(rankInfo.tier);
 
-            const matchIdsJson = await this.getMatches(puuid);
-            for (let i = 0; i < 1; i++) {
+            const matchIdsJson = await this.getMatches(puuid, 10);
+            for (let i = 0; i < 10; i++) {
                 const match_info = await this.getMatchInfo(matchIdsJson[i]);
                 this.setState({ matches: [...this.state.matches, match_info] });
             }
