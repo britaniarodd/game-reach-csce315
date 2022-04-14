@@ -30,9 +30,14 @@ class SignupPage extends Component {
                 <input type="email"></input>
                 <p>Password</p>
                 <input type="password"></input>
-                <Link className="noblueunderlinelink" to="/dashboard"><button className="signupbutton center">Sign Up</button></Link>
+                <Link className="noblueunderlinelink" to="/dashboard"><button className="signupbutton center" onClick={this.signUpClicked.bind(this)}>Sign Up</button></Link>
             </div>
         );
+    }
+
+    async signUpClicked() {
+        let result = await (await fetch("http://localhost:4000/users/get/by-email/test@gmail.com", { headers: { "accepts":"application/json" } })).json()
+        console.log(result)
     }
 }
 
