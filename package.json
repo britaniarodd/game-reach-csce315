@@ -1,12 +1,25 @@
 {
-    "scripts": {
-        "backend-dev": "cd backend && npm run dev",
-        "frontend-dev": "cd frontend && npm start",
-        "start-dev": "concurrently --kill-others \"npm run backend-dev\" \"npm run frontend-dev\"",
-        "start": "cd backend && npm install && npm start",
-        "heroku-postbuild": "cd frontend && npm install && npm run build"
-    },
-    "devDependencies": {
-        "concurrently": "^7.1.0"
-    }
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "frontend-dev": "cd frontend && npm start",
+    "start-dev": "concurrently --kill-others \"npm run dev\" \"npm run frontend-dev\"",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "concurrently": "^7.1.0"
+  }
 }
