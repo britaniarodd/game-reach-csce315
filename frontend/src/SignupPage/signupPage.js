@@ -36,7 +36,7 @@ class SignupPage extends Component {
     }
 
     async signUpClicked() {
-        let result = await (await fetch("http://localhost:4000/users/get/by-email/test@gmail.com", { headers: { "accepts":"application/json" } })).json()
+        let result = await (await fetch("http://localhost:5000/users/get/by-email/test@gmail.com", { headers: { "accepts":"application/json" } })).json()
         console.log(result)
     }
 }
