@@ -36,7 +36,16 @@ class SignupPage extends Component {
     }
 
     async signUpClicked() {
-        let result = await (await fetch("http://localhost:5000/users/get/by-email/test@gmail.com", { headers: { "accepts":"application/json" } })).json()
+        console.log("process env")
+        let env = process.env.NODE_ENV
+        console.log(env)
+        let result = null
+        if(env == "development") {
+            result = await(await fetch("http://localhost:5000/users/get/by-email/test@gmail.com", { headers: { "accepts":"application/json" } })).json()
+        }
+        else if(env == "production") {
+            result = await (await fetch("https://game-reach.herokuapp.com/users/get/by-email/test@gmail.com", { headers: { "accepts":"application/json" } })).json()
+        }
         console.log(result)
     }
 }
