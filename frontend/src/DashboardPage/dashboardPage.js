@@ -12,7 +12,9 @@ class DashboardPage extends Component {
             <React.Fragment>
             <NavigationBar />
             <div className="background">
-            
+            <h1>Welcome, {window.name}!</h1>
+            <br/>
+            <h3>Select "View Stats" for a game below:</h3>
             <div className="row">
                 <div className="column box--league center">
                     <div className="overlay">

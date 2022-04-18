@@ -106,6 +106,7 @@ function ViewConnections() {
                 <br/>
                 <h1 className='title'> View Connections </h1>
                 <br/>
+                <div className='label-color'>
                 {/* status dropdown */}
                 <Dropdown
                     label = "Select Status: "
@@ -131,6 +132,7 @@ function ViewConnections() {
                     value = {game}
                     onChange = {handleGameChange}
                 />
+                </div>
                 {/* <p>You selected {game}</p> */}
                 <br/>
                 <h4> Displaying {numConnections} connections</h4>

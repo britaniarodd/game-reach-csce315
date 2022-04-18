@@ -11,10 +11,10 @@
 }
 
 .DropDown_Background{
-    background-color: black;
+    background-color: inherit;
 }
 
 .labelEdit{
-    color: rgb(167, 85, 243);
+    /*color: rgb(167, 85, 243);*/
     font-family: "Lucida Console", "Courier New", monospace;
 }
