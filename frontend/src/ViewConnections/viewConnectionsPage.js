@@ -11,7 +11,6 @@ function ViewConnections() {
 
     var numConnections = Players.length;
 
-
     //status stuff
     const [status, setStatus] = React.useState('All Statuses');
 
@@ -25,76 +24,55 @@ function ViewConnections() {
     const handleGameChange = (event) =>{
         setGame(event.target.value);
     }
+    //functions for filtering
 
-    //get lengths for displaying numConnections
-    if (status === 'All Statuses'){
-        numConnections = 0;
-        for (const element of Players){
+    //filters for status, then game
+    function filterStatus(status){
+        const status_filtered_array = Players.filter((e) => {
+            if (status === 'All Statuses'){
+                return Players;
+            }
+            else if (status === 'Open'){
+                return e.status === 'Open';
+            }
+            else if (status === 'Closed'){
+                return e.status === 'Closed';
+            }
+            else if (status === 'Mentor'){
+                return e.status === 'Mentor';
+            }
+        }
+        )
+        return status_filtered_array;
+    }
+
+    function filterGame(game, newArray){
+        const game_filtered_array = newArray.filter((e) => {
             if (game === 'All Games'){
-                numConnections = Players.length;
+                return Players;
             }
-            else if (game === 'LoL' && element.game === 'LoL'){
-                numConnections++;
+            else if (game === 'LoL'){
+                return e.game === 'LoL';
             }
-             else if (game === 'CS:GO' && element.game === 'CS:GO'){
-                numConnections++;
+            else if (game === 'CS:GO'){
+                return e.game === 'CS:GO';
             }
-            else if (game === 'Smite' && element.game === 'Smite'){
-                numConnections++;
-            }
-        }
-    }
-    else if (status === 'Open'){
-        numConnections = 0;
-        for (const element of Players){
-            if (game === 'All Games' && element.status === 'Open'){
-                numConnections++;
-            }
-            else if (game === 'LoL' && element.game === 'LoL' && element.status === 'Open'){
-                numConnections++;
-            }
-             else if (game === 'CS:GO' && element.game === 'CS:GO' && element.status === 'Open'){
-                numConnections++;
-            }
-            else if (game === 'Smite' && element.game === 'Smite' && element.status === 'Open'){
-                numConnections++;
+            else if (game === 'Smite'){
+                return e.game === 'Smite';
             }
         }
+        )
+        numConnections = game_filtered_array.length;
+        return game_filtered_array;
     }
-    else if (status === 'Closed'){
-        numConnections = 0;
-        for (const element of Players){
-            if (game === 'All Games' && element.status === 'Closed'){
-                numConnections++;
-            }
-            else if (game === 'LoL' && element.game === 'LoL' && element.status === 'Closed'){
-                numConnections++;
-            }
-             else if (game === 'CS:GO' && element.game === 'CS:GO' && element.status === 'Closed'){
-                numConnections++;
-            }
-            else if (game === 'Smite' && element.game === 'Smite' && element.status === 'Closed'){
-                numConnections++;
-            }
-        }
-    }
-    else if (status === 'Mentor'){
-        numConnections = 0;
-        for (const element of Players){
-            if (game === 'All Games' && element.status === 'Mentor'){
-                numConnections++;
-            }
-            else if (game === 'LoL' && element.game === 'LoL' && element.status === 'Mentor'){
-                numConnections++;
-            }
-             else if (game === 'CS:GO' && element.game === 'CS:GO' && element.status === 'Mentor'){
-                numConnections++;
-            }
-            else if (game === 'Smite' && element.game === 'Smite' && element.status === 'Mentor'){
-                numConnections++;
-            }
-        }
-    }
+
+    //the actual filtering
+
+    //gets new Status array
+    const statusArray = filterStatus(status);
+    //now we have our designated status, lets filter new games
+    const status_gameArray = filterGame(game, statusArray);
+
     return (
         //get size of array
         
@@ -136,131 +114,14 @@ function ViewConnections() {
                 {/* <p>You selected {game}</p> */}
                 <br/>
                 <h4> Displaying {numConnections} connections</h4>
-                
-                {Players.map((e)=>{
-                    //Players: accesses players array
-                    //.map: creates new array based off players and return information
-                    //e: function parameter, holding information from Players array
-                    //=> is a function call. In otherwords, above is doing function(e){}
 
-
-
-                    //BELOW ONLY RETURNS LEAGUE PLAYERS
-                    // if (e.game == "LoL"){
-                    //     return (
-                    //         <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                    //     );
-                    // }
-
-                    //create drop down menu that does the above stuff
-
-                    // //Below: name, game, status and bio are props so they can be used between files.
-                    // return (
-                    //     <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                    // );
-
-                    
-                    //filters for open people
-
-                    //ALL STATUSES
-                    if (status === 'All Statuses'){
-                        if (game === 'All Games'){
-                            return (
+                {/* display the profiles */}
+                {
+                    status_gameArray.map((e) =>{
+                        return(
                             <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'LoL' && e.game === 'LoL'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'CS:GO' && e.game === 'CS:GO'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'Smite' && e.game === 'Smite'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                    }
-
-                    //OPEN STATUS
-                    else if (status === 'Open' && e.status === 'Open'){
-                        if (game === 'All Games'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'LoL' && e.game === 'LoL'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'CS:GO' && e.game === 'CS:GO'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'Smite' && e.game === 'Smite'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                    }
-
-
-
-                    //CLOSED STATUS
-                    else if (status === 'Closed' && e.status === 'Closed'){
-                        if (game === 'All Games'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'LoL' && e.game === 'LoL'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'CS:GO' && e.game === 'CS:GO'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'Smite' && e.game === 'Smite'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                    }
-
-
-                    //MENTOR STATUS
-                    else if (status === 'Mentor' && e.status === 'Mentor'){
-                        if (game === 'All Games'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'LoL' && e.game === 'LoL'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'CS:GO' && e.game === 'CS:GO'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                        else if (game === 'Smite' && e.game === 'Smite'){
-                            return (
-                            <Info name={e.name} game={e.game} status={e.status} bio={e.bio}/>
-                            );
-                        }
-                    }
-                })
+                        )
+                    })
                 }
                 <br/>
             </div>
@@ -280,24 +141,6 @@ export default ViewConnections;
 //files edited: viewConnections.js, viewConnections.css, Dropdown.js, players.js, dropdown.css
 
 
+//implement rank
 
-//combinations:
-//all status, all games
-//all status, LoL
-//all status, CS:GO
-//all status, Smite
-
-//Open, all games
-//Open, LoL
-//Open, CS:GO
-//Open, Smite
-
-//Closed, all games
-//Closed, LoL
-//Closed, CS:GO
-//Closed, Smite
-
-//Mentoring, all games
-//Mentoring, LoL
-//Mentoring, CS:GO
-//Mentoring, Smite
+//three for loops (map function), each its own filter
