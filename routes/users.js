@@ -8,7 +8,7 @@ router.post("/create", function (req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
     const nickname = req.body.nickname;
-    console.log(email, password, nickname);
+    
     bcrypt.hash(password, saltRounds, function (err, hash) {
         if (err) {
             console.log(err);
@@ -32,7 +32,7 @@ router.post("/create", function (req, res, next) {
                 const status = poolres.rows[0].status;
                 const bio = poolres.rows[0].bio;
                 const nickname = poolres.rows[0].nickname;
-                console.log(user_id, email, status, bio, nickname);
+                
                 res.json({
                     user_id: user_id,
                     email: email,
@@ -45,32 +45,22 @@ router.post("/create", function (req, res, next) {
     });
 });
 
-router.get("/get/by-email/:email", function (req, res, next) {
-    const pgpool = req.app.get("pgpool");
-    pgpool.query(
-        "SELECT (user_id, email, status, bio, nickname) FROM users WHERE email=$1",
-        [req.params.email],
-        (poolerr, poolres) => {
-            if (poolerr) {
-                console.log(poolerr);
-                res.status(400).send("PSQL Error");
-                return;
-            }
+async function getUserByEmail(pgpool, email) {
+    const poolres = pgpool.query(
+    "SELECT (user_id, email, status, bio, nickname) FROM users WHERE email=$1",
+    [email]);
+    const user_id = poolres.rows[0].user_id;
+    const user_email = poolres.rows[0].email;
+    const status = poolres.rows[0].status;
+    const bio = poolres.rows[0].bio;
+    const nickname = poolres.rows[0].nickname;
+    return {
+        user_id: user_id,
+        email: user_email,
+        status: status,
+        bio: bio,
+        nickname: nickname,
+    };
+}
 
-            const user_id = poolres.rows[0].user_id;
-            const email = poolres.rows[0].email;
-            const status = poolres.rows[0].status;
-            const bio = poolres.rows[0].bio;
-            const nickname = poolres.rows[0].nickname;
-            res.json({
-                user_id: user_id,
-                email: email,
-                status: status,
-                bio: bio,
-                nickname: nickname,
-            });
-        }
-    );
-});
-
-module.exports = router;
+module.exports = {router, getUserByEmail };

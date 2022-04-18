@@ -6,7 +6,7 @@ var logger = require("morgan");
 var cors = require("cors");
 const { Pool } = require("pg");
 
-var usersRouter = require("./routes/users");
+var usersRouter = require("./routes/users").router;
 
 var app = express();
 
@@ -34,6 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 app.use("/users", usersRouter);
+
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/frontend/build/index.html"));
