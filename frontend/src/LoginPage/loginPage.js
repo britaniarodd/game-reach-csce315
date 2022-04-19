@@ -11,7 +11,7 @@ class LoginPage extends Component {
                 <input type="email"></input>
                 <p>Password</p>
                 <input type="password"></input>
-                <Link className="noblueunderlinelink" to="/dashboard"><button className="signupbutton center">Login</button></Link>
+                <Link className="noblueunderlinelink" to="/dashboard"><button className="signupbutton center" onClick={this.selectAccount()}>Login</button></Link>
             </div>
         );
     }
