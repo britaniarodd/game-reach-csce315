@@ -30,10 +30,12 @@ class SignupPage extends Component {
 
     updateNickname = (e) => {
         this.setState({ nickname: e.target.value });
+        window.name = { nickname: e.target.value };
     };
 
     updateEmail = (e) => {
         this.setState({ email: e.target.value });
+        window.email = { email: e.target.value };
     };
 
     updatePassword = (e) => {
@@ -46,10 +48,19 @@ class SignupPage extends Component {
                 nickname: this.state.nickname,
                 email: this.state.email,
                 password: this.state.password,
+<<<<<<< HEAD
             })
             .then((result) => {
                 console.log(result);
             });
+=======
+            }),
+        });
+        console.log(accountJson);
+
+        window.name = this.state.nickname;
+        window.email = this.state.email;
+>>>>>>> b7ceeb378a143715b911e94bf7752c0719432834
     }
 }
 

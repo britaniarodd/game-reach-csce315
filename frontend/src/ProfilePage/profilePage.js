@@ -3,12 +3,17 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 import "../shared.css";
 import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
+import Dropdown from './../SmallComponents/DropdownMenu/Dropdown';
 
+function ProfilePage() {
+    //state = {};
+    //status stuff
+    const [status, setStatus] = React.useState('Open');
 
-class ProfilePage extends Component {
-    state = {};
-    
-    render() {
+    const handleStatusChange = (event) =>{
+        setStatus(event.target.value);
+    };
+    {
         
         return (
         //<React.Fragment>
@@ -18,18 +23,33 @@ class ProfilePage extends Component {
                 <div className='box2'>
                     <div className='img-box'alt="profile-img">
                     <Avatar 
-                        name={'John Doe'}
+                        name={window.name}
                         color={'#7F00FF'}
                         round={true}
                         size="70">
                     </Avatar>
-                    <h2 className='name'>John Doe</h2>
+                    <h2 className='name'>{window.name}</h2>
                     <h3 className='des'>Mentor</h3>
                     </div>
                     
                     <div className="description-box">
                         <h5>Hi! My name is John Doe and I am open to mentoring other players. I currently play CS:GO.</h5>
                     </div>
+                    <br/>
+                    <br/>
+                    {/* <div className="display-status">
+                    {/* status dropdown 
+                    <Dropdown
+                        label = "Select Status: "
+                        options = {[
+                            {label: 'Open', value: 'Open'},
+                            {label: 'Closed', value: 'Closed'},
+                            {label: 'Mentor', value: 'Mentor'}
+                        ]}
+                        value = {status}
+                        onChange = {handleStatusChange}
+                    />
+                    </div> */}
                     
                     
                 </div>

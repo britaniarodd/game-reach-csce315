@@ -19,7 +19,7 @@ class HeadingBar extends Component {
                 <a className="profilea" href="/profile">
                 <div className='profile'>
                     <Avatar 
-                        name={'John Doe'}
+                        name={window.name}
                         color={'#7F00FF'}
                         round={true}
                         size="70">
