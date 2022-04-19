@@ -12,6 +12,7 @@ var csgoRouter = require("./routes/csgoEndpoints");
 var smiteRouter = require("./routes/smiteEndpoints");
 var connectionsRouter = require("./routes/connectionsEndpoints");
 var filterUsersRouter = require("./routes/filterUsersEndpoints");
+var filterConnectionsRouter = require("./routes/filterConnectionsEndpoints");
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use("/csgo", csgoRouter);
 app.use("/smite", smiteRouter);
 app.use("/connections", connectionsRouter);
 app.use("/filterusers", filterUsersRouter);
+app.use("/filterconnections", filterConnectionsRouter);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/frontend/build/index.html"));
