@@ -53,7 +53,7 @@ class SignupPage extends Component {
                 console.log(result);
             });
 
-            axios.get(getBackendAddress() + "/filterusers/get/league", { rank: "CHALLENGER", status: "open to connections" }).then(result => console.log(result));
+            axios.get(getBackendAddress() + "/filterusers/get/league", { params: {rank: "CHALLENGER", status: "open to connections"} }).then(result => console.log(result));
 
         window.name = this.state.nickname;
         window.email = this.state.email;
