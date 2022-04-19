@@ -6,7 +6,12 @@ var logger = require("morgan");
 var cors = require("cors");
 const { Pool } = require("pg");
 
-var usersRouter = require("./routes/users").router;
+var usersRouter = require("./routes/usersEndpoints");
+var leagueRouter = require("./routes/leagueEndpoints");
+var csgoRouter = require("./routes/csgoEndpoints");
+var smiteRouter = require("./routes/smiteEndpoints");
+var connectionsRouter = require("./routes/connectionsEndpoints");
+var filterUsersRouter = require("./routes/filterUsersEndpoints");
 
 var app = express();
 
@@ -34,7 +39,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 app.use("/users", usersRouter);
-
+app.use("/league", leagueRouter);
+app.use("/csgo", csgoRouter);
+app.use("/smite", smiteRouter);
+app.use("/connections", connectionsRouter);
+app.use("/filterusers", filterUsersRouter);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/frontend/build/index.html"));

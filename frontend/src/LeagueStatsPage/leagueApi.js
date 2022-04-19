@@ -19,6 +19,5 @@ function fetchRetry(request, delay, tries) {
 
 export async function apiRequest(request) {
     let result = (await fetchRetry(request, 1000, 5)).json();
-    console.log(await result);
     return result;
 }

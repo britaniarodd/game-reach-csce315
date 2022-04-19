@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { backendrequest } from "../backendrequest";
+import axios from "axios";
+import { backendrequest, getBackendAddress } from "../backendrequest";
 import "../shared.css";
 import "./signupPage.css";
 
@@ -40,19 +41,15 @@ class SignupPage extends Component {
     };
 
     async signUpClicked() {
-        const accountJson = await backendrequest("/users/create", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Conetent-Type": "application/json",
-            },
-            body: JSON.stringify({
+        axios
+            .post(getBackendAddress() + "/users/create", {
                 nickname: this.state.nickname,
                 email: this.state.email,
                 password: this.state.password,
-            }),
-        });
-        console.log(accountJson);
+            })
+            .then((result) => {
+                console.log(result);
+            });
     }
 }
 

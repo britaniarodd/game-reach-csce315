@@ -1,17 +1,24 @@
 export async function backendrequest(request, info) {
     let env = process.env.NODE_ENV;
-    let result = null;
 
     if (env === "development") {
-        result = (await fetch("http://localhost:5000" + request, info)).json();
+        return fetch("http://localhost:5000" + request, info);
     } else if (env === "production") {
-        result = (
-            await fetch("https://game-reach.herokuapp.com" + request, info)
-        ).json();
+        return fetch("https://game-reach.herokuapp.com" + request, info);
     } else {
         console.log(env + " environment error");
     }
 
-    console.log(await result);
-    return result;
+    return null;
+}
+
+export function getBackendAddress() {
+    let env = process.env.NODE_ENV;
+
+    if (env === "development") {
+        return "http://localhost:5000";
+    } else if (env === "production") {
+        return "https://game-reach.herokuapp.com";
+    }
+    return "";
 }
