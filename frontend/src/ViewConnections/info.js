@@ -13,6 +13,7 @@ function Info (props){
         <div style={styles}>
             <h3> {props.name} </h3>
             <p> Game: {props.game}</p>
+            <p> Rank: {props.rank}</p>
             <p> Status: {props.status}</p>
             <p> Bio: {props.bio}</p>
         </div>
