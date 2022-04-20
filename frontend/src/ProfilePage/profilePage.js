@@ -16,16 +16,11 @@ function ProfilePage() {
         setStatus(event.target.value);
     };*/
    
-    axios.get(getBackendAddress() + "/users/get/by-email/test", {
-                
-            })
-            .then((result) => {
-                console.log(result);
-            });
+    axios.get(getBackendAddress() + "/users/get/by-email/test").then(result => console.log(result));
         
-    
         
-        return (
+        
+    return (
         //<React.Fragment>
         //<NavigationBar />
         <div className="background">

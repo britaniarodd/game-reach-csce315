@@ -37,6 +37,37 @@ router.post("/create", function (req, res, next) {
     });
 });
 
+router.post("/login", function(req, res, next) {
+    const { email, password } = req.body;
+    const pgpool = req.app.get("pgpool");
+    pgpool.query("SELECT * FROM users WHERE email=$1", [email], (poolerr, poolres) => {
+        if(poolerr) {
+            console.log(poolerr);
+            res.status(400).send("PSQL Error");
+            return;
+        }
+        const user = poolres.rows[0];
+        if(user != null) {
+            bcrypt.compare(password, user.passwordhash, (bCryptErr, bCryptRes) => {
+                if(bCryptErr) {
+                    console.log(bCryptErr);
+                    res.status(400).send("bCrypt Error");
+                    return;
+                }
+                if (bCryptRes) {
+                    res.json( { email: user.email, status: user.status, bio: user.bio, nickname: user.nickname } );
+                }
+                else {
+                    res.status(400).send("Wrong password");
+                }
+            });
+        }
+        else {
+            res.status(400).send("Username not found");
+        }
+    });
+});
+
 router.get("/get/by-email/:email", async function (req, res, next) {
     const email = req.params.email;
     try {

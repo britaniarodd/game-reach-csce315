@@ -8,10 +8,11 @@ const { Pool } = require("pg");
 
 var usersRouter = require("./routes/usersEndpoints");
 var leagueRouter = require("./routes/leagueEndpoints");
-var csgoRouter = require("./routes/csgoEndpoints");
+var apexRouter = require("./routes/apexEndpoints");
 var smiteRouter = require("./routes/smiteEndpoints");
 var connectionsRouter = require("./routes/connectionsEndpoints");
 var filterUsersRouter = require("./routes/filterUsersEndpoints");
+var filterConnectionsRouter = require("./routes/filterConnectionsEndpoints");
 
 var app = express();
 
@@ -40,10 +41,11 @@ app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 app.use("/users", usersRouter);
 app.use("/league", leagueRouter);
-app.use("/csgo", csgoRouter);
+app.use("/apex", apexRouter);
 app.use("/smite", smiteRouter);
 app.use("/connections", connectionsRouter);
 app.use("/filterusers", filterUsersRouter);
+app.use("/filterconnections", filterConnectionsRouter);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/frontend/build/index.html"));
