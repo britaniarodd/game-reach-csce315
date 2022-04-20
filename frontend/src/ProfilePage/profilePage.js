@@ -13,16 +13,22 @@ import { getBackendAddress} from "../backendrequest";
 
     const [user, setuser] = React.useState(null);
     const [form, setform] = React.useState(null);
+    const [leagueTag, setLeagueTags] = React.useState(null);
    
     React.useEffect(() => {
-        axios.get(getBackendAddress() + "/users/get/by-email/test2").then((response) => {
+        axios.get(getBackendAddress() + "/users/get/by-email/" + window.email).then((response) => {
           setuser(response.data);
           console.log(response.data);
+        });
+        axios.get(getBackendAddress() + "/league/get/by-email/" + window.email).then((response) => {
+            setLeagueTags(response.data);
+            console.log(response.data);
         });
       }, []);
     
     if (!user) return null;
     console.log("user information: ", user);
+    console.log("league tag: ", leagueTag);
     //state= {showForm: false}
     
 
@@ -35,7 +41,7 @@ import { getBackendAddress} from "../backendrequest";
             <h4> Edit User Profile by Changing Information Then Click Save</h4>
             <br/>
             
-            <form id="add-app">
+            <form id="update-user" >
               <label >Username: </label>
               <input type="text" value={user.nickname.toUpperCase()}/>
     
@@ -44,15 +50,40 @@ import { getBackendAddress} from "../backendrequest";
 
               <label>Status: </label>
               <select id="status">
-                <option value="OPEN TO CONNECTIONS">Volvo</option>
-                <option value="CLOSED TO CONNECTIONS">Saab</option>
-                <option value="OPE">VW</option>
-                <option value="audi" selected>Audi</option>
-                </select>
+                <option value="none" selected>{user.status.toUpperCase()}</option>
+                <option value="OPEN TO CONNECTIONS">OPEN TO CONNECTIONS</option>
+                <option value="CLOSED TO CONNECTIONS">CLOSED TO CONNECTIONS</option>
+                <option value="MENTOR">MENTOR</option>
+              </select>
 
               <label>Bio: </label>
               <input type="text" value={user.bio}/>
+              
+              <button>Save</button>
+            </form>
+          </div>
+        );
+    };
+
+    function showForm(user) {
+
     
+        return (
+          <div>
+            <br/>
+            <h4> Edit Gamer Tags, then hit save: </h4>
+            <br/>
+            
+            <form id="set-tags" >
+              <label >Leage of Legends: </label>
+              <input type="text" value={user.nickname}/>
+    
+              <label>CSGO: </label>
+              <input type="text" value={user.email}/>
+
+              <label>Smite: </label>
+              <input type="text" value={user.email}/>
+              
               <button>Save</button>
             </form>
           </div>
@@ -88,22 +119,7 @@ import { getBackendAddress} from "../backendrequest";
                    <br/>
                    <button> Set Gamer Tags</button>
                    <br/>
-                   <br/>
-                   
-                   {/* <div className="display-status">
-                   {/* status dropdown 
-                   <Dropdown
-                       label = "Select Status: "
-                       options = {[
-                           {label: 'Open', value: 'Open'},
-                           {label: 'Closed', value: 'Closed'},
-                           {label: 'Mentor', value: 'Mentor'}
-                       ]}
-                       value = {status}
-                       onChange = {handleStatusChange}
-                   />
-                   </div> */}
-                   
+                   <br/>                  
                    
                </div>
            </div>

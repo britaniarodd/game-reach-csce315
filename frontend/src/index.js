@@ -3,11 +3,12 @@ import ReactDOM from "react-dom/client";
 import App from "./reactRouter";
 import "bootstrap/dist/css/bootstrap.css";
 
-window.name = "";
-window.$email = "";
+window.name = "test2";
+window.email = "test2";
 window.loggedIn = false;
-window.bio = "";
-window.status = "";
+window.leagueName = "";
+window.csgoName = "";
+window.apexName = "";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
