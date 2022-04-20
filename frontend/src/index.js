@@ -4,8 +4,10 @@ import App from "./reactRouter";
 import "bootstrap/dist/css/bootstrap.css";
 
 window.name = "";
-window.$email = "qhisklrj123@gmail.com";
+window.$email = "";
 window.loggedIn = false;
+window.bio = "";
+window.status = "";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
