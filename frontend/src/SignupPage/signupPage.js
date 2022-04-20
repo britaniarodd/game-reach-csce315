@@ -48,19 +48,14 @@ class SignupPage extends Component {
                 nickname: this.state.nickname,
                 email: this.state.email,
                 password: this.state.password,
-<<<<<<< HEAD
             })
             .then((result) => {
                 console.log(result);
             });
-=======
-            }),
-        });
-        console.log(accountJson);
-
+        
         window.name = this.state.nickname;
         window.email = this.state.email;
->>>>>>> b7ceeb378a143715b911e94bf7752c0719432834
+        window.loggedIn = true;
     }
 }
 

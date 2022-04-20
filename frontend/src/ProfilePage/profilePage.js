@@ -4,16 +4,26 @@ import "../shared.css";
 import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
 import Dropdown from './../SmallComponents/DropdownMenu/Dropdown';
+import axios from "axios";
+import { getBackendAddress} from "../backendrequest";
 
 function ProfilePage() {
-    //state = {};
+    
     //status stuff
     const [status, setStatus] = React.useState('Open');
 
-    const handleStatusChange = (event) =>{
+    /* const handleStatusChange = (event) =>{
         setStatus(event.target.value);
-    };
-    {
+    };*/
+   
+    axios.get(getBackendAddress() + "/users/get/by-email/test", {
+                
+            })
+            .then((result) => {
+                console.log(result);
+            });
+        
+    
         
         return (
         //<React.Fragment>
@@ -57,7 +67,7 @@ function ProfilePage() {
         </div>
         //</React.Fragment>
         );
-    }
+    
 
 }
 

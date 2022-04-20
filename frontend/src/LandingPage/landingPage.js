@@ -6,8 +6,9 @@ import landinglogo from "./Reach_logo.png";
 
 class LandingPage extends Component {
     state = {};
-
+    
     render() {
+        window.loggedIn = false;
         return (
             <div className="background">
                 <img className="landinglogo center" src={landinglogo}></img>

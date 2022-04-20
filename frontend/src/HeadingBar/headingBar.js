@@ -6,7 +6,7 @@ import headinglogo from "./Reach_heading_logo.png";
 
 
 class HeadingBar extends Component {
-    state = {};
+    state = {loggedIn: window.loggedIn};
     render() {
         return (
             <div className="headingBar">
@@ -18,12 +18,13 @@ class HeadingBar extends Component {
                 </a>
                 <a className="profilea" href="/profile">
                 <div className='profile'>
+                    {window.loggedIn &&
                     <Avatar 
                         name={window.name}
                         color={'#7F00FF'}
                         round={true}
                         size="70">
-                    </Avatar>
+                    </Avatar> }
                 </div>
                 </a>
             </div>
