@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 const { Pool } = require("pg");
+require('dotenv').config();
 
 var usersRouter = require("./routes/usersEndpoints");
 var leagueRouter = require("./routes/leagueEndpoints");
