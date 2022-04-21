@@ -3,11 +3,8 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 import "../shared.css";
 import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
-import Dropdown from './../SmallComponents/DropdownMenu/Dropdown';
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
-
-
 
  function ProfilePage() {
 

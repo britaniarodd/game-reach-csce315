@@ -1,0 +1,10 @@
+.filters {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.filter {
+    width: 20%;
+    margin-left: 2rem;
+}

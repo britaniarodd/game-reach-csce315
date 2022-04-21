@@ -1,0 +1,332 @@
+/*
+import * as React from "react";
+import axios from "axios";
+import "../shared.css";
+import "./viewConnectionsPage.css";
+import NavigationBar from "../../NavigationBar/navBar";
+import Players from "./players";
+import Info from "./info";
+import Dropdown from "../../SmallComponents/DropdownMenu/Dropdown";
+import { getBackendAddress } from "../../backendrequest";
+
+function ViewConnections() {
+    var numConnections = Players.length;
+
+    //status stuff
+    const [status, setStatus] = React.useState("All Statuses");
+
+    //game stuff
+    const [game, setGame] = React.useState("All Games");
+
+    //rank stuff
+    const [rank, setRank] = React.useState("All Ranks");
+
+    const handleStatusChange = (event) => {
+        setStatus(event.target.value);
+    };
+
+    const handleGameChange = (event) => {
+        setGame(event.target.value);
+        //below resests ranks everytime you change the game
+        setRank("All Ranks");
+    };
+
+    const handleRankChange = (event) => {
+        setRank(event.target.value);
+    };
+
+    //functions for filtering
+
+    /*
+    //filters for status, then game
+    function filterStatus(status){
+        const status_filtered_array = Players.filter((e) => {
+            if (status === 'All Statuses'){
+                return Players;
+            }
+            else if (status === 'Open'){
+                return e.status === 'Open';
+            }
+            else if (status === 'Closed'){
+                return e.status === 'Closed';
+            }
+            else if (status === 'Mentor'){
+                return e.status === 'Mentor';
+            }
+        }
+        )
+        return status_filtered_array;
+    }
+
+    function filterGame(game, newArray){
+        const game_filtered_array = newArray.filter((e) => {
+            if (game === 'All Games'){
+                return newArray;
+            }
+            else if (game === 'LoL'){
+                return e.game === 'LoL';
+            }
+            else if (game === 'Apex Legends'){
+                return e.game === 'Apex Legends';
+            }
+            else if (game === 'Smite'){
+                return e.game === 'Smite';
+            }
+        }
+        )
+        
+        return game_filtered_array;
+    }
+    
+    function filterRank(game, rank, newArray){
+        const rank_filtered_array = newArray.filter((e) => {
+            if (rank === 'All Ranks' || game === 'All Games'){ //if all games is chosen, dont display rank
+                //if all ranks is chosen, just display newArray
+                return newArray;
+            }
+            else if (game === 'LoL'){ //if game is LoL, filter amongst ranks in LoL
+                if (rank === 'Iron'){
+                    return e.rank === 'Iron';
+                }
+                else if (rank === 'Bronze'){
+                    return e.rank === 'Bronze';
+                }
+                else if (rank === 'Silver'){
+                    return e.rank === 'Silver';
+                }
+                else if (rank === 'Gold'){
+                    return e.rank === 'Gold';
+                }
+                else if (rank === 'Platinum'){
+                    return e.rank === 'Platinum';
+                }
+                else if (rank === 'Diamond'){
+                    return e.rank === 'Diamond';
+                }
+                else if (rank === 'Master'){
+                    return e.rank === 'Master';
+                }
+                else if (rank === 'Grandmaster'){
+                    return e.rank === 'Grandmaster';
+                }
+                else if (rank === 'Challenger'){
+                    return e.rank === 'Challenger';
+                }
+
+            }
+            else if (game === 'Apex Legends'){ //if game is CS:GO , filter amongst ranks in CS:GO
+                if (rank === 'Bronze'){
+                    return e.rank === 'Bronze';
+                }
+                else if (rank === 'Silver'){
+                    return e.rank === 'Silver';
+                }
+                else if (rank === 'Gold'){
+                    return e.rank === 'Gold';
+                }
+                else if (rank === 'Platinum'){
+                    return e.rank === 'Platinum';
+                }
+                else if (rank === 'Diamond'){
+                    return e.rank === 'Diamond';
+                }
+                else if (rank === 'Master'){
+                    return e.rank === 'Master';
+                }
+                else if (rank === 'Apex Predator'){
+                    return e.rank === 'Apex Predator';
+                }
+            }
+            else if (game === 'Smite'){ //if game is LoL, filter amongst ranks in LoL
+                if (rank === 'Bronze'){
+                    return e.rank === 'Bronze';
+                }
+                else if (rank === 'Silver'){
+                    return e.rank === 'Silver';
+                }
+                else if (rank === 'Gold'){
+                    return e.rank === 'Gold';
+                }
+                else if (rank === 'Platinum'){
+                    return e.rank === 'Platinum';
+                }
+                else if (rank === 'Diamond'){
+                    return e.rank === 'Diamond';
+                }
+                else if (rank === 'Master'){
+                    return e.rank === 'Master';
+                }
+                else if (rank === 'Grandmaster'){
+                    return e.rank === 'Grandmaster';
+                }
+            }
+
+        }
+        )
+        numConnections = rank_filtered_array.length;
+        return rank_filtered_array;
+    }
+
+
+
+    //the actual filtering
+
+    //gets new Status array
+    const statusArray = filterStatus(status);
+    //now we have our designated status, lets filter new games
+    const status_gameArray = filterGame(game, statusArray);
+    //now we have our game and status, lets filter rank
+    const status_game_rankArray = filterRank(game, rank, status_gameArray);
+
+    //when we switch games, the rank should reset.
+    */
+/*
+    //conditional rendering dropdown for game rank
+    function DisplayGameDropdown({ game }) {
+        if (game === "LoL") {
+            return (
+                <Dropdown
+                    label="Select Rank: "
+                    options={[
+                        { label: "All Ranks", value: "All Ranks" },
+                        { label: "Iron", value: "Iron" },
+                        { label: "Bronze", value: "Bronze" },
+                        { label: "Silver", value: "Silver" },
+                        { label: "Gold", value: "Gold" },
+                        { label: "Platinum", value: "Platinum" },
+                        { label: "Diamond", value: "Diamond" },
+                        { label: "Master", value: "Master" },
+                        { label: "Grandmaster", value: "Grandmaster" },
+                        { label: "Challenger", value: "Challenger" },
+                    ]}
+                    value={rank}
+                    onChange={handleRankChange}
+                />
+            );
+        } else if (game === "Apex Legends") {
+            return (
+                <Dropdown
+                    label="Select Rank: "
+                    options={[
+                        { label: "All Ranks", value: "All Ranks" },
+                        { label: "Bronze", value: "Bronze" },
+                        { label: "Silver", value: "Silver" },
+                        { label: "Gold", value: "Gold" },
+                        { label: "Platinum", value: "Platinum" },
+                        { label: "Diamond", value: "Diamond" },
+                        { label: "Master", value: "Master" },
+                        { label: "Apex Predator", value: "Apex Predator" },
+                    ]}
+                    value={rank}
+                    onChange={handleRankChange}
+                />
+            );
+        } else if (game === "Smite") {
+            return (
+                <Dropdown
+                    label="Select Rank: "
+                    options={[
+                        { label: "All Ranks", value: "All Ranks" },
+                        { label: "Bronze", value: "Bronze" },
+                        { label: "Silver", value: "Silver" },
+                        { label: "Gold", value: "Gold" },
+                        { label: "Platinum", value: "Platinum" },
+                        { label: "Diamond", value: "Diamond" },
+                        { label: "Master", value: "Master" },
+                        { label: "Grandmaster", value: "Grandmaster" },
+                    ]}
+                    value={rank}
+                    onChange={handleRankChange}
+                />
+            );
+        }
+    }
+
+    function getFilteredUsers() {
+        axios
+            .get(getBackendAddress() + "/filterusers/get/league", {
+                params: { rank: "CHALLENGER", status: "open to connections" },
+            })
+            .then((result) => console.log(result));
+    }
+
+    return (
+        //get size of array
+
+        <React.Fragment>
+            <NavigationBar />
+
+            <div className="background">
+                <div style={{ margin: "0px" }}>
+                    <br />
+                    <h1 className="title"> View Connections </h1>
+                    <br />
+                    {/* status dropdown *//*}
+                    <Dropdown
+                        label="Select Status: "
+                        options={[
+                            { label: "All Statuses", value: "All Statuses" },
+                            { label: "Open", value: "Open" },
+                            { label: "Closed", value: "Closed" },
+                            { label: "Mentor", value: "Mentor" },
+                        ]}
+                        value={status}
+                        onChange={handleStatusChange}
+                    />
+                    {/* <p>You selected {status}</p>}
+                    {/* game dropdown *//*}
+                    <Dropdown
+                        label="Select Game: "
+                        options={[
+                            { label: "All Games", value: "All Games" },
+                            { label: "LoL", value: "LoL" },
+                            { label: "Apex Legends", value: "Apex Legends" },
+                            { label: "Smite", value: "Smite" },
+                        ]}
+                        value={game}
+                        onChange={handleGameChange}
+                    />
+                    <DisplayGameDropdown game={game} />
+                    {/* <p>you selected {rank}</p>
+                <p>you selected {game}</p> }
+                    {/* search bar *//*}
+
+                    <br />
+                    <h4> Displaying {numConnections} connections</h4>
+
+                    {/* display the profiles *//*}
+                    {status_game_rankArray.map((e) => {
+                        return (
+                            <Info
+                                name={e.name}
+                                game={e.game}
+                                rank={e.rank}
+                                status={e.status}
+                                bio={e.bio}
+                            />
+                        );
+                    })}
+                    <br />
+                </div>
+            </div>
+        </React.Fragment>
+    );
+}
+export default ViewConnections;
+//completed: dropdown bar for status
+//next: dropdown bar for game
+//next: search player function
+//sort by game
+//sort by game and status
+
+//files edited: viewConnections.js, viewConnections.css, Dropdown.js, players.js, dropdown.css
+
+//implement rank
+
+//three for loops (map function), each its own filter
+
+//files edited
+//viewconnections.js
+//info.js
+//players.js
+*/
