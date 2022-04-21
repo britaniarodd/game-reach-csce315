@@ -14,9 +14,7 @@ export default function App() {
     return (
         <Router>
             <HeadingBar />
-            
             <Routes>
-                <Route path="/" element={<LandingPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
@@ -24,6 +22,7 @@ export default function App() {
                 <Route path="/findConnections" element={<FindConnections />} />
                 <Route path="/leaguestats" element={<LeagueStatsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/" element={<LandingPage />} />
             </Routes>
         </Router>
     );

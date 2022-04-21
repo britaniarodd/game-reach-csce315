@@ -1,53 +1,52 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./loginPage.css";
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
 import { useNavigate } from 'react-router-dom';
 
-class LoginPage extends Component {
-    state = { errorMessage: "" };
+export default function LoginPage(props) {
 
-    updateEmail = (e) => {
-        this.setState({ email: e.target.value });
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+
+    function updateEmail(e) {
+        setEmail(e.target.value);
     };
 
-    updatePassword = (e) => {
-        this.setState({ password: e.target.value });
+    function updatePassword(e) {
+        setPassword(e.target.value);
     };
 
-    loginClicked = (e) => {
+    function loginClicked(e) {
         axios
             .post(getBackendAddress() + "/users/login", {
-                email: this.state.email,
-                password: this.state.password,
+                email: email,
+                password: password,
             })
             .then((result) => {
                 console.log(result);
                 window.user_id = result.data.user_id;
                 window.email = result.data.email;
-                console.log(this.props);
-                this.props.navigation.navigate('/dashboard');
+                navigate("/dashboard");
                 console.log("tried to naviagte");
             })
             .catch((err) => {
                 if(err.response && err.response.status === 400) {
-                    this.setState({ errorMessage: "Email or password incorrect" });
+                    setErrorMessage("Email or password incorrect");
                 }
             });
     }
 
-    render() {
-        return (
-            <div className="background center">
-                <p>{this.state.errorMessage}</p>
-                <p className="emailtext">Email</p>
-                <input type="email" onChange={this.updateEmail}></input>
-                <p>Password</p>
-                <input type="password" onChange={this.updatePassword}></input>
-                <button className="signupbutton center" onClick={this.loginClicked}>Login</button>
-            </div>
-        );
-    }
+    return (
+        <div className="background center">
+            <p className="emailtext">Email</p>
+            <input type="email" onChange={updateEmail}></input>
+            <p>Password</p>
+            <input type="password" onChange={updatePassword}></input>
+            <button className="signupbutton center" onClick={loginClicked}>Login</button>
+            <p>{errorMessage}</p>
+        </div>
+    );
 }
-
-export default LoginPage;
