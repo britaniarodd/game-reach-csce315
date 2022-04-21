@@ -30,12 +30,10 @@ class SignupPage extends Component {
 
     updateNickname = (e) => {
         this.setState({ nickname: e.target.value });
-        window.name = { nickname: e.target.value };
     };
 
     updateEmail = (e) => {
         this.setState({ email: e.target.value });
-        window.email = { email: e.target.value };
     };
 
     updatePassword = (e) => {
@@ -51,12 +49,9 @@ class SignupPage extends Component {
             })
             .then((result) => {
                 console.log(result);
+                window.user_id = result.data.user_id;
+                window.email = result.data.email;
             });
-
-            axios.get(getBackendAddress() + "/filterusers/get/league", { params: {rank: "CHALLENGER", status: "open to connections"} }).then(result => console.log(result));
-
-        window.name = this.state.nickname;
-        window.email = this.state.email;
     }
 }
 
