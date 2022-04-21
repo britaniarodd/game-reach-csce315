@@ -32,7 +32,7 @@ import { getBackendAddress} from "../backendrequest";
     //state= {showForm: false}
     
 
-    function showForm(user) {
+    function showProfileForm(user) {
 
     
         return (
@@ -76,13 +76,13 @@ import { getBackendAddress} from "../backendrequest";
             
             <form id="set-tags" >
               <label >Leage of Legends: </label>
-              <input type="text" value={user.nickname}/>
+              <input type="text" value={window.leagueName}/>
     
               <label>CSGO: </label>
-              <input type="text" value={user.email}/>
+              <input type="text" value={window.csgoName}/>
 
               <label>Smite: </label>
-              <input type="text" value={user.email}/>
+              <input type="text" value={window.apexName}/>
               
               <button>Save</button>
             </form>
@@ -114,10 +114,11 @@ import { getBackendAddress} from "../backendrequest";
                    <button onClick={() => {
                       setform(true)
                     }}> Edit User Profile </button>
-                   {form ? showForm(user) : null}
+                   {form ? showProfileForm(user) : null}
                    <br/>
                    <br/>
                    <button> Set Gamer Tags</button>
+                   {leagueTag ? showForm(user) : null}
                    <br/>
                    <br/>                  
                    
