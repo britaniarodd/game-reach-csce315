@@ -3,7 +3,6 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 import "../shared.css";
 import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
-//import Dropdown from './../SmallComponents/DropdownMenu/Dropdown';
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
 
@@ -14,7 +13,8 @@ import { getBackendAddress} from "../backendrequest";
     //const [userUpdate, updateUser] = React.useState(null);
     const [user, setuser] = React.useState(null);
     const [form, setform] = React.useState(null);
-    const [leagueTag, setLeagueTags] = React.useState(null);
+    const [tag, setTags] = React.useState(null);
+    const [leagueName, setLeagueName] = React.useState(null);
    
     React.useEffect(() => {
         axios.get(getBackendAddress() + "/users/get/by-email/" + window.email).then((response) => {
@@ -22,18 +22,19 @@ import { getBackendAddress} from "../backendrequest";
           
           console.log(response.data);
         });
-        axios.get(getBackendAddress() + "/league/get/by-email/" + window.email).then((response) => {
-            setLeagueTags(response.data);
-            console.log(response.data);
-        });
+        axios.get(getBackendAddress() + "/league/get/by-email/" + window.email).then((res) => {
+
+            setLeagueName(res.data.gamename);
+            console.log(window.email, ": ", res.data.gamename);
+        }); //handle error for no existing entry for league name
         
       }, []);
     
     if (!user) return null;
+     
     window.name = user.nickname;
-    console.log("user information: ", user);
-    console.log("league tag: ", leagueTag);
-    //state= {showForm: false}
+    console.log("user information: ", user, leagueName);
+
     
     var open = false;
     var close = false;
@@ -58,9 +59,9 @@ import { getBackendAddress} from "../backendrequest";
               
               <select id="status">
                 <option value="none">{user.status.toUpperCase()}</option>
-                <option value="OPEN TO CONNECTIONS">OPEN TO CONNECTIONS</option>
-                <option value="CLOSED TO CONNECTIONS">CLOSED TO CONNECTIONS</option>
-                <option value="MENTOR">OPEN TO MENTORING</option>
+                <option value="Open to Connection">OPEN TO CONNECTIONS</option>
+                <option value="Closed to Connections">CLOSED TO CONNECTIONS</option>
+                <option value="Open to Mentoring">OPEN TO MENTORING</option>
               </select>
 
               <label>Bio: </label>
@@ -83,9 +84,9 @@ import { getBackendAddress} from "../backendrequest";
             
             <form id="set-tags" >
               <label >Leage of Legends: </label>
-              <input type="text" value={window.leagueName}/>
+              <input type="text" value={leagueName}/>
     
-              <label>CSGO: </label>
+              <label>Apex Legends: </label>
               <input type="text" value={window.csgoName}/>
 
               <label>Smite: </label>
@@ -125,9 +126,9 @@ import { getBackendAddress} from "../backendrequest";
                    <br/>
                    <br/>
                    <button onClick={() => {
-                      setLeagueTags(true)
+                      setTags(true)
                     }}> Set Gamer Tags</button>
-                   {leagueTag ? showForm(user) : null}
+                   {tag ? showForm(user) : null}
                    <br/>
                    <br/>                  
                    

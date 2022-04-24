@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./reactRouter";
 import "bootstrap/dist/css/bootstrap.css";
 
-window.name = "keyboarcat";
-window.email = "nya@gmail.com";
+window.name = "bobpie";
+window.email = "bobberpie@gmail.com";
 window.loggedIn = false;
 window.leagueName = "";
 window.csgoName = "";
