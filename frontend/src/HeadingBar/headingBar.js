@@ -6,8 +6,18 @@ import headinglogo from "./Reach_heading_logo.png";
 
 
 class HeadingBar extends Component {
-    state = {loggedIn: window.loggedIn};
+    state = {loggedIn: sessionStorage.getItem("loggedIn")};
     render() {
+        function showAvatar() {
+            if (sessionStorage.getItem("loggedIn")) {
+            return (<Avatar 
+                        name={sessionStorage.getItem("nickname")}
+                        color={'#7F00FF'}
+                        round={true}
+                        size="70">
+                    </Avatar>);
+            }
+        }
         return (
             <div className="headingBar">
                 <a className="cornera" href="/">
@@ -18,13 +28,7 @@ class HeadingBar extends Component {
                 </a>
                 <a className="profilea" href="/profile">
                 <div className='profile'>
-                    {window.loggedIn &&
-                    <Avatar 
-                        name={window.name}
-                        color={'#7F00FF'}
-                        round={true}
-                        size="70">
-                    </Avatar> }
+                    {sessionStorage.getItem("loggedIn") ? showAvatar() : null}
                 </div>
                 </a>
             </div>

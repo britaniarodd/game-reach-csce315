@@ -1,47 +1,58 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./loginPage.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import { backendrequest, getBackendAddress } from "../backendrequest";
+import { getBackendAddress} from "../backendrequest";
+import { useNavigate } from 'react-router-dom';
 
-class LoginPage extends Component {
-    state = {email: "", nickname: ""};
-    
-    render() {
-        return (
-            <div className="background center">
-                <p className="emailtext">Email</p>
-                <input type="email" onChange={this.updateEmail} ></input>
-                <p>Password</p>
-                <input type="password"></input>
-                <Link className="noblueunderlinelink" to="/dashboard"><button className="signupbutton center"  onClick={this.signUpClicked.bind(this)}>Login</button></Link>
-            </div>
-        );
-    }
-    updateEmail = (e) => {
-        this.setState({ email: e.target.value });
-        window.email = e.target.value;
-        
-        console.log(window.email);
+
+export default function LoginPage(props) {
+    sessionStorage.setItem("loggedIn", false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+
+    function updateEmail(e) {
+        setEmail(e.target.value);
     };
-    async signUpClicked() {
+
+    function updatePassword(e) {
+        setPassword(e.target.value);
+    };
+
+    function loginClicked(e) {
         axios
-            .get(getBackendAddress() + "/users/get/by-email/" + window.email)
+            .post(getBackendAddress() + "/users/login", {
+                email: email,
+                password: password,
+            })
             .then((result) => {
-                window.name = result.data.nickname;
                 console.log(result);
-                this.setState({ nickname: result.data.nickname});
-                console.log(this.state.nickname);
-
+                sessionStorage.setItem("user_id",result.data.user_id);
+                sessionStorage.setItem("email", result.data.email);
+                sessionStorage.setItem("nickname", result.data.nickname);
+                sessionStorage.setItem("loggedIn", true);
+                navigate("/dashboard");
+                console.log("tried to naviagte");
+                console.log("User ID: ", sessionStorage.getItem("user_id"));
+                console.log("Email: ", sessionStorage.getItem("email"));
+                console.log("LoggedIn: ", sessionStorage.getItem("loggedIn"));
+            })
+            .catch((err) => {
+                if(err.response && err.response.status === 400) {
+                    setErrorMessage("Email or password incorrect");
+                }
             });
-            
-            axios.get(getBackendAddress() + "/filterusers/get/league", { params: {rank: "CHALLENGER", status: "open to connections"} }).then(result => console.log(result));
-
-        //window.name = this.state.nickname;
-        console.log(window.name);
-        //window.email = this.state.email;
     }
+
+    return (
+        <div className="background center">
+            <p className="emailtext">Email</p>
+            <input type="email" onChange={updateEmail}></input>
+            <p>Password</p>
+            <input type="password" onChange={updatePassword}></input>
+            <button className="signupbutton center" onClick={loginClicked}>Login</button>
+            <p>{errorMessage}</p>
+        </div>
+    );
 }
-
-
-export default LoginPage;

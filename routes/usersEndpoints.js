@@ -23,8 +23,8 @@ router.post("/create", function (req, res, next) {
 
         const pgpool = req.app.get("pgpool");
         pgpool.query(
-            "INSERT INTO users (email, status, bio, nickname, passwordhash) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, email, status, bio, nickname",
-            [email, "open to connections", "Bio", nickname, hash],
+            "INSERT INTO users (email, status, bio, nickname, passwordhash, discord) VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id, email, status, bio, nickname, discord",
+            [email, "open to connections", "Bio", nickname, hash, ""],
             (poolerr, poolres) => {
                 if (poolerr) {
                     console.log(poolerr);
@@ -37,35 +37,47 @@ router.post("/create", function (req, res, next) {
     });
 });
 
-router.post("/login", function(req, res, next) {
+router.post("/login", function (req, res, next) {
     const { email, password } = req.body;
     const pgpool = req.app.get("pgpool");
-    pgpool.query("SELECT * FROM users WHERE email=$1", [email], (poolerr, poolres) => {
-        if(poolerr) {
-            console.log(poolerr);
-            res.status(400).send("PSQL Error");
-            return;
+    pgpool.query(
+        "SELECT * FROM users WHERE email=$1",
+        [email],
+        (poolerr, poolres) => {
+            if (poolerr) {
+                console.log(poolerr);
+                res.status(400).send("PSQL Error");
+                return;
+            }
+            const user = poolres.rows[0];
+            if (user != null) {
+                bcrypt.compare(
+                    password,
+                    user.passwordhash,
+                    (bCryptErr, bCryptRes) => {
+                        if (bCryptErr) {
+                            console.log(bCryptErr);
+                            res.status(400).send("bCrypt Error");
+                            return;
+                        }
+                        if (bCryptRes) {
+                            res.json({
+                                user_id: user.user_id,
+                                email: user.email,
+                                status: user.status,
+                                bio: user.bio,
+                                nickname: user.nickname,
+                            });
+                        } else {
+                            res.status(400).send("Wrong password");
+                        }
+                    }
+                );
+            } else {
+                res.status(400).send("Username not found");
+            }
         }
-        const user = poolres.rows[0];
-        if(user != null) {
-            bcrypt.compare(password, user.passwordhash, (bCryptErr, bCryptRes) => {
-                if(bCryptErr) {
-                    console.log(bCryptErr);
-                    res.status(400).send("bCrypt Error");
-                    return;
-                }
-                if (bCryptRes) {
-                    res.json( { email: user.email, status: user.status, bio: user.bio, nickname: user.nickname } );
-                }
-                else {
-                    res.status(400).send("Wrong password");
-                }
-            });
-        }
-        else {
-            res.status(400).send("Username not found");
-        }
-    });
+    );
 });
 
 router.get("/get/by-email/:email", async function (req, res, next) {
@@ -86,11 +98,11 @@ router.get("/get/by-email/:email", async function (req, res, next) {
 });
 
 router.patch("/update", function (req, res, next) {
-    const { user_id, status, bio, nickname } = req.body;
+    const { user_id, status, bio, nickname, discord } = req.body;
     const pgpool = req.app.get("pgpool");
     pgpool.query(
-        "UPDATE users SET status=$1, bio=$2, nickname=$3 WHERE user_id=$4 RETURNING user_id, email, status, bio, nickname",
-        [status, bio, nickname, user_id],
+        "UPDATE users SET status=$1, bio=$2, nickname=$3, discord=$4 WHERE user_id=$5 RETURNING user_id, email, status, bio, nickname, discord",
+        [status, bio, nickname, discord, user_id],
         (poolerr, poolres) => {
             if (poolerr) {
                 console.log(poolerr);

@@ -8,7 +8,11 @@ class LandingPage extends Component {
     state = {};
     
     render() {
-        window.loggedIn = false;
+        sessionStorage.setItem("loggedIn", false);
+        sessionStorage.setItem("email", "");
+        sessionStorage.setItem("nickname", "");
+        sessionStorage.setItem("user_id", "");
+        console.log(sessionStorage.getItem("loggedIn"));
         return (
             <div className="background">
                 <img className="landinglogo center" src={landinglogo}></img>

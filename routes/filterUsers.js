@@ -1,6 +1,6 @@
 async function filter(pgpool, game, status, rank) {
     const results = await pgpool.query(
-        "SELECT email, status, bio, nickname, rank, gamename FROM (SELECT * FROM (SELECT * FROM users WHERE status LIKE $1) AS statusfiltered INNER JOIN " +
+        "SELECT email, status, bio, discord, nickname, rank, gamename FROM (SELECT * FROM (SELECT * FROM users WHERE status LIKE $1) AS statusfiltered INNER JOIN " +
             game +
             " ON statusfiltered.user_id=" +
             game +

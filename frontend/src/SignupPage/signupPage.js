@@ -1,63 +1,65 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
-import { backendrequest, getBackendAddress } from "../backendrequest";
+import { useNavigate } from 'react-router-dom';
+import { getBackendAddress } from "../backendrequest";
 import "../shared.css";
 import "./signupPage.css";
 
-class SignupPage extends Component {
-    state = { nickname: "", email: "", password: "" };
-    render() {
-        return (
-            <div className="background center">
-                <p className="usernametext">Username</p>
-                <input type="text" onChange={this.updateNickname}></input>
-                <p>Email</p>
-                <input type="email" onChange={this.updateEmail}></input>
-                <p>Password</p>
-                <input type="password" onChange={this.updatePassword}></input>
-                <Link className="noblueunderlinelink" to="/dashboard">
-                    <button
-                        className="signupbutton center"
-                        onClick={this.signUpClicked.bind(this)}
-                    >
-                        Sign Up
-                    </button>
-                </Link>
-            </div>
-        );
-    }
+export default function SignupPage(props) {
+    const [nickname, setNickname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
-    updateNickname = (e) => {
-        this.setState({ nickname: e.target.value });
-        window.name = { nickname: e.target.value };
+    const navigate = useNavigate();
+
+    function updateNickname(e) {
+        setNickname(e.target.value);
     };
 
-    updateEmail = (e) => {
-        this.setState({ email: e.target.value });
-        window.email = { email: e.target.value };
+    function updateEmail(e) {
+        setEmail(e.target.value);
     };
 
-    updatePassword = (e) => {
-        this.setState({ password: e.target.value });
+    function updatePassword(e) {
+        setPassword(e.target.value);
     };
 
-    async signUpClicked() {
+    function signUpClicked(e) {
         axios
             .post(getBackendAddress() + "/users/create", {
-                nickname: this.state.nickname,
-                email: this.state.email,
-                password: this.state.password,
+                nickname: nickname,
+                email: email,
+                password: password,
             })
             .then((result) => {
                 console.log(result);
+                window.user_id = result.data.user_id;
+                window.email = result.data.email;
+                navigate("/dashboard");
+            })
+            .catch((err) => {
+                if(err.response && err.response.status === 400) {
+                    setErrorMessage("That email is taken");
+                }
             });
-            
-            axios.get(getBackendAddress() + "/filterusers/get/league", { params: {rank: "CHALLENGER", status: "open to connections"} }).then(result => console.log(result));
-
-        window.name = this.state.nickname;
-        window.email = this.state.email;
     }
-}
 
-export default SignupPage;
+    return (
+        <div className="background center">
+            <p className="usernametext">Username</p>
+            <input type="text" onChange={updateNickname}></input>
+            <p>Email</p>
+            <input type="email" onChange={updateEmail}></input>
+            <p>Password</p>
+            <input type="password" onChange={updatePassword}></input>
+            <button
+                className="signupbutton center"
+                onClick={signUpClicked}
+            >
+                Sign Up
+            </button>
+            <p>{errorMessage}</p>
+        </div>
+    );   
+}

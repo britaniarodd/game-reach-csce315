@@ -8,11 +8,12 @@ class DashboardPage extends Component {
     state = {};
     
     render() {
+        sessionStorage.setItem("loggedIn", true);
         return (
             <React.Fragment>
             <NavigationBar />
             <div className="background">
-            <h1>Welcome, {window.name}!</h1>
+            <h1>Welcome, {sessionStorage.getItem("nickname")}!</h1>
             <br/>
             <h3>Select "View Stats" for a game below:</h3>
             <div className="row">
