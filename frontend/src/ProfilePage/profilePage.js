@@ -21,8 +21,9 @@ import { getBackendAddress} from "../backendrequest";
     const [leagueName, setLeagueName] = React.useState("");
     const [newLeagueName, leagueUpdate] = React.useState("");
     const [leagueRank, setleagueRank] = React.useState("");
-    const [pugbName, setPUGBName] = React.useState("");
+    const [pugbName, setPUBGName] = React.useState("");
     const [newPUBGName, pubgUpdate] = React.useState("");
+    const [pubgRank, setpubgRank] = React.useState("");
    
 
     React.useEffect(() => {
@@ -35,6 +36,7 @@ import { getBackendAddress} from "../backendrequest";
           discordUpdate(response.data.discord);
           console.log("User Info: ", response.data);
         });
+
         axios.get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
 
             setLeagueName(res.data.gamename);
@@ -46,8 +48,21 @@ import { getBackendAddress} from "../backendrequest";
               setLeagueName("");
               console.log("New Leagename found")
           }
-      }); //handle error for no existing entry for league name
+        }); //handle error for no existing entry for league name
         
+        axios.get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+
+          setPUBGName(res.data.gamename);
+          pubgUpdate(res.data.gamename);
+          setpubgRank(res.data.rank);
+          console.log("Pubg Name: ", res.data);
+        }).catch((err) => {
+          if(err.response && err.response.status === 400) {
+              setPUBGName("");
+              console.log("New PUBG found")
+          }
+        });
+
       }, []);
     
     if (!user) return null;
@@ -123,19 +138,48 @@ import { getBackendAddress} from "../backendrequest";
     function showForm() {
 
       function saveGameNames(e) {
+      
         console.log(sessionStorage.getItem("user_id"));
+        if(leagueName != null) {
+          axios
+          .patch(getBackendAddress() + "/league/update", {
+              user_id: sessionStorage.getItem("user_id"),
+              game: "leagueoflegends",
+              rank: leagueRank,
+              gamename: newLeagueName
+          }).then(result => console.log(result));
+        } else {
+          axios
+          .post(getBackendAddress() + "/league/create", {
+              user_id: sessionStorage.getItem("user_id"),
+              game: "leagueoflegends",
+              rank: "",
+              gamename: newLeagueName
+          }).then(result => console.log("Create: ", result));
+        }
         
-        axios
-        .patch(getBackendAddress() + "/league/update", {
-            user_id: sessionStorage.getItem("user_id"),
-            game: "leagueoflegends",
-            rank: leagueRank,
-            gamename: newLeagueName
-        }).then(result => console.log(result));
+        if(pugbName != null) { 
+          axios
+          .patch(getBackendAddress() + "/pubg/update", {
+              user_id: sessionStorage.getItem("user_id"),
+              game: "pubg",
+              rank: pubgRank,
+              gamename: newPUBGName
+          }).then(result => console.log("Update:", result));
+        } else {
+          axios
+          .post(getBackendAddress() + "/pubg/create", {
+              user_id: sessionStorage.getItem("user_id"),
+              game: "pubg",
+              rank: "",
+              gamename: newPUBGName
+          }).then(result => console.log("Create: ", result));
+        }
         
         setTags(false);
         
         setLeagueName(newLeagueName);
+        setPUBGName(newPUBGName);
         return;
       };
 
@@ -201,13 +245,13 @@ import { getBackendAddress} from "../backendrequest";
                    <br/>
                    <br/>
                    <button onClick={() => {
-                      setform(true)
+                      form ? setform(false) : setform(true)
                     }}> Edit User Profile </button>
                    {form ? showProfileForm(user) : null}
                    <br/>
                    <br/>
                    <button onClick={() => {
-                      setTags(true)
+                      tag ? setTags(false) : setTags(true)
                     }}> Set Gamer Tags</button>
                    {tag ? showForm() : null}
                    <br/>
