@@ -8,9 +8,7 @@ import { getBackendAddress} from "../backendrequest";
 
 
 
- function ProfilePage() {
-   
-   
+ function ProfilePage() { 
     const [user, setuser] = React.useState(null);
     const [nickname, nicknameUpdate] = React.useState("");
     const [status, statusUpdate] = React.useState("");
@@ -151,7 +149,7 @@ import { getBackendAddress} from "../backendrequest";
         );
     };
 
-    //-------------------- Setting/Saving Gamer Names ----------------------------/
+    //-------------------- Setting/Saving Gamer Names ----------------------------//
     function showForm() {
 
       function saveGameNames(e) {
@@ -255,7 +253,11 @@ import { getBackendAddress} from "../backendrequest";
           </div>
         );
     };
-    
+
+    //-------------------- Delete Profile ----------------------------/
+    function deleteAccount() {
+
+    }
     return (
        <React.Fragment>
        <NavigationBar />
@@ -273,13 +275,16 @@ import { getBackendAddress} from "../backendrequest";
                    <h3 className='des'>{user.status}</h3>
                    <h4 className="des"> Discord: {user.discord}</h4>
                    
+                   <div className="deleteAccount">
+                   <button className="button-3" onClick={deleteAccount}> Delete Account </button> </div>
+
                    </div>
                    <div className="description-box">
                        <h5>{user.bio}</h5>
                    </div>
                    <br/>
                    <div className="editProfile">
-                   <button onClick={() => {
+                   <button className="button-3" onClick={() => {
                       form ? setform(false) : setform(true)
                     }}> Edit User Profile </button> </div>
                    {form ? showProfileForm(user) : null}
@@ -297,7 +302,7 @@ import { getBackendAddress} from "../backendrequest";
                    
                    <br/>
                    <div className="editProfile">
-                   <button onClick={() => {
+                   <button className="button-3" onClick={() => {
                       tag ? setTags(false) : setTags(true)
                     }}> Set Gamer Tags</button> </div>
                    {tag ? showForm() : null}
@@ -308,7 +313,7 @@ import { getBackendAddress} from "../backendrequest";
            </div>
        </div>
        </React.Fragment>
-       );
+    );
 }
 
 
