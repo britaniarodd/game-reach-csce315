@@ -5,10 +5,11 @@ import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
-
+import { useNavigate } from 'react-router-dom';
 
 
  function ProfilePage() { 
+    const navigate = useNavigate();
     const [user, setuser] = React.useState(null);
     const [nickname, nicknameUpdate] = React.useState("");
     const [status, statusUpdate] = React.useState("");
@@ -282,23 +283,26 @@ import { getBackendAddress} from "../backendrequest";
     };
 
     //-------------------- Delete Profile ----------------------------/
-    function deleteAccount() {
-      console.log(sessionStorage.getItem("user_id"));
-      axios.delete(getBackendAddress() + "/league/delete", {
+    async function deleteAccount() {
+      console.log(getBackendAddress(), sessionStorage.getItem("user_id"));
+      const del = await axios.delete(getBackendAddress() + "/users/delete", { data: {
         user_id: sessionStorage.getItem("user_id")
-        //game: "leagueoflegends
-      }).then((res) => {
-        
-        console.log(res);
+      }}).then((res) => {
+        console.log(res.data);
       }).catch((err) => {
         if(err.response && err.response.status === 400) {
-            console.log("No Leagename found")
+            console.log("No User found")
         }
       });
-      setLeagueName("");
-      leagueUpdate("");
-      setleagueRank("");
       sessionStorage.setItem("leagueName", "");
+      sessionStorage.setItem("pubgName", "");
+      sessionStorage.setItem("smiteName", "");
+      sessionStorage.setItem("user_id", "");
+      sessionStorage.setItem("email", "");
+      sessionStorage.setItem("nickname", "");
+      console.log(sessionStorage.getItem("user_id"));
+      alert("Account has been deleted.");
+      navigate("/");
     }
     return (
        <React.Fragment>

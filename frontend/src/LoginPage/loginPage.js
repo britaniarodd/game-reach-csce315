@@ -35,11 +35,11 @@ export default function LoginPage(props) {
                 sessionStorage.setItem("email", result.data.email);
                 sessionStorage.setItem("nickname", result.data.nickname);
                 sessionStorage.setItem("loggedIn", true);
-                navigate("/dashboard");
                 console.log("tried to naviagte");
                 console.log("User ID: ", sessionStorage.getItem("user_id"));
                 console.log("Email: ", sessionStorage.getItem("email"));
                 console.log("LoggedIn: ", sessionStorage.getItem("loggedIn"));
+                navigate("/dashboard");
             })
             .catch((err) => {
                 if(err.response && err.response.status === 400) {

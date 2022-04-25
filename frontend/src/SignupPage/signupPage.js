@@ -36,6 +36,7 @@ export default function SignupPage(props) {
                 console.log(result);
                 sessionStorage.setItem("user_id", result.data.user_id);
                 sessionStorage.setItem("email", result.data.email);
+                sessionStorage.setItem("nickname", result.data.nickname);
                 navigate("/dashboard");
             })
             .catch((err) => {

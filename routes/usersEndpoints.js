@@ -120,9 +120,9 @@ router.delete("/delete", async function (req, res, next) {
         const user_id = req.body.user_id;
         const pgpool = req.app.get("pgpool");
         await deleteGameInfo(pgpool, "leagueoflegends", user_id);
-        await deleteGameInfo(pgpool, "csgo", user_id);
+        await deleteGameInfo(pgpool, "pubg", user_id);
         await deleteGameInfo(pgpool, "smite", user_id);
-        await deleteConnections(pgpool, user_id);
+        //await deleteConnections(pgpool, user_id);
         await pgpool.query("DELETE FROM users WHERE user_id=$1", [user_id]);
         res.status(200).send("Deleted");
     } catch (err) {
