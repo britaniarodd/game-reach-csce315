@@ -90,6 +90,7 @@ router.get("/get/by-email/:email", async function (req, res, next) {
             status: userJson.status,
             bio: userJson.bio,
             nickname: userJson.nickname,
+            discord: userJson.discord
         });
     } catch (err) {
         console.log(err);

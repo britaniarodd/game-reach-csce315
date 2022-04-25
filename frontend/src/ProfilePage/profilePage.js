@@ -12,10 +12,10 @@ import { useNavigate } from 'react-router-dom';
    
    
     const [user, setuser] = React.useState(null);
-    const [nickname, nicknameUpdate] = React.useState(null);
-    const [status, statusUpdate] = React.useState(null);
-    const [bio, bioUpdate] = React.useState(null);
-    const [discord, discordUpdate] = React.useState(null);
+    const [nickname, nicknameUpdate] = React.useState("");
+    const [status, statusUpdate] = React.useState("");
+    const [bio, bioUpdate] = React.useState("");
+    const [discord, discordUpdate] = React.useState("");
     const [form, setform] = React.useState(null);
     const [tag, setTags] = React.useState(null);
     const [leagueName, setLeagueName] = React.useState(null);
@@ -52,18 +52,15 @@ import { useNavigate } from 'react-router-dom';
      function saveProfileInfo(e) {
         console.log(nickname);
         console.log(user, sessionStorage.getItem("user_id"));
-        try {
         axios
         .patch(getBackendAddress() + "/users/update", {
             user_id: sessionStorage.getItem("user_id"),
             status: status,
             bio: bio,
             nickname: nickname,
-            discord: ""
-        });
-        } catch {
-          console.log("sucks");
-        }
+            discord: discord
+        }).then(result => console.log(result));
+        
       setform(false);
       setuser({nickname: nickname, status: status, bio: bio, discord: discord});
       return;
@@ -154,7 +151,7 @@ import { useNavigate } from 'react-router-dom';
                    </Avatar>
                    <h2 className='name'>{user.nickname}</h2>
                    <h3 className='des'>{user.status}</h3>
-                   <h3 className="discord"> {user.discord}</h3>
+                   <h3 className="discord"> Discord: {user.discord}</h3>
                    
                    </div>
                    <div className="description-box">
