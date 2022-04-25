@@ -9,7 +9,7 @@ window.email = "test2";
 window.loggedIn = false;
 window.leagueName = "";
 window.csgoName = "";
-window.apexName = "";
+window.pubgName = "";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
