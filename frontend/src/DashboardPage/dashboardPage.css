@@ -1,13 +1,13 @@
 * {
     box-sizing: border-box;
   }
-.column {
+.column1 {
     float: left;
     width: 33.33%;
     border: 2px solid black;
     text-align: center;
   }
-.row {
+.row1 {
     padding-top: 40px;
     height: 100%;
 }
@@ -73,7 +73,7 @@ h2 {
     color: white;
 }
   
-  .column:hover .overlay {
+  .column1:hover .overlay {
     opacity: 0.6;
   }
 .text {

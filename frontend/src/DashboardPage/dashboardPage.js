@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "../shared.css";
 import "./dashboardPage.css";
 import NavigationBar from "./../NavigationBar/navBar";
@@ -6,6 +6,7 @@ import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
 
 function DashboardPage() {
+    sessionStorage.setItem("loggedIn", true);
     axios
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
             sessionStorage.setItem("leagueName", res.data.gamename);
@@ -45,11 +46,11 @@ function DashboardPage() {
             <React.Fragment>
             <NavigationBar />
             <div className="background">
-            <h1>Welcome, {sessionStorage.getItem("nickname")}!</h1>
+            <h1>  Welcome, {sessionStorage.getItem("nickname")}!</h1>
             <br/>
-            <h3>Select "View Stats" for a game below:</h3>
-            <div className="row">
-                <div className="column box--league center">
+            <h3>  Select "View Stats" for a game below:</h3>
+            <div className="row1">
+                <div className="column1 box--league center">
                     <div className="overlay">
                         <h2>League of Legends</h2>
                     </div>
@@ -61,7 +62,7 @@ function DashboardPage() {
                     </a>
                 </div>
             
-                <div className="column box--csgo">
+                <div className="column1 box--csgo">
                     <div className="overlay">
                         <h2>PUBG</h2>
                     </div>
@@ -73,7 +74,7 @@ function DashboardPage() {
                 </div>
                 
 
-                <div className="column box--smite center">
+                <div className="column1 box--smite center">
                     <div className="overlay text">
                         <h2>SMITE</h2>
                     </div>

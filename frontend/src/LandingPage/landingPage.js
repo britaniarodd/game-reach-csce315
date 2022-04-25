@@ -12,7 +12,7 @@ class LandingPage extends Component {
         sessionStorage.setItem("email", "");
         sessionStorage.setItem("nickname", "");
         sessionStorage.setItem("user_id", "");
-        console.log(sessionStorage.getItem("loggedIn"));
+        console.log(sessionStorage.getItem("loggedIn"), sessionStorage.getItem("nickname"));
         return (
             <div className="background">
                 <img className="landinglogo center" src={landinglogo}></img>

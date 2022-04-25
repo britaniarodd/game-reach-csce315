@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import Avatar, { ConfigProvider } from 'react-avatar';
+import Avatar from 'react-avatar';
 import "./headingBar.css";
 import cornerlogo from "./Reach_mini_logo.png";
 import headinglogo from "./Reach_heading_logo.png";
 
 
 class HeadingBar extends Component {
-    state = {loggedIn: sessionStorage.getItem("loggedIn")};
+   
     render() {
         function showAvatar() {
-            if (sessionStorage.getItem("loggedIn")) {
+            console.log("LoggedIn? ", sessionStorage.getItem("loggedIn") );
+            
             return (<Avatar 
                         name={sessionStorage.getItem("nickname")}
                         color={'#7F00FF'}
                         round={true}
                         size="70">
                     </Avatar>);
-            }
+            
         }
         return (
             <div className="headingBar">
@@ -28,7 +29,7 @@ class HeadingBar extends Component {
                 </a>
                 <a className="profilea" href="/profile">
                 <div className='profile'>
-                    {sessionStorage.getItem("loggedIn") ? showAvatar() : null}
+                    { sessionStorage.getItem("loggedIn") ? showAvatar(): null }
                 </div>
                 </a>
             </div>

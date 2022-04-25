@@ -31,7 +31,7 @@ class navBar extends Component {
                             className="nav-item nav-link active"
                             href="/dashboard"
                         >
-                            Dashboard <span className="sr-only">(current)</span>
+                            Dashboard <span className="sr-only"></span>
                         </a>
                         <a
                             className="nav-item nav-link active"

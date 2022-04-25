@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from "react";
-import Avatar, { ConfigProvider } from 'react-avatar';
+import React from "react";
+import Avatar from 'react-avatar';
 import "../shared.css";
 import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
@@ -124,28 +124,29 @@ import { getBackendAddress} from "../backendrequest";
 
       
         return (
-          <div>
+          <div className="gameNameForm">
+            <br />
+            <h4> Edit User Profile by Changing Information, then Click Save:</h4>
             <br/>
-            <h4> Edit User Profile by Changing Information Then Click Save</h4>
-            <br/>
-           
+            <div className="infoForm">
               <label >Nickname: </label>
               <input type="text" defaultValue={nickname} onChange={updateNickname}/>
-
+              <br/>
               <label>Status: </label>
-              
               <select id="status" defaultValue={status} onChange={updateStatus}>
                 <option value="Open to Connection">OPEN TO CONNECTIONS</option>
                 <option value="Closed to Connections">CLOSED TO CONNECTIONS</option>
                 <option value="Open to Mentoring">OPEN TO MENTORING</option>
               </select>
-
+              <br/>
               <label>Bio: </label>
               <input type="text"  id="bio" defaultValue={bio} onChange={updateBio}/>
-              
+              <br/>
               <label>Discord: </label>
               <input type="text"  id="discord" defaultValue={discord} onChange={updateDiscord}/>
+              <br/>
               <button onClick={saveProfileInfo}>Save</button>
+              </div>
           </div>
         );
     };
@@ -234,21 +235,21 @@ import { getBackendAddress} from "../backendrequest";
       };
     
         return (
-          <div>
+          <div className="gameNameForm">
             <br/>
             <h4> Edit Gamer Tags, then hit save: </h4>
             <br/>
             
             
-              <label >League of Legends: </label>
+              <label className="inputName">League of Legends: </label>
               <input type="text" defaultValue={newLeagueName} onChange={updateLeagueName}/>
-    
-              <label>PUBG: </label>
+              <br/>
+              <label className="inputName">PUBG: </label>
               <input type="text" defaultValue={newPUBGName} onChange={updatePubgName}/>
-
-              <label>Smite: </label>
+              <br/>
+              <label className="inputName">Smite: </label>
               <input type="text" defaultValue={newSmiteName} onChange={updateSmiteName}/>
-              
+              <br/>
               <button onClick={saveGameNames}>Save</button>
             
           </div>
@@ -270,13 +271,21 @@ import { getBackendAddress} from "../backendrequest";
                    </Avatar>
                    <h2 className='name'>{user.nickname}</h2>
                    <h3 className='des'>{user.status}</h3>
-                   <h3 className="discord"> Discord: {user.discord}</h3>
+                   <h4 className="des"> Discord: {user.discord}</h4>
                    
                    </div>
                    <div className="description-box">
-                       <h5>{user.bio}.</h5>
+                       <h5>{user.bio}</h5>
                    </div>
-                   <div className="GameNames">
+                   <br/>
+                   <div className="editProfile">
+                   <button onClick={() => {
+                      form ? setform(false) : setform(true)
+                    }}> Edit User Profile </button> </div>
+                   {form ? showProfileForm(user) : null}
+                   
+                   <br/>
+                   <div className="gameName-box">
                       <h2 className="GameNames">GAME NAMES:</h2>
                       <div className="gameTags">
                        <label className="gamesTitles">League of Legends: </label> <p className="GameNames">{leagueName} </p>
@@ -285,16 +294,12 @@ import { getBackendAddress} from "../backendrequest";
                       </div>
                    </div>
                    <br/>
+                   
                    <br/>
-                   <button onClick={() => {
-                      form ? setform(false) : setform(true)
-                    }}> Edit User Profile </button>
-                   {form ? showProfileForm(user) : null}
-                   <br/>
-                   <br/>
+                   <div className="editProfile">
                    <button onClick={() => {
                       tag ? setTags(false) : setTags(true)
-                    }}> Set Gamer Tags</button>
+                    }}> Set Gamer Tags</button> </div>
                    {tag ? showForm() : null}
                    <br/>
                    <br/>                  
