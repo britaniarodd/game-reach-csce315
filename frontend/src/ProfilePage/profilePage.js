@@ -44,11 +44,15 @@ import { getBackendAddress} from "../backendrequest";
             setLeagueName(res.data.gamename);
             leagueUpdate(res.data.gamename);
             setleagueRank(res.data.rank);
+            sessionStorage.setItem("leagueName", res.data.gamename);
             console.log("League Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
+              sessionStorage.setItem("leagueName", "");
               setLeagueName("");
-              console.log("New Leagename found")
+              leagueUpdate("");
+              setleagueRank("");
+              console.log("No LeagueName found")
           }
         }); 
 
@@ -57,11 +61,15 @@ import { getBackendAddress} from "../backendrequest";
           setPUBGName(res.data.gamename);
           pubgUpdate(res.data.gamename);
           setpubgRank(res.data.rank);
+          sessionStorage.setItem("pubgName", res.data.gamename);
           console.log("Pubg Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
+            sessionStorage.setItem("pubgName", "");
               setPUBGName("");
-              console.log("New PUBG found")
+              pubgUpdate("");
+              setpubgRank("");
+              console.log("No PUBGName found")
           }
         });
 
@@ -70,11 +78,15 @@ import { getBackendAddress} from "../backendrequest";
           setSmiteName(res.data.gamename);
           smiteUpdate(res.data.gamename);
           setsmiteRank(res.data.rank);
+          sessionStorage.setItem("smiteName", res.data.gamename);
           console.log("Smite Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
+            sessionStorage.setItem("smiteName", "");
               setSmiteName("");
-              console.log("New Smite found")
+              smiteUpdate("");
+              setsmiteRank("");
+              console.log("No SmiteName found")
           }
         });
       }, []);
@@ -156,14 +168,16 @@ import { getBackendAddress} from "../backendrequest";
       
         console.log(sessionStorage.getItem("user_id"));
         if(leagueName != null) {
+          if (leagueRank == null) { var rank = "";} else{ rank = leagueRank;}
           axios
           .patch(getBackendAddress() + "/league/update", {
               user_id: sessionStorage.getItem("user_id"),
               game: "leagueoflegends",
-              rank: leagueRank,
+              rank: rank,
               gamename: newLeagueName
           }).then(result => console.log(result));
         } else {
+          if (newLeagueName != null) {
           axios
           .post(getBackendAddress() + "/league/create", {
               user_id: sessionStorage.getItem("user_id"),
@@ -171,17 +185,20 @@ import { getBackendAddress} from "../backendrequest";
               rank: "",
               gamename: newLeagueName
           }).then(result => console.log("Create: ", result));
+          }
         }
 
         if(pubgName != null) { 
+          if (pubgRank == null) { var rank = "";} else{ rank = pubgRank;}
           axios
           .patch(getBackendAddress() + "/pubg/update", {
               user_id: sessionStorage.getItem("user_id"),
               game: "pubg",
-              rank: pubgRank,
+              rank: rank,
               gamename: newPUBGName
           }).then(result => console.log("Update:", result));
         } else {
+          if (newPUBGName != null) {
           axios
           .post(getBackendAddress() + "/pubg/create", {
               user_id: sessionStorage.getItem("user_id"),
@@ -189,24 +206,34 @@ import { getBackendAddress} from "../backendrequest";
               rank: "",
               gamename: newPUBGName
           }).then(result => console.log("Create: ", result));
+          }
         }
 
         if(smiteName != null) { 
+          if (smiteRank == null) { var rank = "";} else{ rank = smiteRank;}
           axios
           .patch(getBackendAddress() + "/smite/update", {
               user_id: sessionStorage.getItem("user_id"),
               game: "smite",
-              rank: smiteRank,
+              rank: rank,
               gamename: newSmiteName
           }).then(result => console.log("Update:", result));
         } else {
+          if (newSmiteName != null) {
           axios
           .post(getBackendAddress() + "/smite/create", {
               user_id: sessionStorage.getItem("user_id"),
               game: "smite",
               rank: "",
               gamename: newSmiteName
-          }).then(result => console.log("Create: ", result));
+          }).then(result => console.log("Create: ", result))
+          .catch((err) => {
+            if(err.response && err.response.status === 400) {
+                setSmiteName("");
+                console.log("New Smite found")
+            }
+          });
+          }
         }
         
         setTags(false);
@@ -256,7 +283,22 @@ import { getBackendAddress} from "../backendrequest";
 
     //-------------------- Delete Profile ----------------------------/
     function deleteAccount() {
-
+      console.log(sessionStorage.getItem("user_id"));
+      axios.delete(getBackendAddress() + "/league/delete", {
+        user_id: sessionStorage.getItem("user_id")
+        //game: "leagueoflegends
+      }).then((res) => {
+        
+        console.log(res);
+      }).catch((err) => {
+        if(err.response && err.response.status === 400) {
+            console.log("No Leagename found")
+        }
+      });
+      setLeagueName("");
+      leagueUpdate("");
+      setleagueRank("");
+      sessionStorage.setItem("leagueName", "");
     }
     return (
        <React.Fragment>

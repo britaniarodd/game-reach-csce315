@@ -21,6 +21,9 @@ export default function LoginPage(props) {
     };
 
     function loginClicked(e) {
+        console.log(email);
+        if (email == "" | password == "") {setErrorMessage("Please Enter Information");}
+        else {
         axios
             .post(getBackendAddress() + "/users/login", {
                 email: email,
@@ -40,9 +43,10 @@ export default function LoginPage(props) {
             })
             .catch((err) => {
                 if(err.response && err.response.status === 400) {
-                    setErrorMessage("Email or password incorrect");
+                    setErrorMessage("Email or Password incorrect");
                 }
             });
+        }
 
     }
 
