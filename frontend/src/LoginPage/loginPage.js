@@ -4,8 +4,9 @@ import axios from "axios";
 import { getBackendAddress } from "../backendrequest";
 import { useNavigate } from 'react-router-dom';
 
-export default function LoginPage(props) {
 
+export default function LoginPage(props) {
+    sessionStorage.setItem("loggedIn", false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -27,10 +28,15 @@ export default function LoginPage(props) {
             })
             .then((result) => {
                 console.log(result);
-                window.user_id = result.data.user_id;
-                window.email = result.data.email;
+                sessionStorage.setItem("user_id",result.data.user_id);
+                sessionStorage.setItem("email", result.data.email);
+                sessionStorage.setItem("nickname", result.data.nickname);
+                sessionStorage.setItem("loggedIn", true);
                 navigate("/dashboard");
                 console.log("tried to naviagte");
+                console.log("User ID: ", sessionStorage.getItem("user_id"));
+                console.log("Email: ", sessionStorage.getItem("email"));
+                console.log("LoggedIn: ", sessionStorage.getItem("loggedIn"));
             })
             .catch((err) => {
                 if(err.response && err.response.status === 400) {

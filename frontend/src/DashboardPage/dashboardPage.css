@@ -46,7 +46,7 @@ h2 {
     
 }
 .box--csgo {
-    background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgb(82, 50, 24)), url(./csgo_logo.png);
+    background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgb(82, 50, 24)), url(./PUBG.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

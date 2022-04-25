@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./reactRouter";
 import "bootstrap/dist/css/bootstrap.css";
+import "./index.css";
 
 window.name = "test2";
 window.email = "test2";

@@ -62,6 +62,7 @@ router.post("/login", function (req, res, next) {
                         }
                         if (bCryptRes) {
                             res.json({
+                                user_id: user.user_id,
                                 email: user.email,
                                 status: user.status,
                                 bio: user.bio,
