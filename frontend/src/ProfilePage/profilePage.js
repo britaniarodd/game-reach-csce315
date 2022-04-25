@@ -21,12 +21,16 @@ import { getBackendAddress} from "../backendrequest";
     const [leagueName, setLeagueName] = React.useState("");
     const [newLeagueName, leagueUpdate] = React.useState("");
     const [leagueRank, setleagueRank] = React.useState("");
+    const [smiteName, setSmiteName] = React.useState("");
+    const [newSmiteName, smiteUpdate] = React.useState("");
+    const [smiteRank, setsmiteRank] = React.useState("");
     const [pugbName, setPUBGName] = React.useState("");
     const [newPUBGName, pubgUpdate] = React.useState("");
     const [pubgRank, setpubgRank] = React.useState("");
    
 
     React.useEffect(() => {
+      //----------- Get USER INFO -----------------//
         console.log("User ID: ", sessionStorage.getItem("user_id"));
         axios.get(getBackendAddress() + "/users/get/by-email/" + sessionStorage.getItem("email")).then((response) => {
           setuser(response.data);
@@ -37,8 +41,8 @@ import { getBackendAddress} from "../backendrequest";
           console.log("User Info: ", response.data);
         });
 
+        //----------- Get League INFO -----------------//
         axios.get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-
             setLeagueName(res.data.gamename);
             leagueUpdate(res.data.gamename);
             setleagueRank(res.data.rank);
@@ -48,10 +52,10 @@ import { getBackendAddress} from "../backendrequest";
               setLeagueName("");
               console.log("New Leagename found")
           }
-        }); //handle error for no existing entry for league name
-        
-        axios.get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+        }); 
 
+        //----------- Get PUBG INFO -----------------//
+        axios.get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
           setPUBGName(res.data.gamename);
           pubgUpdate(res.data.gamename);
           setpubgRank(res.data.rank);
@@ -63,6 +67,18 @@ import { getBackendAddress} from "../backendrequest";
           }
         });
 
+        //----------- Get SMITE INFO -----------------//
+        axios.get(getBackendAddress() + "/smite/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+          setSmiteName(res.data.gamename);
+          smiteUpdate(res.data.gamename);
+          setsmiteRank(res.data.rank);
+          console.log("Pubg Name: ", res.data);
+        }).catch((err) => {
+          if(err.response && err.response.status === 400) {
+              setSmiteName("");
+              console.log("New PUBG found")
+          }
+        });
       }, []);
     
     if (!user) return null;
@@ -157,7 +173,7 @@ import { getBackendAddress} from "../backendrequest";
               gamename: newLeagueName
           }).then(result => console.log("Create: ", result));
         }
-        
+
         if(pugbName != null) { 
           axios
           .patch(getBackendAddress() + "/pubg/update", {
@@ -175,11 +191,30 @@ import { getBackendAddress} from "../backendrequest";
               gamename: newPUBGName
           }).then(result => console.log("Create: ", result));
         }
+
+        if(smiteName != null) { 
+          axios
+          .patch(getBackendAddress() + "/smite/update", {
+              user_id: sessionStorage.getItem("user_id"),
+              game: "smite",
+              rank: smiteRank,
+              gamename: newSmiteName
+          }).then(result => console.log("Update:", result));
+        } else {
+          axios
+          .post(getBackendAddress() + "/smite/create", {
+              user_id: sessionStorage.getItem("user_id"),
+              game: "smite",
+              rank: "",
+              gamename: newSmiteName
+          }).then(result => console.log("Create: ", result));
+        }
         
         setTags(false);
         
         setLeagueName(newLeagueName);
         setPUBGName(newPUBGName);
+        setSmiteName(newSmiteName);
         return;
       };
 
@@ -189,6 +224,10 @@ import { getBackendAddress} from "../backendrequest";
 
       function updatePubgName(e) {
         pubgUpdate(e.target.value);
+      };
+
+      function updateSmiteName(e) {
+        smiteUpdate(e.target.value);
       };
     
         return (
@@ -205,7 +244,7 @@ import { getBackendAddress} from "../backendrequest";
               <input type="text" defaultValue={newPUBGName} onChange={updatePubgName}/>
 
               <label>Smite: </label>
-              <input type="text" defaultValue={window.apexName}/>
+              <input type="text" defaultValue={newSmiteName} onChange={updateSmiteName}/>
               
               <button onClick={saveGameNames}>Save</button>
             
@@ -239,7 +278,7 @@ import { getBackendAddress} from "../backendrequest";
                       <div className="gameTags">
                        <label className="gamesTitles">League of Legends: </label> <p className="GameNames">{leagueName} </p>
                        <label className="gamesTitles">PUBG:</label> <p className="GameNames">{pugbName} </p>
-                       <label className="gamesTitles">Smite: </label>
+                       <label className="gamesTitles">Smite: </label> <p className="GameNames">{smiteName} </p>
                       </div>
                    </div>
                    <br/>
