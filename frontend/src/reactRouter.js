@@ -8,6 +8,7 @@ import DashboardPage from "./DashboardPage/dashboardPage";
 import ViewConnections from "./connections/ViewConnections/viewConnections";
 import FindConnections from "./connections/FindConnections/findConnections";
 import LeagueStatsPage from "./LeagueStatsPage/leagueStatsPage";
+import PUBGStatsPage from "./PUBGStatsPage/PUBGStats";
 import ProfilePage from "./ProfilePage/profilePage";
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
                 <Route path="/findConnections" element={<FindConnections />} />
                 <Route path="/leaguestats" element={<LeagueStatsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/PUBGStats" element={<PUBGStatsPage />} />
                 <Route path="/" element={<LandingPage />} />
             </Routes>
         </Router>
