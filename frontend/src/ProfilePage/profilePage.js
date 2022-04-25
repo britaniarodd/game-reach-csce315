@@ -24,7 +24,7 @@ import { getBackendAddress} from "../backendrequest";
     const [smiteName, setSmiteName] = React.useState("");
     const [newSmiteName, smiteUpdate] = React.useState("");
     const [smiteRank, setsmiteRank] = React.useState("");
-    const [pugbName, setPUBGName] = React.useState("");
+    const [pubgName, setPUBGName] = React.useState("");
     const [newPUBGName, pubgUpdate] = React.useState("");
     const [pubgRank, setpubgRank] = React.useState("");
    
@@ -72,11 +72,11 @@ import { getBackendAddress} from "../backendrequest";
           setSmiteName(res.data.gamename);
           smiteUpdate(res.data.gamename);
           setsmiteRank(res.data.rank);
-          console.log("Pubg Name: ", res.data);
+          console.log("Smite Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
               setSmiteName("");
-              console.log("New PUBG found")
+              console.log("New Smite found")
           }
         });
       }, []);
@@ -174,7 +174,7 @@ import { getBackendAddress} from "../backendrequest";
           }).then(result => console.log("Create: ", result));
         }
 
-        if(pugbName != null) { 
+        if(pubgName != null) { 
           axios
           .patch(getBackendAddress() + "/pubg/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -213,8 +213,11 @@ import { getBackendAddress} from "../backendrequest";
         setTags(false);
         
         setLeagueName(newLeagueName);
+        sessionStorage.setItem("leagueName", leagueName);
         setPUBGName(newPUBGName);
+        sessionStorage.setItem("pubgName", pubgName);
         setSmiteName(newSmiteName);
+        sessionStorage.setItem("smiteName", smiteName);
         return;
       };
 
@@ -277,7 +280,7 @@ import { getBackendAddress} from "../backendrequest";
                       <h2 className="GameNames">GAME NAMES:</h2>
                       <div className="gameTags">
                        <label className="gamesTitles">League of Legends: </label> <p className="GameNames">{leagueName} </p>
-                       <label className="gamesTitles">PUBG:</label> <p className="GameNames">{pugbName} </p>
+                       <label className="gamesTitles">PUBG:</label> <p className="GameNames">{pubgName} </p>
                        <label className="gamesTitles">Smite: </label> <p className="GameNames">{smiteName} </p>
                       </div>
                    </div>
