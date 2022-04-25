@@ -63,7 +63,7 @@ h5 {
     text-align: center;
     color: rgb(187, 187, 249);
 }
-p {
+.gamesTitles {
     color: rgb(252, 252, 252);
     font-size: 20px;
     font-weight: bold;

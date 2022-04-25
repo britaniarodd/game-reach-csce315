@@ -5,7 +5,7 @@ import "./profilePage.css";
 import NavigationBar from "./../NavigationBar/navBar";
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
-import { useNavigate } from 'react-router-dom';
+
 
 
  function ProfilePage() {
@@ -18,53 +18,61 @@ import { useNavigate } from 'react-router-dom';
     const [discord, discordUpdate] = React.useState("");
     const [form, setform] = React.useState(null);
     const [tag, setTags] = React.useState(null);
-    const [leagueName, setLeagueName] = React.useState(null);
-    const navigate = useNavigate();
+    const [leagueName, setLeagueName] = React.useState("");
+    const [newLeagueName, leagueUpdate] = React.useState("");
+    const [leagueRank, setleagueRank] = React.useState("");
+    const [pugbName, setPUGBName] = React.useState("");
+    const [newPUBGName, pubgUpdate] = React.useState("");
+   
 
     React.useEffect(() => {
-        console.log(sessionStorage.getItem("user_id"));
+        console.log("User ID: ", sessionStorage.getItem("user_id"));
         axios.get(getBackendAddress() + "/users/get/by-email/" + sessionStorage.getItem("email")).then((response) => {
           setuser(response.data);
           nicknameUpdate(response.data.nickname);
           statusUpdate(response.data.status);
           bioUpdate(response.data.bio);
           discordUpdate(response.data.discord);
-          console.log(response.data);
+          console.log("User Info: ", response.data);
         });
         axios.get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
 
             setLeagueName(res.data.gamename);
-            console.log(sessionStorage.getItem("email"), ": ", res.data.gamename);
+            leagueUpdate(res.data.gamename);
+            setleagueRank(res.data.rank);
+            console.log("League Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
               setLeagueName("");
+              console.log("New Leagename found")
           }
       }); //handle error for no existing entry for league name
         
       }, []);
     
     if (!user) return null;
-    console.log("user information: ", user, leagueName);
-
-
+   
+    //---------------------------- Saving /Setting User Profile Info ------------------------ //
     function showProfileForm(user) {
       
-     function saveProfileInfo(e) {
+      function saveProfileInfo(e) {
         console.log(nickname);
         console.log(user, sessionStorage.getItem("user_id"));
+        
         axios
         .patch(getBackendAddress() + "/users/update", {
-            user_id: sessionStorage.getItem("user_id"),
-            status: status,
-            bio: bio,
-            nickname: nickname,
-            discord: discord
+          user_id: sessionStorage.getItem("user_id"),
+          status: status,
+          bio: bio,
+          nickname: nickname,
+          discord: discord
         }).then(result => console.log(result));
         
-      setform(false);
-      setuser({nickname: nickname, status: status, bio: bio, discord: discord});
-      return;
-        
+        setform(false);
+        sessionStorage.setItem("nickname", nickname);
+        setuser({nickname: nickname, status: status, bio: bio, discord: discord});
+        return;
+          
       };
 
       function updateNickname(e) {
@@ -111,8 +119,33 @@ import { useNavigate } from 'react-router-dom';
         );
     };
 
-    function showForm(user) {
+    //-------------------- Setting/Saving Gamer Names ----------------------------/
+    function showForm() {
 
+      function saveGameNames(e) {
+        console.log(sessionStorage.getItem("user_id"));
+        
+        axios
+        .patch(getBackendAddress() + "/league/update", {
+            user_id: sessionStorage.getItem("user_id"),
+            game: "leagueoflegends",
+            rank: leagueRank,
+            gamename: newLeagueName
+        }).then(result => console.log(result));
+        
+        setTags(false);
+        
+        setLeagueName(newLeagueName);
+        return;
+      };
+
+      function updateLeagueName(e) {
+        leagueUpdate(e.target.value);
+      };
+
+      function updatePubgName(e) {
+        pubgUpdate(e.target.value);
+      };
     
         return (
           <div>
@@ -120,18 +153,18 @@ import { useNavigate } from 'react-router-dom';
             <h4> Edit Gamer Tags, then hit save: </h4>
             <br/>
             
-            <form id="set-tags" >
-              <label >Leage of Legends: </label>
-              <input type="text" value={leagueName}/>
+            
+              <label >League of Legends: </label>
+              <input type="text" defaultValue={newLeagueName} onChange={updateLeagueName}/>
     
-              <label>Apex Legends: </label>
-              <input type="text" value={window.csgoName}/>
+              <label>PUBG: </label>
+              <input type="text" defaultValue={newPUBGName} onChange={updatePubgName}/>
 
               <label>Smite: </label>
-              <input type="text" value={window.apexName}/>
+              <input type="text" defaultValue={window.apexName}/>
               
-              <button>Save</button>
-            </form>
+              <button onClick={saveGameNames}>Save</button>
+            
           </div>
         );
     };
@@ -160,9 +193,9 @@ import { useNavigate } from 'react-router-dom';
                    <div className="GameNames">
                       <h2 className="GameNames">GAME NAMES:</h2>
                       <div className="gameTags">
-                       <p>League of Legends: </p>
-                       <p>Apex Legends:</p>
-                       <p>Smite: </p>
+                       <label className="gamesTitles">League of Legends: </label> <p className="GameNames">{leagueName} </p>
+                       <label className="gamesTitles">PUBG:</label> <p className="GameNames">{pugbName} </p>
+                       <label className="gamesTitles">Smite: </label>
                       </div>
                    </div>
                    <br/>
@@ -176,7 +209,7 @@ import { useNavigate } from 'react-router-dom';
                    <button onClick={() => {
                       setTags(true)
                     }}> Set Gamer Tags</button>
-                   {tag ? showForm(user) : null}
+                   {tag ? showForm() : null}
                    <br/>
                    <br/>                  
                    
@@ -186,26 +219,6 @@ import { useNavigate } from 'react-router-dom';
        </React.Fragment>
        );
 }
-function saveProfileInfo(user) {
-  console.log(user, sessionStorage.getItem("user_id"));
-  axios
-  .post(getBackendAddress() + "/users/update", {
-      user_id: sessionStorage.getItem("user_id"),
-      nickname: user.newNickname,
-      status: user.newStatus,
-      bio: user.newBio,
-  })
-  .then((result) => {
-      console.log(result);
-      window.user_id = result.data.user_id;
-      window.email = result.data.email;
-      //navigate("/dashboard");
-  })
-  .catch((err) => {
-      if(err.response && err.response.status === 400) {
-          //setErrorMessage("That email is taken");
-      }
-  });
-  };
+
 
 export default ProfilePage;
