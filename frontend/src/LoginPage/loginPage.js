@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./loginPage.css";
 import axios from "axios";
-import { getBackendAddress} from "../backendrequest";
+import { getBackendAddress } from "../backendrequest";
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage(props) {

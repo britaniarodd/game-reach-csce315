@@ -13,6 +13,7 @@ var smiteRouter = require("./routes/smiteEndpoints");
 var connectionsRouter = require("./routes/connectionsEndpoints");
 var filterUsersRouter = require("./routes/filterUsersEndpoints");
 var filterConnectionsRouter = require("./routes/filterConnectionsEndpoints");
+var smiteApiRouter = require("./routes/smiteApiEndpoints");
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use("/smite", smiteRouter);
 app.use("/connections", connectionsRouter);
 app.use("/filterusers", filterUsersRouter);
 app.use("/filterconnections", filterConnectionsRouter);
+app.use("/smiteapi", smiteApiRouter);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/frontend/build/index.html"));

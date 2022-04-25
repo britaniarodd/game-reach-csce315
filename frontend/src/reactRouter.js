@@ -9,6 +9,7 @@ import ViewConnections from "./connections/ViewConnections/viewConnections";
 import FindConnections from "./connections/FindConnections/findConnections";
 import LeagueStatsPage from "./LeagueStatsPage/leagueStatsPage";
 import ProfilePage from "./ProfilePage/profilePage";
+import SmiteStatsPage from "./SmiteStatsPage/smiteStatsPage";
 
 export default function App() {
     return (
@@ -21,6 +22,7 @@ export default function App() {
                 <Route path="/viewConnections" element={<ViewConnections />} />
                 <Route path="/findConnections" element={<FindConnections />} />
                 <Route path="/leaguestats" element={<LeagueStatsPage />} />
+                <Route path="/smitestats" element={<SmiteStatsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/" element={<LandingPage />} />
             </Routes>

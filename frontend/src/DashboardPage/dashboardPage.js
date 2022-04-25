@@ -44,7 +44,7 @@ class DashboardPage extends Component {
                     <div className="overlay text">
                         <h2>SMITE</h2>
                     </div>
-                    <a href="" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
+                    <a href="/smitestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     
                     <div className="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
 
