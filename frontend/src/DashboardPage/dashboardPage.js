@@ -8,12 +8,11 @@ class DashboardPage extends Component {
     state = {};
     
     render() {
-        sessionStorage.setItem("loggedIn", true);
         return (
             <React.Fragment>
             <NavigationBar />
             <div className="background">
-            <h1>Welcome, {sessionStorage.getItem("nickname")}!</h1>
+            <h1>Welcome, {window.name}!</h1>
             <br/>
             <h3>Select "View Stats" for a game below:</h3>
             <div className="row">
@@ -31,9 +30,9 @@ class DashboardPage extends Component {
             
                 <div className="column box--csgo">
                     <div className="overlay">
-                        <h2>CS:GO</h2>
+                        <h2>PUBG</h2>
                     </div>
-                    <a href="" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
+                    <a href="/PUBGStats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     <div className="trn-button center" id="bottom">View Stats</div>
             
                     </a>
