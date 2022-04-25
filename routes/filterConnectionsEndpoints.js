@@ -16,10 +16,10 @@ router.get("/get/league", async function (req, res, next) {
     }
 });
 
-router.get("/get/apex", async function (req, res, next) {
+router.get("/get/pubg", async function (req, res, next) {
     try {
         const { user_id, status, rank } = req.query;
-        const game = "apexlegends";
+        const game = "pubg";
         const pgpool = req.app.get("pgpool");
         const filteredConnections = await filter(pgpool, game, user_id, status, rank);
         res.json(filteredConnections);

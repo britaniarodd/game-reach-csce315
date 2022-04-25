@@ -9,7 +9,7 @@ require('dotenv').config();
 
 var usersRouter = require("./routes/usersEndpoints");
 var leagueRouter = require("./routes/leagueEndpoints");
-var apexRouter = require("./routes/apexEndpoints");
+var pubgRouter = require("./routes/pubgEndpoints");
 var smiteRouter = require("./routes/smiteEndpoints");
 var connectionsRouter = require("./routes/connectionsEndpoints");
 var filterUsersRouter = require("./routes/filterUsersEndpoints");
@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 app.use("/users", usersRouter);
 app.use("/league", leagueRouter);
-app.use("/apex", apexRouter);
+app.use("/pubg", pubgRouter);
 app.use("/smite", smiteRouter);
 app.use("/connections", connectionsRouter);
 app.use("/filterusers", filterUsersRouter);

@@ -8,7 +8,7 @@ const {
 var express = require("express");
 var router = express.Router();
 
-const game = "apexlegends";
+const game = "pubg";
 
 router.get("/get/by-email/:email", async function (req, res, next) {
     try {

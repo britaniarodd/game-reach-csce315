@@ -11,7 +11,7 @@ class ViewConnections extends Component {
         rank: "All Ranks",
         users: [],
         leagueRanks: ["All Ranks", "Iron", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "Challenger"],
-        apexRanks: ["All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Apex Predator"],
+        pubgRanks: ["All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Apex Predator"],
         smiteRanks: [ "All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster"],
     }
 
@@ -23,7 +23,7 @@ class ViewConnections extends Component {
         let game = ""
         switch(stategame) {
             case "League of Legends": game = "league"; break
-            case "Apex Legends": game = "apex"; break
+            case "PUBG": game = "pubg"; break
             case "Smite": game = "smite"; break
         }
         const status = (statestatus === "All Statuses" ? "%" : statestatus)
@@ -53,7 +53,7 @@ class ViewConnections extends Component {
         let ranks = []
         switch(this.state.game) {
             case "League of Legends": ranks = this.state.leagueRanks; break
-            case "Apex Legends": ranks = this.state.apexRanks; break
+            case "PUBG": ranks = this.state.pubgRanks; break
             case "Smite": ranks = this.state.smiteRanks; break
             default: return <div></div>
         }
@@ -79,7 +79,7 @@ class ViewConnections extends Component {
                             <p>Game</p>
                             <select onChange={this.gameChange}>
                                 <option value="League of Legends">League of Legends</option>
-                                <option value="Apex Legends">Apex Legends</option>
+                                <option value="PUBG">PUBG</option>
                                 <option value="Smite">Smite</option>
                             </select>
                         </form>
