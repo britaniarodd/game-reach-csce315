@@ -44,11 +44,7 @@ async function deleteConnection(pgpool, user_id, connection_user_email) {
 }
 
 async function deleteConnections(pgpool, user_id) {
-    const connectionUserJson = await getUserByEmail(
-        pgpool,
-        connection_user_email
-    );
-    pgpool.query("DELETE FROM connections WHERE user_id=$1", [user_id]);
+    pgpool.query("DELETE FROM connections WHERE user_id=$1 OR connection_user_id=$1", [user_id]);
 }
 
 module.exports = {
