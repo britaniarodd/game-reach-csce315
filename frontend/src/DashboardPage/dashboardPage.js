@@ -51,8 +51,9 @@ function DashboardPage() {
             <h3>  Select "View Stats" for a game below:</h3>
             <div className="row1">
                 <div className="column1 box--league center">
+                    <label>League of Legends</label>
                     <div className="overlay">
-                        <h2>League of Legends</h2>
+                        
                     </div>
 
                     <a href="/leaguestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
@@ -63,8 +64,9 @@ function DashboardPage() {
                 </div>
             
                 <div className="column1 box--csgo">
+                    <label>PUBG</label>
                     <div className="overlay">
-                        <h2>PUBG</h2>
+                        
                     </div>
                     <a href="/PUBGStats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     <div className="trn-button center" id="bottom">View Stats</div>
@@ -75,8 +77,8 @@ function DashboardPage() {
                 
 
                 <div className="column1 box--smite center">
+                    <label>SMITE</label>
                     <div className="overlay text">
-                        <h2>SMITE</h2>
                     </div>
                     <a href="/smitestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     
