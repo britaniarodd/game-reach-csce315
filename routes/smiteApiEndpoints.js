@@ -51,10 +51,17 @@ router.get("/getstats/:ign", async (req, res, next) => {
         const historyIds = history.map(match => match.Match);
 
         timestamp = getTimestamp();
-        url = "https://api.smitegame.com/smiteapi.svc/getmatchdetailsbatchjson/" + devId + "/" + getSignature(timestamp, "getmatchdetailsbatch") + "/" + session_id + "/" + timestamp + "/" + history.join(",");
-        console.log(url);
+        url = "https://api.smitegame.com/smiteapi.svc/getmatchdetailsbatchjson/" + devId + "/" + getSignature(timestamp, "getmatchdetailsbatch") + "/" + session_id + "/" + timestamp + "/" + historyIds.join(",");
         const matchesres = await axios.get(url);
-        console.log(matchesres.data);
+
+        for(let i = 0; i < Object.keys(matchesres.data).length;) {
+            let matchInfo = [];
+            for(let j = 0; j < 10; j++) {
+                matchInfo.push(matchesres.data[String(i)]);
+                i++;
+            }
+            resInfo[i/10] = matchInfo;
+        }
 
         res.json(resInfo);
     }
