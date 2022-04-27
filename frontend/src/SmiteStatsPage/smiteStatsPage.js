@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import NavigationBar from "./../NavigationBar/navBar";
 import { getBackendAddress } from "../backendrequest";
 import { StatBox, StatElement } from "../StatsComponents";
 
 export default function SmiteStatsPage(props) {
-
     const [statsJson, setStatsJson] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -26,6 +26,7 @@ export default function SmiteStatsPage(props) {
 
     return (
         <div className="background">
+            <NavigationBar />
             <h1>Smite Stats</h1>
                 <input type="text"
                     onKeyDown={lookupUser}

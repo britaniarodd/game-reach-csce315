@@ -1,5 +1,3 @@
-//GET THIS TO APPEAR ONLY ON DASHBOARD
-//install bootstrap: npm install bootstrap@4.1.1
 import React, { Component } from "react";
 import "./navBar.css";
 
@@ -8,7 +6,7 @@ class navBar extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-light">
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="/dashboard">
                     GR
                 </a>
                 <button

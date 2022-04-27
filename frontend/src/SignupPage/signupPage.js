@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { getBackendAddress } from "../backendrequest";
@@ -10,6 +10,13 @@ export default function SignupPage(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        sessionStorage.setItem("loggedIn", false);
+        sessionStorage.setItem("email", "");
+        sessionStorage.setItem("nickname", "");
+        sessionStorage.setItem("user_id", "");
+    });
 
     const navigate = useNavigate();
 
