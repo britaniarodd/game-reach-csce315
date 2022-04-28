@@ -29,7 +29,7 @@ class FindConnections extends Component {
         }
         const status = (statestatus === "All Statuses" ? "%" : statestatus)
         const rank = (staterank === "All Ranks" ? "%" : staterank)
-        axios.get(getBackendAddress() + "/filterusers/get/" + game, { params: { status: status, rank: rank } })
+        axios.get(getBackendAddress() + "/filterusers/get/" + game, { params: { user_id: sessionStorage.getItem("user_id"), status: status, rank: rank } })
         .then((res) => {
             this.setState({ users: res.data })
         })
