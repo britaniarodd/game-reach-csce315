@@ -84,7 +84,7 @@ class FindConnections extends Component {
                             <p>Game</p>
                             <select onChange={this.gameChange}>
                                 <option value="League of Legends">League of Legends</option>
-                                <option value="PUBG">PUBG Legends</option>
+                                <option value="PUBG">PUBG</option>
                                 <option value="Smite">Smite</option>
                             </select>
                         </form>
