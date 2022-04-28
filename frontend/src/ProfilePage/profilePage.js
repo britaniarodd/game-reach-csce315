@@ -140,20 +140,20 @@ import { useNavigate } from 'react-router-dom';
             <h4> Edit User Profile by Changing Information, then Click Save:</h4>
             <br/>
             <div className="infoForm">
-              <label >Nickname: </label>
+              <label className="inputName" >Nickname: </label>
               <input type="text" defaultValue={nickname} onChange={updateNickname}/>
               <br/>
-              <label>Status: </label>
+              <label className="inputName"> Status: </label>
               <select id="status" defaultValue={status} onChange={updateStatus}>
                 <option value="Open to Connection">OPEN TO CONNECTIONS</option>
                 <option value="Closed to Connections">CLOSED TO CONNECTIONS</option>
                 <option value="Open to Mentoring">OPEN TO MENTORING</option>
               </select>
               <br/>
-              <label>Bio: </label>
+              <label className="inputName">Bio: </label>
               <input type="text"  id="bio" defaultValue={bio} onChange={updateBio}/>
               <br/>
-              <label>Discord: </label>
+              <label className="inputName">Discord: </label>
               <input type="text"  id="discord" defaultValue={discord} onChange={updateDiscord}/>
               <br/>
               <button onClick={saveProfileInfo}>Save</button>

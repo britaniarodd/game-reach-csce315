@@ -13,6 +13,7 @@ class ViewConnections extends Component {
         leagueRanks: ["All Ranks", "Iron", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "Challenger"],
         pubgRanks: ["All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Apex Predator"],
         smiteRanks: [ "All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster"],
+        connection_removed: false,
     }
 
     componentDidMount() {
@@ -29,7 +30,7 @@ class ViewConnections extends Component {
         }
         const status = (statestatus === "All Statuses" ? "%" : statestatus)
         const rank = (staterank === "All Ranks" ? "%" : staterank)
-        axios.get(getBackendAddress() + "/filterconnections/get/" + game, { params: { status: status, rank: rank } })
+        axios.get(getBackendAddress() + "/filterconnections/get/" + game, { params: { user_id: sessionStorage.getItem("user_id"), status: status, rank: rank } })
         .then((res) => {
             this.setState({ users: res.data })
         })
@@ -68,13 +69,32 @@ class ViewConnections extends Component {
         )
     }
 
+    deleteConnection = (user) =>{
+        console.log(sessionStorage.getItem("user_id"), user.email);
+        axios.delete(getBackendAddress() + "/connections/delete", { data: {
+            user_id: sessionStorage.getItem("user_id"),
+            connection_user_email: user.email
+          }}).then((res) => {
+            console.log(res.data);
+          }).catch((err) => {
+            if(err.response && err.response.status === 400) {
+                console.log("No User found")
+            }
+          });
+          this.setState({
+            connection_removed: true,
+          });
+          alert("Connection Removed");
+    
+    }
+
     render() {
         return (
             <React.Fragment>
                 <NavigationBar />
                 <div className="background">
                     <h1 className="title">View Connections</h1>
-
+                    <h3>  Select a "Game", "Status", and "Rank" to View Your Connections:</h3>
                     <div className="filters">
                         <form className="filter">
                             <p>Game</p>
@@ -100,17 +120,21 @@ class ViewConnections extends Component {
                             {this.getRankDropdown()}
                         </form>
                     </div>
-
+                    <br/>
+                    <br/>
                     {this.state.users.map((user) => {
                         return (
                             
                             <React.Fragment key={user.email}>
-                                <div className='box2'>
-                                <p>Nickname: {user.nickname}</p>
-                                <p>Status: {user.status}</p>
+                                <div className='connection-box'>
+                                <h2 className='nickname'>Nickname: {user.nickname}</h2>
+                                <h3 className='description'>Status: {user.status}</h3>
+                                <h4 className='description'>Discord: {user.dicord}</h4>
                                 <p>Bio: {user.bio}</p>
-                                <p>Discord: {user.discord}</p>
+                                <button  key={user} className="button-3" onClick={() => this.deleteConnection(user)}> Delete Connection </button>
                                 </div>
+                                <br/>
+                                <br/>
                             </React.Fragment>)
                             
                     })}

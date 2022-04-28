@@ -110,7 +110,9 @@ h5 {
     margin-right: 10%
 }
 
-
+.inputName {
+    font-size: 20px;
+}
 
 /* CSS */
 .button-3 {

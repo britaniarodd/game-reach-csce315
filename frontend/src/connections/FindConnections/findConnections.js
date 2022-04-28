@@ -68,7 +68,18 @@ class FindConnections extends Component {
     }
 
     addConnection(user){
-        console.log(user);
+        console.log(sessionStorage.getItem("user_id"), user.email);
+        axios.post(getBackendAddress() + "/connections/create", {
+            user_id: sessionStorage.getItem("user_id"), 
+            connection_user_email: user.email
+          }).then((res) => {
+            console.log(res.data);
+          }).catch((err) => {
+            if(err.response && err.response.status === 400) {
+                console.log("No User found")
+            }
+          });
+        alert("Connection Created");
     
     }
 
@@ -78,6 +89,7 @@ class FindConnections extends Component {
                 <NavigationBar />
                 <div className="background">
                     <h1 className="title">Find Connections</h1>
+                    <h3>  Select a "Game", "Status", and "Rank" to Find Connections:</h3>
 
                     <div className="filters">
                         <form className="filter">
@@ -115,7 +127,7 @@ class FindConnections extends Component {
                                 <h3 className='description'>Status: {user.status}</h3>
                                 <h4 className='description'>Discord: {user.discord}</h4>
                                 <p>Bio: {user.bio}</p>
-                                <button  key={user} className="button-3" onClick={this.addConnection(user.nickname)}> Add Connection </button>
+                                <button  key={user} className="button-3" onClick={() => this.addConnection(user)}> Add Connection </button>
                                 </div>
                                 <br/>
                                 <br/>
