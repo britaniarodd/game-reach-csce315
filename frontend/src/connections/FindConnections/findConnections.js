@@ -79,6 +79,7 @@ class FindConnections extends Component {
                 console.log("No User found")
             }
           });
+        alert("Connection Created");
     
     }
 
@@ -88,6 +89,7 @@ class FindConnections extends Component {
                 <NavigationBar />
                 <div className="background">
                     <h1 className="title">Find Connections</h1>
+                    <h3>  Select a "Game", "Status", and "Rank" to Find Connections:</h3>
 
                     <div className="filters">
                         <form className="filter">
