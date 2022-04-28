@@ -73,7 +73,7 @@ class ViewConnections extends Component {
             <React.Fragment>
                 <NavigationBar />
                 <div className="background">
-                    <h1 className="title">Find Connections</h1>
+                    <h1 className="title">View Connections</h1>
 
                     <div className="filters">
                         <form className="filter">
@@ -103,12 +103,16 @@ class ViewConnections extends Component {
 
                     {this.state.users.map((user) => {
                         return (
+                            
                             <React.Fragment key={user.email}>
+                                <div className='box2'>
                                 <p>Nickname: {user.nickname}</p>
                                 <p>Status: {user.status}</p>
                                 <p>Bio: {user.bio}</p>
                                 <p>Discord: {user.discord}</p>
+                                </div>
                             </React.Fragment>)
+                            
                     })}
                 </div>
                 );

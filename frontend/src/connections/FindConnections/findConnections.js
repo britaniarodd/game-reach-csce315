@@ -25,7 +25,6 @@ class FindConnections extends Component {
             case "League of Legends": game = "league"; break
             case "PUBG": game = "pubg"; break
             case "Smite": game = "smite"; break
-            default: game = ""
         }
         const status = (statestatus === "All Statuses" ? "%" : statestatus)
         const rank = (staterank === "All Ranks" ? "%" : staterank)
@@ -68,6 +67,11 @@ class FindConnections extends Component {
         )
     }
 
+    addConnection(user){
+        console.log(user);
+    
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -100,14 +104,21 @@ class FindConnections extends Component {
                             {this.getRankDropdown()}
                         </form>
                     </div>
-
+                    <br/>
+                    <br/>
+                    <br/>
                     {this.state.users.map((user) => {
                         return (
                             <React.Fragment key={user.email}>
-                                <p>Nickname: {user.nickname}</p>
-                                <p>Status: {user.status}</p>
+                                 <div className='connection-box'>
+                                <h2 className='nickname'>Nickname: {user.nickname}</h2>
+                                <h3 className='description'>Status: {user.status}</h3>
+                                <h4 className='description'>Discord: {user.discord}</h4>
                                 <p>Bio: {user.bio}</p>
-                                <p>Discord: {user.discord}</p>
+                                <button  key={user} className="button-3" onClick={this.addConnection(user.nickname)}> Add Connection </button>
+                                </div>
+                                <br/>
+                                <br/>
                             </React.Fragment>)
                     })}
                 </div>
