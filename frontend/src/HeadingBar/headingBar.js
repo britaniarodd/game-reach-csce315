@@ -6,7 +6,6 @@ import headinglogo from "./Reach_heading_logo.png";
 
 
 class HeadingBar extends Component {
-   
     render() {
         function showAvatar() {
             console.log("LoggedIn? ", sessionStorage.getItem("loggedIn") );
