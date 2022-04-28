@@ -29,7 +29,7 @@ class ViewConnections extends Component {
         }
         const status = (statestatus === "All Statuses" ? "%" : statestatus)
         const rank = (staterank === "All Ranks" ? "%" : staterank)
-        axios.get(getBackendAddress() + "/filterconnections/get/" + game, { params: { status: status, rank: rank } })
+        axios.get(getBackendAddress() + "/filterconnections/get/" + game, { params: { user_id: sessionStorage.getItem("user_id"), status: status, rank: rank } })
         .then((res) => {
             this.setState({ users: res.data })
         })
@@ -100,17 +100,21 @@ class ViewConnections extends Component {
                             {this.getRankDropdown()}
                         </form>
                     </div>
-
+                    <br/>
+                    <br/>
                     {this.state.users.map((user) => {
                         return (
                             
                             <React.Fragment key={user.email}>
-                                <div className='box2'>
-                                <p>Nickname: {user.nickname}</p>
-                                <p>Status: {user.status}</p>
+                                <div className='connection-box'>
+                                <h2 className='nickname'>Nickname: {user.nickname}</h2>
+                                <h3 className='description'>Status: {user.status}</h3>
+                                <h4 className='description'>Discord: {user.dicord}</h4>
                                 <p>Bio: {user.bio}</p>
-                                <p>Discord: {user.discord}</p>
+                                <button  key={user} className="button-3" > Delete Connection </button>
                                 </div>
+                                <br/>
+                                <br/>
                             </React.Fragment>)
                             
                     })}

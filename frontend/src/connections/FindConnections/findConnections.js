@@ -68,7 +68,17 @@ class FindConnections extends Component {
     }
 
     addConnection(user){
-        console.log(user);
+        console.log(sessionStorage.getItem("user_id"), user.email);
+        axios.post(getBackendAddress() + "/connections/create", {
+            user_id: sessionStorage.getItem("user_id"), 
+            connection_user_email: user.email
+          }).then((res) => {
+            console.log(res.data);
+          }).catch((err) => {
+            if(err.response && err.response.status === 400) {
+                console.log("No User found")
+            }
+          });
     
     }
 
@@ -84,7 +94,7 @@ class FindConnections extends Component {
                             <p>Game</p>
                             <select onChange={this.gameChange}>
                                 <option value="League of Legends">League of Legends</option>
-                                <option value="PUBG">PUBG Legends</option>
+                                <option value="PUBG">PUBG</option>
                                 <option value="Smite">Smite</option>
                             </select>
                         </form>
@@ -115,7 +125,7 @@ class FindConnections extends Component {
                                 <h3 className='description'>Status: {user.status}</h3>
                                 <h4 className='description'>Discord: {user.discord}</h4>
                                 <p>Bio: {user.bio}</p>
-                                <button  key={user} className="button-3" onClick={this.addConnection(user.nickname)}> Add Connection </button>
+                                <button  key={user} className="button-3" onClick={() => this.addConnection(user)}> Add Connection </button>
                                 </div>
                                 <br/>
                                 <br/>
