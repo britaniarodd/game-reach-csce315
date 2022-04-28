@@ -8,9 +8,9 @@ class navBar extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-light">
-                <a className="navbar-brand" href="#">
+                <label className="navbar-brand" href="">
                     GR
-                </a>
+                </label>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -26,26 +26,26 @@ class navBar extends Component {
                     className="collapse navbar-collapse"
                     id="navbarNavAltMarkup"
                 >
-                    <div className="navbar-nav">
-                        <a
+                    <ul className="navbar-nav">
+                        <li><a
                             className="nav-item nav-link active"
                             href="/dashboard"
                         >
                             Dashboard <span className="sr-only"></span>
-                        </a>
-                        <a
+                        </a></li>
+                        <li><a
                             className="nav-item nav-link active"
                             href="/findConnections"
                         >
                             Find Connections
-                        </a>
-                        <a
+                        </a></li>
+                        <li><a
                             className="nav-item nav-link active"
                             href="/viewConnections"
                         >
                             View Connections
-                        </a>
-                    </div>
+                        </a></li>
+                    </ul>
                 </div>
             </nav>
         );
