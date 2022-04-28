@@ -55,7 +55,7 @@ class LeagueStatsPage extends Component {
                         <p>
                             {this.state.tier} {this.state.rankStr}
                         </p>
-                        <img src={this.state.rank}></img>
+                        <img src={this.state.rank} alt={this.state.rankStr}></img>
                     </div>
                 </div>
                 <div className="clearBoth" />
@@ -115,6 +115,8 @@ class LeagueStatsPage extends Component {
             case "SILVER":
                 this.setState({ rank: emblem_silver, tier: "Silver" });
                 break;
+            default:
+                this.setState({ rank: "", tier: "" });
         }
     }
 

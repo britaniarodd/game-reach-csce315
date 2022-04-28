@@ -25,6 +25,7 @@ class ViewConnections extends Component {
             case "League of Legends": game = "league"; break
             case "PUBG": game = "pubg"; break
             case "Smite": game = "smite"; break
+            default: game = ""
         }
         const status = (statestatus === "All Statuses" ? "%" : statestatus)
         const rank = (staterank === "All Ranks" ? "%" : staterank)

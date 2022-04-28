@@ -190,7 +190,7 @@ import { useNavigate } from 'react-router-dom';
         }
 
         if(pubgName != null) { 
-          if (pubgRank == null) { var rank = "";} else{ rank = pubgRank;}
+          if (pubgRank == null) { rank = "";} else{ rank = pubgRank;}
           axios
           .patch(getBackendAddress() + "/pubg/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -211,7 +211,7 @@ import { useNavigate } from 'react-router-dom';
         }
 
         if(smiteName != null) { 
-          if (smiteRank == null) { var rank = "";} else{ rank = smiteRank;}
+          if (smiteRank == null) { rank = "";} else{ rank = smiteRank;}
           axios
           .patch(getBackendAddress() + "/smite/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -285,7 +285,7 @@ import { useNavigate } from 'react-router-dom';
     //-------------------- Delete Profile ----------------------------/
     async function deleteAccount() {
       console.log(getBackendAddress(), sessionStorage.getItem("user_id"));
-      const del = await axios.delete(getBackendAddress() + "/users/delete", { data: {
+      axios.delete(getBackendAddress() + "/users/delete", { data: {
         user_id: sessionStorage.getItem("user_id")
       }}).then((res) => {
         console.log(res.data);

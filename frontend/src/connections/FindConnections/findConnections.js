@@ -115,7 +115,7 @@ class FindConnections extends Component {
                                 <h3 className='description'>Status: {user.status}</h3>
                                 <h4 className='description'>Discord: {user.discord}</h4>
                                 <p>Bio: {user.bio}</p>
-                                <button className="button-3" onClick={this.addConnection(user.nickname)}> Add Connection </button>
+                                <button  key={user} className="button-3" onClick={this.addConnection(user.nickname)}> Add Connection </button>
                                 </div>
                                 <br/>
                                 <br/>

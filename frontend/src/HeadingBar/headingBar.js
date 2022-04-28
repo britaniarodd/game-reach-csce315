@@ -22,10 +22,10 @@ class HeadingBar extends Component {
         return (
             <div className="headingBar">
                 <a className="cornera" href="/">
-                    <img className="cornerlogo" src={cornerlogo}></img>
+                    <img className="cornerlogo" src={cornerlogo} alt="Corner logo with the abbreviation GR"></img>
                 </a>
                 <a className="headinga" href="/">
-                    <img className="headinglogo" src={headinglogo}></img>
+                    <img className="headinglogo" src={headinglogo} alt="Heading logo with the words Game Reach"></img>
                 </a>
                 <a className="profilea" href="/profile">
                 <div className='profile'>

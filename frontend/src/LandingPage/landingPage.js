@@ -6,16 +6,18 @@ import landinglogo from "./Reach_logo.png";
 
 class LandingPage extends Component {
     state = {};
-    
-    render() {
+
+    componentDidMount() {
         sessionStorage.setItem("loggedIn", false);
         sessionStorage.setItem("email", "");
         sessionStorage.setItem("nickname", "");
         sessionStorage.setItem("user_id", "");
-        console.log(sessionStorage.getItem("loggedIn"), sessionStorage.getItem("nickname"));
+    }
+    
+    render() {
         return (
             <div className="background">
-                <img className="landinglogo center" src={landinglogo}></img>
+                <img className="landinglogo center" src={landinglogo} alt="landing page logo saying Game Reach"></img>
                 <Link className="noblueunderlinelink" to="/signup"><button className="signupbutton center" href="/signup">
                     Signup
                 </button></Link>

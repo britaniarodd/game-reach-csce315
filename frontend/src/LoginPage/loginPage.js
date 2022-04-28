@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./loginPage.css";
 import axios from "axios";
 import { getBackendAddress } from "../backendrequest";
@@ -6,11 +6,17 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function LoginPage(props) {
-    sessionStorage.setItem("loggedIn", false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        sessionStorage.setItem("loggedIn", false);
+        sessionStorage.setItem("email", "");
+        sessionStorage.setItem("nickname", "");
+        sessionStorage.setItem("user_id", "");
+    });
 
     function updateEmail(e) {
         setEmail(e.target.value);
@@ -22,7 +28,7 @@ export default function LoginPage(props) {
 
     function loginClicked(e) {
         console.log(email);
-        if (email == "" | password == "") {setErrorMessage("Please Enter Information");}
+        if (email === "" | password === "") {setErrorMessage("Please Enter Information");}
         else {
         axios
             .post(getBackendAddress() + "/users/login", {

@@ -6,7 +6,7 @@ export function StatBox(props) {
             <div className="stats shadow">
                 {React.Children.map(props.children, child => {
                     return (
-                        <div className="stat">
+                        <div className="stat bg-slate-800">
                             <div className="stat-figure text-secondary">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +22,9 @@ export function StatBox(props) {
                                     ></path>
                                 </svg>
                             </div>
-                            <div className="stat-title">{child.props.title}</div>
-                            <div className="stat-value">{child.props.value}</div>
-                            <div className="stat-desc">{child.props.description}</div>
+                            <div className="stat-title text-white">{child.props.title}</div>
+                            <div className="stat-value text-white">{child.props.value}</div>
+                            <div className="stat-desc text-white">{child.props.description}</div>
                         </div>
                     );
                 })}
