@@ -9,6 +9,15 @@
     margin-left: 2rem;
 }
 
+.title {
+    color: #b48de6;
+    margin-left: 20px;
+}
+
+.instructions {
+    margin-left: 20px;
+}
+
 .connection-box {
     background: #cb95f5;
     border-radius: 5px;

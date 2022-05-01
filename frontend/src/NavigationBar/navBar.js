@@ -24,21 +24,21 @@ class navBar extends Component {
                     className="collapse navbar-collapse"
                     id="navbarNavAltMarkup"
                 >
-                    <ul className="navbar-nav">
-                        <li><a
-                            className="nav-item nav-link active"
+                    <ul className="navbar-nav ">
+                        <li className="nav-item"><a
+                            className="nav-link active"
                             href="/dashboard"
                         >
-                            Dashboard <span className="sr-only"></span>
+                            Dashboard
                         </a></li>
-                        <li><a
-                            className="nav-item nav-link active"
+                        <li className="nav-item"><a
+                            className="nav-link active"
                             href="/findConnections"
                         >
                             Find Connections
                         </a></li>
-                        <li><a
-                            className="nav-item nav-link active"
+                        <li className="nav-item"><a
+                            className="nav-link active"
                             href="/viewConnections"
                         >
                             View Connections
@@ -46,6 +46,9 @@ class navBar extends Component {
                     </ul>
                 </div>
             </nav>
+
+    
+        
         );
     }
 }

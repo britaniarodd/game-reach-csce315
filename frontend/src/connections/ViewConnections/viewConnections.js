@@ -61,7 +61,7 @@ class ViewConnections extends Component {
         }
         return (
             <React.Fragment>
-                <p>Rank</p>
+                <p>Rank:</p>
                 <select onChange={this.rankChange}>
                     {ranks.map((rank) => <option key={rank} value={rank}>{rank}</option>)}
                 </select>
@@ -94,10 +94,10 @@ class ViewConnections extends Component {
                 <NavigationBar />
                 <div className="background">
                     <h1 className="title">View Connections</h1>
-                    <h3>  Select a "Game", "Status", and "Rank" to View Your Connections:</h3>
+                    <h3 className="instructions">  Select a "Game", "Status", and "Rank" to View Your Connections:</h3>
                     <div className="filters">
                         <form className="filter">
-                            <p>Game</p>
+                            <p>Game:</p>
                             <select onChange={this.gameChange}>
                                 <option value="League of Legends">League of Legends</option>
                                 <option value="PUBG">PUBG</option>
@@ -107,7 +107,7 @@ class ViewConnections extends Component {
                         <br></br>
 
                         <form className="filter">
-                            <p>Status</p>
+                            <p>Status:</p>
                             <select onChange={this.statusChange}>
                                 <option value="All Statuses">All Statuses</option>
                                 <option value="Open to Connections">Open to Connections</option>

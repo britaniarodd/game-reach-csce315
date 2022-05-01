@@ -10,7 +10,6 @@ function DashboardPage() {
     axios
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
             sessionStorage.setItem("leagueName", res.data.gamename);
-            
             console.log("League Name: ", sessionStorage.getItem("leagueName"));
         }).catch((err) => {
             if(err.response && err.response.status === 400) {
@@ -41,7 +40,7 @@ function DashboardPage() {
                 console.log("New PUBG found")
             }
           });
-    
+    // ADD Rankings for each game
         return (
             <React.Fragment>
             <NavigationBar />
