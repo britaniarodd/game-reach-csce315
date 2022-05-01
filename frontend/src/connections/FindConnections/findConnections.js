@@ -83,6 +83,12 @@ class FindConnections extends Component {
     
     }
 
+    printNoresults() {
+        return (<div className='instructions'>
+            <h4>No Results</h4>
+        </div>)
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -133,6 +139,7 @@ class FindConnections extends Component {
                                 <br/>
                             </React.Fragment>)
                     })}
+                    {this.state.users.length==0 ? this.printNoresults() : null}
                 </div>
                 );
             </React.Fragment>

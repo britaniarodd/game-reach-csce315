@@ -88,11 +88,17 @@ class ViewConnections extends Component {
     
     }
 
+    printNoresults() {
+        return (<div className='instructions'>
+            <h4>No Connections</h4>
+        </div>)
+    }
+
     render() {
         return (
             <React.Fragment>
                 <NavigationBar />
-                <div className="background">
+                <div className="background" >
                     <h1 className="title">View Connections</h1>
                     <h3 className="instructions">  Select a "Game", "Status", and "Rank" to View Your Connections:</h3>
                     <div className="filters">
@@ -138,6 +144,7 @@ class ViewConnections extends Component {
                             </React.Fragment>)
                             
                     })}
+                    {this.state.users.length==0 ? this.printNoresults() : null}
                 </div>
                 );
             </React.Fragment>

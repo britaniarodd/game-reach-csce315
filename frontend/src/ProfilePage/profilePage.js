@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
  function ProfilePage() { 
     const navigate = useNavigate();
+    const [fontSize, setFont] = React.useState(sessionStorage.getItem("size"));
     const [user, setuser] = React.useState(null);
     const [nickname, nicknameUpdate] = React.useState("");
     const [status, statusUpdate] = React.useState("");
@@ -129,6 +130,7 @@ import { useNavigate } from 'react-router-dom';
       function updateBio(e) {
         bioUpdate(e.target.value);
       };
+
       function updateDiscord(e) {
         discordUpdate(e.target.value);
       };
@@ -304,32 +306,38 @@ import { useNavigate } from 'react-router-dom';
       alert("Account has been deleted.");
       navigate("/");
     }
+
+    function changeFontSize () {
+      sessionStorage.setItem("size", "200%");
+      console.log("button pressed");
+      setFont("200%");
+    }
     return (
        <React.Fragment>
        <NavigationBar />
        <div className="background">
            <div className='prof-container'>
                <div className='box2'>
-                   <div className='img-box'alt="profile-img">
+                   <div className='img-box'alt="profile-img" id="container" >
                    <Avatar 
                        name={user.nickname}
                        color={'#7F00FF'}
                        round={true}
                        size="70">
                    </Avatar>
-                   <h2 className='name'>{user.nickname}</h2>
-                   <h3 className='des'>{user.status}</h3>
-                   <h4 className="des"> Discord: {user.discord}</h4>
+                   <h2 className='name' id="container" style={{fontSize:fontSize}}>{user.nickname}</h2>
+                   <h3 className='des' id="container" style={{fontSize:fontSize}}>{user.status}</h3>
+                   <h4 className="des" id="container" style={{fontSize:fontSize}}> Discord: {user.discord}</h4>
                    
-                   <div className="deleteAccount">
+                   <div className="deleteAccount" id="container">
                    <button className="button-3" onClick={deleteAccount}> Delete Account </button> </div>
 
                    </div>
                    <div className="description-box">
-                       <h5>{user.bio}</h5>
+                       <h5 style={{fontSize:fontSize}}>{user.bio}</h5>
                    </div>
                    <br/>
-                   <div className="editProfile">
+                   <div className="editProfile" id="container">
                    <button className="button-3" onClick={() => {
                       form ? setform(false) : setform(true)
                     }}> Edit User Profile </button> </div>
@@ -337,24 +345,24 @@ import { useNavigate } from 'react-router-dom';
                    
                    <br/>
                    <div className="gameName-box">
-                      <h2 className="GameNames">GAME NAMES:</h2>
+                      <h2 className="GameNames" id="container" style={{fontSize:fontSize}}>GAME NAMES:</h2>
                       <div className="gameTags">
-                       <label className="gamesTitles">League of Legends: </label> <p className="GameNames">{leagueName} </p>
-                       <label className="gamesTitles">PUBG:</label> <p className="GameNames">{pubgName} </p>
-                       <label className="gamesTitles">Smite: </label> <p className="GameNames">{smiteName} </p>
+                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>League of Legends: </label> <p className="GameNames">{leagueName} </p>
+                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>PUBG:</label> <p className="GameNames">{pubgName} </p>
+                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>Smite: </label> <p className="GameNames">{smiteName} </p>
                       </div>
                    </div>
                    <br/>
                    
                    <br/>
-                   <div className="editProfile">
+                   <div className="editProfile" id="container">
                    <button className="button-3" onClick={() => {
                       tag ? setTags(false) : setTags(true)
                     }}> Set Gamer Tags</button> </div>
                    {tag ? showForm() : null}
                    <br/>
-                   <br/>                  
-                   
+                   <br/> 
+                   <button className="button-3" id="container" onClick={changeFontSize}>Large Text</button>                 
                </div>
            </div>
        </div>
