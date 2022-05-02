@@ -4,6 +4,7 @@ import "./dashboardPage.css";
 import NavigationBar from "./../NavigationBar/navBar";
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
+import { apiKey, naApiRoute, apiRequest } from "../LeagueStatsPage/leagueApi";
 
 
 function getRankFromPoint(bestRankPoint){
@@ -36,6 +37,18 @@ function getGameNames () {
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
             sessionStorage.setItem("leagueName", res.data.gamename);
             console.log("League Name: ", sessionStorage.getItem("leagueName"));
+
+            const summoner_name = res.data.gamename;
+            let request = naApiRoute + "/lol/summoner/v4/summoners/by-name/" + summoner_name + "?api_key=" + apiKey;
+            apiRequest(request).then(summonerJson => {
+              const encrypted_id = summonerJson.id;
+              request = naApiRoute + "/lol/league/v4/entries/by-summoner/" + encrypted_id + "?api_key=" + apiKey;
+              apiRequest(request).then(rankJson => {
+                const rankInfo = rankJson[0];
+                const leagueRank = rankInfo.tier + " " + rankInfo.rank;
+                resetLeagueRank(leagueRank);
+              });
+            });
         }).catch((err) => {
             if(err.response && err.response.status === 400) {
             sessionStorage.setItem("leagueName", "");
@@ -98,6 +111,48 @@ function getGameNames () {
             sessionStorage.setItem("smiteName", res.data.gamename);
             
             console.log("Smite Name: ", sessionStorage.getItem("smiteName"));
+            const ign = sessionStorage.getItem("smiteName");
+            axios.get(getBackendAddress() + "/smiteapi/getstats/" + ign)
+            .then(res => {
+                const statsJson = res.data;
+                let smiteRank = "";
+                switch(statsJson.playerinfo.RankedConquest.Tier) {
+                  case 1: smiteRank = "Bronze V"; break;
+                  case 2: smiteRank = "Bronze IV"; break;
+                  case 3: smiteRank = "Bronze III"; break;
+                  case 4: smiteRank = "Bronze II"; break;
+                  case 5: smiteRank = "Bronze I"; break;
+                  case 6: smiteRank = "Silver V"; break;
+                  case 7: smiteRank = "Silver IV"; break;
+                  case 8: smiteRank = "Silver III"; break;
+                  case 9: smiteRank = "Silver II"; break;
+                  case 10: smiteRank = "Silver I"; break;
+                  case 11: smiteRank = "Gold V"; break;
+                  case 12: smiteRank = "Gold IV"; break;
+                  case 13: smiteRank = "Gold III"; break;
+                  case 14: smiteRank = "Gold II"; break;
+                  case 15: smiteRank = "Gold I"; break;
+                  case 16: smiteRank = "Platinum V"; break;
+                  case 17: smiteRank = "Platinum IV"; break;
+                  case 18: smiteRank = "Platinum III"; break;
+                  case 19: smiteRank = "Platinum II"; break;
+                  case 20: smiteRank = "Platinum I"; break;
+                  case 21: smiteRank = "Diamond V"; break;
+                  case 22: smiteRank = "Diamond IV"; break;
+                  case 23: smiteRank = "Diamond III"; break;
+                  case 24: smiteRank = "Diamond II"; break;
+                  case 25: smiteRank = "Diamond I"; break;
+                  case 26: smiteRank = "Masters"; break;
+                  case 27: smiteRank = "Grandmasters"; break;
+                  default: smiteRank = "Unranked"; break;
+              }
+              resetSmiteRank(smiteRank);
+            })
+            .catch(err => {
+                if(err.response && err.response.status === 400) {
+                    console.log("Could not get Smite rank");
+                }
+            });
             
           }).catch((err) => {
             if(err.response && err.response.status === 400) {
@@ -116,6 +171,26 @@ function resetRank(rank) {
         rank: rank,
         gamename: sessionStorage.getItem("pubgName"),
     }).then(result => console.log("Update:", result));
+}
+
+function resetLeagueRank(rank) {
+  axios
+  .patch(getBackendAddress() + "/league/update", {
+      user_id: sessionStorage.getItem("user_id"),
+      game: "league",
+      rank: rank,
+      gamename: sessionStorage.getItem("leagueName"),
+  }).then(result => console.log("Update:", result));
+}
+
+function resetSmiteRank(rank) {
+  axios
+  .patch(getBackendAddress() + "/smite/update", {
+      user_id: sessionStorage.getItem("user_id"),
+      game: "smite",
+      rank: rank,
+      gamename: sessionStorage.getItem("smiteName"),
+  }).then(result => console.log("Update:", result));
 }
 
 function DashboardPage() {
