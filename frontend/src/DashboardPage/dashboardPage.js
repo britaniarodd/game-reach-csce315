@@ -6,6 +6,31 @@ import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
 
 
+function getRankFromPoint(bestRankPoint){
+    var PUBGRank = "";
+    if (bestRankPoint < 1500){
+      PUBGRank = "Bronze";
+    }
+    else if (bestRankPoint >= 1500 && bestRankPoint < 2000){
+      PUBGRank = "Silver";
+    }
+    else if (bestRankPoint >= 2000 && bestRankPoint < 2500){
+      PUBGRank = "Gold";
+    }
+    else if (bestRankPoint >= 2500 && bestRankPoint < 3000){
+      PUBGRank = "Platinum";
+    }
+    else if (bestRankPoint >= 3000 && bestRankPoint < 3500){
+      PUBGRank = "Diamond";
+    }
+    else{
+      PUBGRank = "Master";
+    }
+    return PUBGRank;
+  }
+
+
+
 function getGameNames () {
     axios
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
@@ -21,7 +46,47 @@ function getGameNames () {
         .get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
             sessionStorage.setItem("pubgName", res.data.gamename);
             
-            console.log("Pubg Name: ", sessionStorage.getItem("pubgName"));
+            console.log("Pubg Name upon load: ", sessionStorage.getItem("pubgName"));
+            var name = sessionStorage.getItem("pubgName");
+            fetch(
+                `https://api.pubg.com/shards/steam/players?filter[playerNames]=${name}`,
+                {
+                  headers: {
+                    Authorization:
+                      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNTNjNTJlMC1hNGE2LTAxM2EtZjMwZS0yYmJhOGI1OWNiNGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjUwNjU4NDI5LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImdhbWVyZWFjaCJ9.Fja9Ktnp9-ZUZWzTiJSYkAH3JuN7XUK7VFhkWOJuPDE",
+                    Accept: "application/vnd.api+json",
+                  },
+                }
+              )
+                //then, response parameter holds the string. afterwards, response.json() turns it into a json that we can use
+                .then((response) => response.json())
+                //then, data now holds response.json() (like chain link system); we can use data to manage our data and get the player id
+                .then((data) => {
+                  const id = data.data[0].id;
+                  console.log(id);
+                  //using player id, get individual lifetime stats from API
+                  fetch(
+                    `https://api.pubg.com/shards/steam/players/${id}/seasons/lifetime?filter[gamepad]=false`,
+                    {
+                      headers: {
+                        Authorization:
+                          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNTNjNTJlMC1hNGE2LTAxM2EtZjMwZS0yYmJhOGI1OWNiNGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjUwNjU4NDI5LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImdhbWVyZWFjaCJ9.Fja9Ktnp9-ZUZWzTiJSYkAH3JuN7XUK7VFhkWOJuPDE",
+                        Accept: "application/vnd.api+json",
+                      },
+                    }
+                  )
+                    //now response holds the lifetime stats data. do response.json to turn it into json
+                    .then((response) => response.json())
+                    //data now holds json
+                    .then((data) => {
+                        var rankPoint = data.data.attributes.bestRankPoint;
+                        var rank = getRankFromPoint(rankPoint);
+                        //console.log("Rank for PUBG: " + rank);
+                        resetRank(rank);
+                    }
+                    );
+                })
+        
             
           }).catch((err) => {
             if(err.response && err.response.status === 400) {
@@ -43,9 +108,14 @@ function getGameNames () {
     return true;
 }
 
-function resetRank(done) {
-    console.log(sessionStorage.getItem("leagueName"))
-    //add a pi ranking calls here 
+function resetRank(rank) {
+    axios
+    .patch(getBackendAddress() + "/pubg/update", {
+        user_id: sessionStorage.getItem("user_id"),
+        game: "pubg",
+        rank: rank,
+        gamename: sessionStorage.getItem("pubgName"),
+    }).then(result => console.log("Update:", result));
 }
 
 function DashboardPage() {
@@ -53,7 +123,8 @@ function DashboardPage() {
     
     sessionStorage.setItem("loggedIn", true);
     //console.log(getGameNames());
-    resetRank(getGameNames());
+    //resetRank(getGameNames());
+    getGameNames();
     
     console.log(sessionStorage.getItem("leagueName"), sessionStorage.getItem("pubgName"), sessionStorage.getItem("smiteName"));
     // ADD Rankings for each game
@@ -110,6 +181,8 @@ function DashboardPage() {
         );
 
 }
+
+
 
 
 export default DashboardPage;
