@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavigationBar from "./../NavigationBar/navBar";
 import { getBackendAddress } from "../backendrequest";
 import { StatBox, StatElement } from "../StatsComponents";
-import SearchBar from "../PUBGStatsPage/searchPlayer";
+import smitelogo from "./Smite-Logo.jpg";
 
 export default function SmiteStatsPage(props) {
-    const [statsSearched, setStatsSearched] = useState(false);
     const [typedName, setTypedName] = useState("");
     const [statsJson, setStatsJson] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
+    useEffect(() => {
+        const smiteName = sessionStorage.getItem("smiteName");
+        if(smiteName.length > 0) {
+            setTypedName(smiteName);
+            lookupUser(smiteName);
+        }
+    }, []);
+
     function lookupUserType(e) {
         if (e.key === "Enter") {
-            lookupUser();
+            lookupUser(typedName);
         }
     }
 
-    function lookupUser() {
-        const ign = typedName;
+    function lookupUser(ign) {
         axios.get(getBackendAddress() + "/smiteapi/getstats/" + ign)
         .then(res => {
             setStatsJson(res.data);
-            setStatsSearched(true);
-            console.log(res.data);
             setErrorMessage("");
         })
         .catch(err => {
@@ -33,27 +37,26 @@ export default function SmiteStatsPage(props) {
         });
     }
 
-    function getPlayerDetails(player) {
-        return (
-            <div style={{ fontSize: "1.1rem" }}>
-                <p>{player["Reference_Name"]}</p>
-            </div>
-        );
-    }
-
     function getMatchDetails(match) {
-        console.log(match);
         return (
-            <div style={{ fontSize: "1.1rem" }}>
+            <div style={{ fontSize: "1rem" }}>
                 <p>{match["0"].name}</p>
                 <p>{match["0"].Minutes} min</p>
-                <p>{match["0"].Entry_Datetime} UDT</p>
+                <p>{new Date(match["0"].Entry_Datetime).toLocaleString('en-US')}</p>
             </div>
         );
     }
 
-    function getPlayerName(player) {
-        return <p style={{ fontSize: "0.9rem" }}>{player.hz_player_name || player.hz_gamer_tag || "Private"}</p>;
+    function getStat(match, lambda) {
+        return (
+            <div style={{ fontSize: "1rem" }}>
+                {Object.keys(match).map(playerKey => {
+                    return (
+                        <p key={playerKey}>{lambda(match[playerKey])}</p>
+                    );
+                })}
+            </div>
+        );
     }
 
     function showHistory() {
@@ -67,9 +70,15 @@ export default function SmiteStatsPage(props) {
                         <React.Fragment key={key}>
                             <StatBox>
                                 <StatElement title="Game Info" value={getMatchDetails(statsJson[key])} description="" />
-                                {Object.keys(statsJson[key]).map(playerKey => {
-                                    return <StatElement key={playerKey} title={getPlayerName(statsJson[key][playerKey])} value={getPlayerDetails(statsJson[key][playerKey])} description="" />
-                                })}
+                                <StatElement title="Player" value={getStat(statsJson[key], player => player.hz_player_name || player.hz_gamer_tag || "Private Profile")} description="" />
+                                <StatElement title="God" value={getStat(statsJson[key], player => player.Reference_Name)} description="" />
+                                <StatElement title="Outcome" value={getStat(statsJson[key], player => player.Win_Status)} description="" />
+                                <StatElement title="Kills" value={getStat(statsJson[key], player => player.Kills_Player)} description="" />
+                                <StatElement title="Deaths" value={getStat(statsJson[key], player => player.Deaths)} description="" />
+                                <StatElement title="Assists" value={getStat(statsJson[key], player => player.Assists)} description="" />
+                                <StatElement title="Dmg Done" value={getStat(statsJson[key], player => player.Damage_Player)} description="" />
+                                <StatElement title="Phys Dmg Taken" value={getStat(statsJson[key], player => player.Damage_Taken_Physical)} description="" />
+                                <StatElement title="Magic Dmg Taken" value={getStat(statsJson[key], player => player.Damage_Taken_Magical)} description="" />
                             </StatBox>
                             <br />
                         </React.Fragment>
@@ -79,13 +88,46 @@ export default function SmiteStatsPage(props) {
         );
     }
 
+    function tierToRank(tier) {
+        switch(tier) {
+            case 1: return <p>Bronze V</p>;
+            case 2: return <p>Bronze IV</p>;
+            case 3: return <p>Bronze III</p>;
+            case 4: return <p>Bronze II</p>;
+            case 5: return <p>Bronze I</p>;
+            case 6: return <p>Silver V</p>;
+            case 7: return <p>Silver IV</p>;
+            case 8: return <p>Silver III</p>;
+            case 9: return <p>Silver II</p>;
+            case 10: return <p>Silver I</p>;
+            case 11: return <p>Gold V</p>;
+            case 12: return <p>Gold IV</p>;
+            case 13: return <p>Gold III</p>;
+            case 14: return <p>Gold II</p>;
+            case 15: return <p>Gold I</p>;
+            case 16: return <p>Platinum V</p>;
+            case 17: return <p>Platinum IV</p>;
+            case 18: return <p>Platinum III</p>;
+            case 19: return <p>Platinum II</p>;
+            case 20: return <p>Platinum I</p>;
+            case 21: return <p>Diamond V</p>;
+            case 22: return <p>Diamond IV</p>;
+            case 23: return <p>Diamond III</p>;
+            case 24: return <p>Diamond II</p>;
+            case 25: return <p>Diamond I</p>;
+            case 26: return <p>Masters</p>;
+            case 27: return <p>Grandmasters</p>;
+            default: return <p>Unranked</p>
+        }
+    }
+
     function statsForMode(mode, displayname) {
-        console.log(mode);
         return (
             <React.Fragment>
                 <h3 className="center">{displayname}</h3>
                 <StatBox>
                     <StatElement title="MMR" value={Math.round(statsJson.playerinfo[mode].Rank_Stat)} description="" />
+                    <StatElement title="Rank" value={tierToRank(statsJson.playerinfo[mode].Tier)} description="" />
                     <StatElement title="Wins" value={statsJson.playerinfo[mode].Wins} description="" />
                     <StatElement title="Losses" value={statsJson.playerinfo[mode].Losses} description="" />
                 </StatBox>
@@ -93,7 +135,7 @@ export default function SmiteStatsPage(props) {
     }
 
     function showStats() {
-        if(statsSearched) {
+        if(statsJson.playerinfo != undefined) {
             if(statsJson.playerinfo.ret_msg) {
                 return <h3 className="center">Player Profile is Private</h3>;
             }
@@ -116,6 +158,8 @@ export default function SmiteStatsPage(props) {
                             <div className="m-3">
                                 {statsForMode("RankedConquestController", "Ranked Conquest Controller")}
                             </div>
+                        </div>
+                        <div className="d-flex justify-center">
                             <div className="m-3">
                                 {statsForMode("RankedJoust", "Ranked Joust")}
                             </div>
@@ -134,13 +178,14 @@ export default function SmiteStatsPage(props) {
     return (
         <div className="background">
             <NavigationBar />
+            <img className="center" src={smitelogo} style={{ maxWidth: "20%" }} />
             <h1 className="center">Smite Stats</h1>
                 <div className="flex justify-center">
                     <div className="flex">
-                        <input className="bg-neutral-700 px-4 py-2 outline-none text-black" type="text" placeholder="Search Smite Players" onKeyDown={lookupUserType} onChange={e => setTypedName(e.target.value)}></input>
+                        <input className="bg-neutral-700 px-4 py-2 outline-none text-black" type="text" placeholder="Search Smite Players" value={typedName} onKeyDown={lookupUserType} onChange={e => setTypedName(e.target.value)}></input>
                         <button
                             className="bg-purple-600 px-4 py-2 rounded-sm hover:bg-purple-800 font-semibold"
-                            onClick={lookupUser}
+                            onClick={e => lookupUser(typedName)}
                             >
                             Search Players
                         </button>

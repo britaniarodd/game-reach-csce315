@@ -54,7 +54,7 @@ label {
     position:relative;
 }
 .box--smite {
-    background-image: linear-gradient(to bottom, rgba(252, 252, 245, 0.52), rgb(69, 65, 82)), url(./smite_logo.png);
+    background-image: linear-gradient(to bottom, rgba(252, 252, 245, 0.52), rgb(69, 65, 82)), url(./smite_logo_crop.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

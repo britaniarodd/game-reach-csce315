@@ -11,13 +11,17 @@ import emblem_iron from "./Emblem_Iron.png";
 import emblem_master from "./Emblem_Master.png";
 import emblem_platinum from "./Emblem_Platinum.png";
 import emblem_silver from "./Emblem_Silver.png";
-import MatchComponent from "./matchComponent";
+import NavigationBar from "./../NavigationBar/navBar";
+import { StatBox, StatElement } from "../StatsComponents";
+import leaguelogo from "./logo.png";
 
 class LeagueStatsPage extends Component {
     state = {
+        typedName: "",
+        errorMessage: "",
         account_name: "",
         account_level: 0,
-        rank: emblem_bronze,
+        rank: undefined,
         wins: 0,
         losses: 0,
         tier: "",
@@ -28,39 +32,98 @@ class LeagueStatsPage extends Component {
     render() {
         return (
             <div className="background">
-                <p>League Stats</p>
-                <input
-                    type="text"
-                    onKeyDown={this.lookupUser.bind(this)}
-                ></input>
+                <NavigationBar />
+                <img className="center" src={leaguelogo} style={{ maxWidth: "20%" }} />
+                <h1 className="center">League Stats</h1>
+                    <div className="flex justify-center">
+                        <div className="flex">
+                            <input className="bg-neutral-700 px-4 py-2 outline-none text-black" type="text" placeholder="Search League Players" value={this.state.typedName} onKeyDown={this.lookupUserType} onChange={e => this.setState({ typedName: e.target.value })}></input>
+                            <button
+                                className="bg-purple-600 px-4 py-2 rounded-sm hover:bg-purple-800 font-semibold"
+                                onClick={e => this.lookupUser(this.state.typedName)}
+                                >
+                                Search Players
+                            </button>
+                        </div>
+                    </div>
+                    <p>{this.state.errorMessage}</p>
+                    {this.statsHTML()}
+                    {this.matchHistories()}
+            </div>);
+    }
 
-                <div>
-                    <div className="statColumn">
-                        <p>Account Name: {this.state.account_name}</p>
-                        <p>Account Level: {this.state.account_level}</p>
-                        <p>Wins: {this.state.wins}</p>
-                        <p>Losses: {this.state.losses}</p>
-                        {this.state.matches.map((match, idx) => {
+    statsHTML() {
+        if(this.state.account_name.length > 0) {
+            return (
+                <React.Fragment>
+                    <h3 className="center">Player Info</h3>
+                    <StatBox>
+                        <StatElement title="Name" value={this.state.account_name} description="" />
+                        <StatElement title="Player Level" value={this.state.account_level} description="" />
+                        <StatElement title="Rank" value={this.state.tier + " " + this.state.rankStr} description="" />
+                        <StatElement title="Rank Icon" value={<img style={{ maxWidth: "10vw" }} src={this.state.rank} alt={"League rank icon for " + this.state.tier} /> || "Unranked"} description="" />
+                        <StatElement title="Wins" value={this.state.wins} description="" />
+                        <StatElement title="Losses" value={this.state.losses} description="" />
+                    </StatBox>
+                </React.Fragment>
+            );
+        }
+        return <React.Fragment />
+    }
+
+    matchInfo(match) {
+        return (
+            <div style={{ fontSize: "1rem" }}>
+                <p>{match.info.gameMode}</p>
+                <p>{Math.round(match.info.gameDuration / 60)} min</p>
+                <p>{new Date(match.info.gameStartTimestamp).toLocaleString('en-US')}</p>
+            </div>
+        );
+    }
+
+    getStat(match, stat) {
+        return (
+            <div style={{ fontSize: "1rem" }}>
+                {match.info.participants.map(player => {
+                    return (
+                        <p key={player.puuid}>{player[stat]}</p>
+                    );
+                })}
+            </div>
+        );
+    }
+
+    matchHistories() {
+        if(this.state.account_name.length > 0) {
+            return (
+                <React.Fragment>
+                <h3 className="center">Match History</h3>
+                    <div>
+                        {this.state.matches.map(match => {
+                            console.log(match);
                             return (
-                                <MatchComponent
-                                    key={match.metadata.matchId}
-                                    match_info={match}
-                                    leagueApiKey={this.apiKey}
-                                    apiRoute={this.apiRoute}
-                                />
+                                <div key={match.metadata.matchId}>
+                                    <StatBox>
+                                        <StatElement title="Game Info" value={this.matchInfo(match)} description="" />
+                                        <StatElement title="Player" value={this.getStat(match, "summonerName")} description="" />
+                                        <StatElement title="Champion" value={this.getStat(match, "championName")} description="" />
+                                        <StatElement title="Role" value={this.getStat(match, "teamPosition")} description="" />
+                                        <StatElement title="Kills" value={this.getStat(match, "kills")} description="" />
+                                        <StatElement title="Deaths" value={this.getStat(match, "deaths")} description="" />
+                                        <StatElement title="Assists" value={this.getStat(match, "assists")} description="" />
+                                        <StatElement title="Dmg Done" value={this.getStat(match, "totalDamageDealtToChampions")} description="" />
+                                        <StatElement title="Phys Dmg Taken" value={this.getStat(match, "physicalDamageTaken")} description="" />
+                                        <StatElement title="Magic Dmg Taken" value={this.getStat(match, "magicDamageTaken")} description="" />
+                                    </StatBox>
+                                    <br />
+                                </div>
                             );
                         })}
                     </div>
-                    <div className="statColumn">
-                        <p>
-                            {this.state.tier} {this.state.rankStr}
-                        </p>
-                        <img src={this.state.rank} alt={this.state.rankStr}></img>
-                    </div>
-                </div>
-                <div className="clearBoth" />
-            </div>
-        );
+                </React.Fragment>
+            );
+        }
+        return <React.Fragment />
     }
 
     async getRankInfo(encrypted_id) {
@@ -116,7 +179,7 @@ class LeagueStatsPage extends Component {
                 this.setState({ rank: emblem_silver, tier: "Silver" });
                 break;
             default:
-                this.setState({ rank: "", tier: "" });
+                this.setState({ rank: undefined, tier: "" });
         }
     }
 
@@ -141,31 +204,35 @@ class LeagueStatsPage extends Component {
         return apiRequest(request);
     }
 
-    async lookupUser(e) {
+    async lookupUser(ign) {
+        const summonerJson = await this.getSummonerInfo(ign);
+        this.setState({
+            account_name: summonerJson.name,
+            account_level: summonerJson.summonerLevel,
+        });
+
+        const encrypted_id = summonerJson.id;
+        const puuid = summonerJson.puuid;
+
+        const rankJson = await this.getRankInfo(encrypted_id);
+        const rankInfo = rankJson[0];
+        this.setState({
+            wins: rankInfo.wins,
+            losses: rankInfo.losses,
+            rankStr: rankInfo.rank,
+        });
+        this.setTier(rankInfo.tier);
+
+        const matchIdsJson = await this.getMatches(puuid, 10);
+        for (let i = 0; i < 10; i++) {
+            const match_info = await this.getMatchInfo(matchIdsJson[i]);
+            this.setState({ matches: [...this.state.matches, match_info] });
+        }
+    }
+
+    lookupUserType = (e) => {
         if (e.key === "Enter") {
-            const summonerJson = await this.getSummonerInfo(e.target.value);
-            this.setState({
-                account_name: summonerJson.name,
-                account_level: summonerJson.summonerLevel,
-            });
-
-            const encrypted_id = summonerJson.id;
-            const puuid = summonerJson.puuid;
-
-            const rankJson = await this.getRankInfo(encrypted_id);
-            const rankInfo = rankJson[0];
-            this.setState({
-                wins: rankInfo.wins,
-                losses: rankInfo.losses,
-                rankStr: rankInfo.rank,
-            });
-            this.setTier(rankInfo.tier);
-
-            const matchIdsJson = await this.getMatches(puuid, 10);
-            for (let i = 0; i < 10; i++) {
-                const match_info = await this.getMatchInfo(matchIdsJson[i]);
-                this.setState({ matches: [...this.state.matches, match_info] });
-            }
+            this.lookupUser(e.target.value);
         }
     }
 }
