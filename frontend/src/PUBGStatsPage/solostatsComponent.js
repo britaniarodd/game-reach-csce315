@@ -14,33 +14,33 @@ function SoloStatsComponent({
       alert("Solo Gameplay: Everyone for themselves!");
     }
     else{
-      alert("Solo Gameplay: First Person Point-of-View")
+      alert("Solo Gameplay: First Person Point-of-View");
     }
   }
 
   function alertStats(statName){
-    if (statName === "kills"){
-      //put alerts here
-      console.log("Kills");
+    // if (statName === "kills"){
+    //   //put alerts here
+    //   alert("Total number of kills");
+    // }
+    if (statName === "KDRatio"){
+      alert("Ratio between kills and deaths");
     }
-    else if (statName === "KDRatio"){
-      console.log("KDRatio");
-    }
-    else if (statName === "Wins"){
-      console.log("Wins");
-    }
+    // else if (statName === "Wins"){
+    //   alert("First Place! Congrats!");
+    // }
     else if (statName === "WLRatio"){
-      console.log("WLRatio");
+      alert("Ratio between wins and losses");
     }
-    else if (statName === "Assists"){
-      console.log("Assists");
-    }
+    // else if (statName === "Assists"){
+    //   alert("Number of assists");
+    // }
     else if (statName === "TopTen"){
-      console.log("Top Ten");
+      alert("Number of times placed in Top Ten");
     }
-    else{
-      console.log("Suicide");
-    }
+    // else{
+    //   alert("Are you unlucky? Or are you just bad.");
+    // }
 
   }
 
@@ -62,9 +62,9 @@ function SoloStatsComponent({
           <div className="stat-figure text-secondary">
 
           </div>
-          <button onClick={() => alertStats("kills")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">Kills</div>
-          </button>
+          {/* <button onClick={() => alertStats("kills")} className="bg-transparent border-none"> */}
+          <div className="stat-title text-gray-400">Kills</div>
+          {/* </button> */}
           <div className="stat-value text-gray-400">{kills}</div>
 
         </div>
@@ -73,7 +73,7 @@ function SoloStatsComponent({
 
           </div>
           <button onClick={() => alertStats("KDRatio")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">KD Ratio</div>
+          <div className="stat-title text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">KD Ratio</div>
           </button>
           <div className="stat-value text-gray-400">{KDRatio}</div>
 
@@ -82,9 +82,9 @@ function SoloStatsComponent({
           <div className="stat-figure text-secondary">
 
           </div>
-          <button onClick={() => alertStats("Wins")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">Wins</div>
-          </button>
+          {/* <button onClick={() => alertStats("Wins")} className="bg-transparent border-none"> */}
+          <div className="stat-title text-gray-400">Wins</div>
+          {/* </button> */}
           <div className="stat-value text-gray-400">{wins}</div>
 
         </div>
@@ -94,7 +94,7 @@ function SoloStatsComponent({
 
           </div>
           <button onClick={() => alertStats("WLRatio")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">Win Loss Ratio</div>
+          <div className="stat-title text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Win Loss Ratio</div>
           </button>
           <div className="stat-value text-gray-400">{wLratio}%</div>
 
@@ -104,9 +104,9 @@ function SoloStatsComponent({
           <div className="stat-figure text-secondary">
 
           </div>
-          <button onClick={() => alertStats("Assists")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">Assists</div>
-          </button>
+          {/* <button onClick={() => alertStats("Assists")} className="bg-transparent border-none"> */}
+          <div className="stat-title text-gray-400">Assists</div>
+          {/* </button> */}
           <div className="stat-value text-gray-400">{assists}</div>
 
         </div>
@@ -116,7 +116,7 @@ function SoloStatsComponent({
 
           </div>
           <button onClick={() => alertStats("TopTen")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">Top Ten</div>
+          <div className="stat-title text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Top Ten</div>
           </button>
           <div className="stat-value text-gray-400">{topten}</div>
 
@@ -125,9 +125,9 @@ function SoloStatsComponent({
           <div className="stat-figure text-secondary">
 
           </div>
-          <button onClick={() => alertStats("Suicides")} className="bg-transparent border-none">
-          <div className="stat-title text-gray-400 hover:text-white transition ease-in-out duration-200 hover:underline">Suicides</div>
-          </button>
+          {/* <button onClick={() => alertStats("Suicides")} className="bg-transparent border-none"> */}
+          <div className="stat-title text-gray-400">Suicides</div>
+          {/* </button> */}
           <div className="stat-value text-gray-400">{suicides}</div>
 
         </div>
