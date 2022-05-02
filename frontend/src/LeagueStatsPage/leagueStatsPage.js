@@ -29,6 +29,14 @@ class LeagueStatsPage extends Component {
         matches: [],
     };
 
+    componentDidMount() {
+        const leagueName = sessionStorage.getItem("leagueName");
+        if(leagueName.length > 0) {
+            this.setState({ typedName: leagueName });
+            this.lookupUser(leagueName);
+        }
+    }
+
     render() {
         return (
             <div className="background">
