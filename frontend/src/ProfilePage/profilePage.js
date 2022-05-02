@@ -308,10 +308,23 @@ import { useNavigate } from 'react-router-dom';
     }
 
     function changeFontSize () {
-      sessionStorage.setItem("size", "200%");
-      console.log("button pressed");
-      setFont("200%");
+      if (fontSize == "250%") {
+        setFont("150%");
+        sessionStorage.setItem("size", "150%");
+      } else {
+        sessionStorage.setItem("size", "200%");
+        setFont("250%");
+      }
     }
+
+    function showLargeText (){
+      return <button className="button-3" id="container" style={{fontSize:fontSize}} onClick={changeFontSize}>Enlargen Text</button>   ;              
+    }
+
+    function showSmallText() {
+      return <button className="button-3" id="container" style={{fontSize:fontSize}} onClick={changeFontSize}>Shrink Text</button>                 
+    }
+
     return (
        <React.Fragment>
        <NavigationBar />
@@ -347,22 +360,22 @@ import { useNavigate } from 'react-router-dom';
                    <div className="gameName-box">
                       <h2 className="GameNames" id="container" style={{fontSize:fontSize}}>GAME NAMES:</h2>
                       <div className="gameTags">
-                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>League of Legends: </label> <p className="GameNames">{leagueName} </p>
-                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>PUBG:</label> <p className="GameNames">{pubgName} </p>
-                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>Smite: </label> <p className="GameNames">{smiteName} </p>
+                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>League of Legends: </label> <p className="GameNames" style={{fontSize:fontSize}}>{leagueName} </p>
+                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>PUBG:</label> <p className="GameNames" style={{fontSize:fontSize}}>{pubgName} </p>
+                       <label className="gamesTitles" id="container" style={{fontSize:fontSize}}>Smite: </label> <p className="GameNames" style={{fontSize:fontSize}}>{smiteName} </p>
                       </div>
                    </div>
                    <br/>
                    
                    <br/>
                    <div className="editProfile" id="container">
-                   <button className="button-3" onClick={() => {
+                   <button className="button-3"  onClick={() => {
                       tag ? setTags(false) : setTags(true)
                     }}> Set Gamer Tags</button> </div>
                    {tag ? showForm() : null}
                    <br/>
                    <br/> 
-                   <button className="button-3" id="container" onClick={changeFontSize}>Large Text</button>                 
+                   {fontSize =="250%" ? showSmallText() : showLargeText()}
                </div>
            </div>
        </div>

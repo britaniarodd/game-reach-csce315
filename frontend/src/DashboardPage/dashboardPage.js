@@ -6,6 +6,8 @@ import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
 
 function DashboardPage() {
+    const [fontSize] = React.useState(sessionStorage.getItem("size"));
+    
     sessionStorage.setItem("loggedIn", true);
     axios
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
@@ -45,9 +47,9 @@ function DashboardPage() {
             <React.Fragment>
             <NavigationBar />
             <div className="background">
-            <h1>  Welcome, {sessionStorage.getItem("nickname")}!</h1>
+            <h1 >  Welcome, {sessionStorage.getItem("nickname")}!</h1>
             <br/>
-            <h3>  Select "View Stats" for a game below:</h3>
+            <h3 style={{fontSize:fontSize}}>  Select "View Stats" for a game below:</h3>
             <div className="row1">
                 <div className="column1 box--league center">
                     <label>League of Legends</label>
@@ -57,7 +59,7 @@ function DashboardPage() {
 
                     <a href="/leaguestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     
-                    <div className="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
+                    <div className="trn-button center" id="bottom" data-v-3ce7f89e="" style={{fontSize:fontSize}}>View Stats</div>
             
                     </a>
                 </div>
@@ -68,7 +70,7 @@ function DashboardPage() {
                         
                     </div>
                     <a href="/PUBGStats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
-                    <div className="trn-button center" id="bottom">View Stats</div>
+                    <div className="trn-button center" id="bottom" style={{fontSize:fontSize}}>View Stats</div>
             
                     </a>
                     
@@ -81,7 +83,7 @@ function DashboardPage() {
                     </div>
                     <a href="/smitestats" className="title box" data-v-3ce7f89e="" data-v-32c8451d=""> 
                     
-                    <div className="trn-button center" id="bottom" data-v-3ce7f89e="">View Stats</div>
+                    <div className="trn-button center" id="bottom" data-v-3ce7f89e="" style={{fontSize:fontSize}}>View Stats</div>
 
                     </a>
                     
