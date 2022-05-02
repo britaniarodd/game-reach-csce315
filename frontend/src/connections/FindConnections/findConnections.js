@@ -11,7 +11,7 @@ class FindConnections extends Component {
         rank: "All Ranks",
         users: [],
         leagueRanks: ["All Ranks", "Iron", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "Challenger"],
-        pubgRanks: ["All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Apex Predator"],
+        pubgRanks: ["All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master"],
         smiteRanks: [ "All Ranks", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster"],
         fontSize: sessionStorage.getItem("size"),
     }
@@ -54,7 +54,7 @@ class FindConnections extends Component {
         let ranks = []
         switch(this.state.game) {
             case "League of Legends": ranks = this.state.leagueRanks; break
-            case "pubg": ranks = this.state.pubgRanks; break
+            case "PUBG": ranks = this.state.pubgRanks; break
             case "Smite": ranks = this.state.smiteRanks; break
             default: return <div></div>
         }
