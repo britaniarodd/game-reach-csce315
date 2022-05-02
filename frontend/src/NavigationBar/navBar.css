@@ -12,14 +12,8 @@
     font-family: "Lucida Console", "Courier New", monospace;
     font-weight: bold;
     padding-left: 50px;
-    
-}
-.navbar-nav .nav-item .nav-link {
-    color: black;
 }
 
-
-.navbar .navbar-nav > li > a:hover{
-    background-color: #d6d4e1;
-    color: #FFFFFF;
-  }
+.nav-item:hover{
+    color: blue;
+}
