@@ -77,8 +77,8 @@ export default function SmiteStatsPage(props) {
                                 <StatElement title="Deaths" value={getStat(statsJson[key], player => player.Deaths)} description="" />
                                 <StatElement title="Assists" value={getStat(statsJson[key], player => player.Assists)} description="" />
                                 <StatElement title="Dmg Done" value={getStat(statsJson[key], player => player.Damage_Player)} description="" />
-                                <StatElement title="Phys Dmg Taken" value={getStat(statsJson[key], player => player.Damage_Taken_Physical)} description="" />
-                                <StatElement title="Magic Dmg Taken" value={getStat(statsJson[key], player => player.Damage_Taken_Magical)} description="" />
+                                <StatElement title={<button onClick={() => alert("Physical damage taken from other players")} className="bg-transparent border-none text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Phys Dmg Taken</button>} value={getStat(statsJson[key], player => player.Damage_Taken_Physical)} description="" />
+                                <StatElement title={<button onClick={() => alert("Magical damage taken from other players")} className="bg-transparent border-none text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Magic Dmg Taken</button>} value={getStat(statsJson[key], player => player.Damage_Taken_Magical)} description="" />
                             </StatBox>
                             <br />
                         </React.Fragment>
@@ -126,7 +126,7 @@ export default function SmiteStatsPage(props) {
             <React.Fragment>
                 <h3 className="center">{displayname}</h3>
                 <StatBox>
-                    <StatElement title="MMR" value={Math.round(statsJson.playerinfo[mode].Rank_Stat)} description="" />
+                    <StatElement title={<button onClick={() => alert("MMR is Match Making Rating")} className="bg-transparent border-none text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">MMR</button>} value={Math.round(statsJson.playerinfo[mode].Rank_Stat)} description="" />
                     <StatElement title="Rank" value={tierToRank(statsJson.playerinfo[mode].Tier)} description="" />
                     <StatElement title="Wins" value={statsJson.playerinfo[mode].Wins} description="" />
                     <StatElement title="Losses" value={statsJson.playerinfo[mode].Losses} description="" />
