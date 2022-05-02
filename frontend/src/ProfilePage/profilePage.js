@@ -171,7 +171,9 @@ import { useNavigate } from 'react-router-dom';
       
         console.log(sessionStorage.getItem("user_id"));
         if(leagueName != null) {
-          if (leagueRank == null) { var rank = "";} else{ rank = leagueRank;}
+          if (leagueRank == null) { var rank = "";} 
+          else if (sessionStorage.getItem("leagueName") != newLeagueName) { rank = ""; } 
+          else{ rank = leagueRank;}
           axios
           .patch(getBackendAddress() + "/league/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -192,7 +194,9 @@ import { useNavigate } from 'react-router-dom';
         }
 
         if(pubgName != null) { 
-          if (pubgRank == null) { rank = "";} else{ rank = pubgRank;}
+          if (pubgRank == null) { rank = "";} 
+          else if (sessionStorage.getItem("pubgName") != newPUBGName) { rank = ""; } 
+          else{ rank = pubgRank;}
           axios
           .patch(getBackendAddress() + "/pubg/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -213,7 +217,9 @@ import { useNavigate } from 'react-router-dom';
         }
 
         if(smiteName != null) { 
-          if (smiteRank == null) { rank = "";} else{ rank = smiteRank;}
+          if (smiteRank == null) { rank = "";} 
+          else if (sessionStorage.getItem("smiteName") != newSmiteName) { rank = ""; } 
+          else{ rank = smiteRank;}
           axios
           .patch(getBackendAddress() + "/smite/update", {
               user_id: sessionStorage.getItem("user_id"),

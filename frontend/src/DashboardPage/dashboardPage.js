@@ -5,10 +5,8 @@ import NavigationBar from "./../NavigationBar/navBar";
 import axios from "axios";
 import { getBackendAddress} from "../backendrequest";
 
-function DashboardPage() {
-    const [fontSize] = React.useState(sessionStorage.getItem("size"));
-    
-    sessionStorage.setItem("loggedIn", true);
+
+function getGameNames () {
     axios
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
             sessionStorage.setItem("leagueName", res.data.gamename);
@@ -16,7 +14,7 @@ function DashboardPage() {
         }).catch((err) => {
             if(err.response && err.response.status === 400) {
             sessionStorage.setItem("leagueName", "");
-                console.log("New Leagename found")
+                console.log("No Leagename found")
             }
         }); 
     axios
@@ -28,7 +26,7 @@ function DashboardPage() {
           }).catch((err) => {
             if(err.response && err.response.status === 400) {
                 sessionStorage.setItem("pubgName", "")
-                console.log("New PUBG found")
+                console.log("No PUBG found")
             }
         });
     axios.get(getBackendAddress() + "/smite/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
@@ -39,9 +37,25 @@ function DashboardPage() {
           }).catch((err) => {
             if(err.response && err.response.status === 400) {
                 sessionStorage.setItem("smiteName", "")
-                console.log("New PUBG found")
+                console.log("No PUBG found")
             }
           });
+    return true;
+}
+
+function resetRank(done) {
+    console.log(sessionStorage.getItem("leagueName"))
+    //add a pi ranking calls here 
+}
+
+function DashboardPage() {
+    const [fontSize] = React.useState(sessionStorage.getItem("size"));
+    
+    sessionStorage.setItem("loggedIn", true);
+    //console.log(getGameNames());
+    resetRank(getGameNames());
+    
+    console.log(sessionStorage.getItem("leagueName"), sessionStorage.getItem("pubgName"), sessionStorage.getItem("smiteName"));
     // ADD Rankings for each game
         return (
             <React.Fragment>
