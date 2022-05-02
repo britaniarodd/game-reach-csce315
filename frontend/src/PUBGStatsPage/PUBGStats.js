@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "./searchPlayer";
 import "../shared.css";
 import "./pubgstatspage.css";
@@ -9,7 +9,7 @@ import pubglogo from "./pubg-logo.jpg";
 
 function PUBGStats() {
   //different stats that will be set whenever a new name is entered
-  const [name, setName] = useState("");
+  const [name, setName] = useState(sessionStorage.getItem("pubgName"));
   const [displayName, setdisplayName] = useState("");
   //indicates whether or not a search has been made to diplay stats
   const [search, setSearch] = useState(false);
@@ -78,6 +78,8 @@ function PUBGStats() {
   const [squadFPPTopTen, setsquadFPPTopTen] = useState(0);
   const [squadFPPRevive, setsquadFPPRevive] = useState(0);
   const [squadFPPKD, setsquadFPPKD] = useState(0);
+
+  const [bestrankpoint, setBestRankPoint] = useState(0);
 
   const [error, setError] = useState(false);
 
@@ -233,13 +235,16 @@ function PUBGStats() {
 
 
             //get bestrankpoint
-            const bestrankpoint = data.data.attributes.bestRankPoint;
+            setBestRankPoint(data.data.attributes.bestRankPoint);
+            
           });
       })
       //if dosent work, produce error message
       .catch((err) => setError(true));
   };
-
+  useEffect(() => {
+    handleClick();
+  }, [])
   return (
     <>
       <NavigationBar />
@@ -257,8 +262,8 @@ function PUBGStats() {
             </button>
           </div>
         </div>
-
-        {error ? (
+  
+        {name === ""? <h1 className="text-2xl text-red-600">No Username Input Specified</h1> : error ? (
           <h1 className="text-2xl text-red-600">Does Not Exist</h1>
         ) : (
           <>
@@ -266,8 +271,9 @@ function PUBGStats() {
             <h1 className="flex justify-center text-violet-500 font-bold font-mono">
               Showing Stats for {displayName}
             </h1>
+            {/* <h1>{sessionStorage.getItem("pubgName")}</h1> */}
             <br/>
-            <h2 className="flex justify-center text-gray-200 font-bold font-mono">Best Rank Point:</h2>
+            <h2 className="flex justify-center text-gray-200 font-bold font-mono">Best Rank Point: {bestrankpoint}</h2>
             <br />
             <TeamStatsComponent
               kills={squadKills}
