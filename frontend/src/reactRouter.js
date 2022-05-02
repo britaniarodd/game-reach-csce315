@@ -11,6 +11,7 @@ import LeagueStatsPage from "./LeagueStatsPage/leagueStatsPage";
 import SmiteStatsPage from "./SmiteStatsPage/smiteStatsPage";
 import PUBGStatsPage from "./PUBGStatsPage/PUBGStats";
 import ProfilePage from "./ProfilePage/profilePage";
+import AboutPage from "./AboutGameReach/Aboutpage";
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path="/smitestats" element={<SmiteStatsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/PUBGStats" element={<PUBGStatsPage />} />
+                <Route path="/AboutPage" element={<AboutPage />}/>
                 <Route path="/" element={<LandingPage />} />
             </Routes>
         </Router>
