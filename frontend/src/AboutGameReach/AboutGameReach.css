@@ -1,3 +1,7 @@
 .quote{
     font-style: italic;
 }
+p.spacing {
+    line-height: 150%;
+    letter-spacing: 2px;
+}

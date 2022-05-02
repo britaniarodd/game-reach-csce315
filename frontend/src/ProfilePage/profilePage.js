@@ -139,23 +139,23 @@ import { useNavigate } from 'react-router-dom';
         return (
           <div className="gameNameForm">
             <br />
-            <h4> Edit User Profile by Changing Information, then Click Save:</h4>
+            <h4 style={{fontSize:fontSize}} > Edit User Profile by Changing Information, then Click Save:</h4>
             <br/>
             <div className="infoForm">
-              <label className="inputName" >Nickname: </label>
+              <label className="inputName" style={{fontSize:fontSize}} >Nickname: </label>
               <input type="text" defaultValue={nickname} onChange={updateNickname}/>
               <br/>
-              <label className="inputName"> Status: </label>
+              <label className="inputName" style={{fontSize:fontSize}} > Status: </label>
               <select id="status" defaultValue={status} onChange={updateStatus}>
-                <option value="Open to Connection">OPEN TO CONNECTIONS</option>
-                <option value="Closed to Connections">CLOSED TO CONNECTIONS</option>
-                <option value="Open to Mentoring">OPEN TO MENTORING</option>
+                <option value="Open to Connection" style={{fontSize:fontSize}} >OPEN TO CONNECTIONS</option>
+                <option value="Closed to Connections" style={{fontSize:fontSize}} >CLOSED TO CONNECTIONS</option>
+                <option value="Open to Mentoring" style={{fontSize:fontSize}} >OPEN TO MENTORING</option>
               </select>
               <br/>
-              <label className="inputName">Bio: </label>
+              <label className="inputName" style={{fontSize:fontSize}} >Bio: </label>
               <input type="text"  id="bio" defaultValue={bio} onChange={updateBio}/>
               <br/>
-              <label className="inputName">Discord: </label>
+              <label className="inputName" style={{fontSize:fontSize}} >Discord: </label>
               <input type="text"  id="discord" defaultValue={discord} onChange={updateDiscord}/>
               <br/>
               <button onClick={saveProfileInfo}>Save</button>
@@ -265,17 +265,17 @@ import { useNavigate } from 'react-router-dom';
         return (
           <div className="gameNameForm">
             <br/>
-            <h4> Edit Gamer Tags, then hit save: </h4>
+            <h4 style={{fontSize:fontSize}} > Edit Gamer Tags, then hit save: </h4>
             <br/>
             
             
-              <label className="inputName">League of Legends: </label>
+              <label className="inputName" style={{fontSize:fontSize}} >League of Legends: </label>
               <input type="text" defaultValue={newLeagueName} onChange={updateLeagueName}/>
               <br/>
-              <label className="inputName">PUBG: </label>
+              <label className="inputName" style={{fontSize:fontSize}} >PUBG: </label>
               <input type="text" defaultValue={newPUBGName} onChange={updatePubgName}/>
               <br/>
-              <label className="inputName">Smite: </label>
+              <label className="inputName" style={{fontSize:fontSize}} >Smite: </label>
               <input type="text" defaultValue={newSmiteName} onChange={updateSmiteName}/>
               <br/>
               <button onClick={saveGameNames}>Save</button>
@@ -307,22 +307,24 @@ import { useNavigate } from 'react-router-dom';
       navigate("/");
     }
 
-    function changeFontSize () {
-      if (fontSize == "250%") {
-        setFont("150%");
-        sessionStorage.setItem("size", "150%");
-      } else {
-        sessionStorage.setItem("size", "200%");
-        setFont("250%");
-      }
+    function smallFontSize () {
+      sessionStorage.setItem("size", "150%");
+      console.log("small");
+      setFont("150%");        
+    }
+    
+    function largeFontSize() {
+      sessionStorage.setItem("size", "250%");
+      console.log("large");
+      setFont("250%");
     }
 
     function showLargeText (){
-      return <button className="button-3" id="container" style={{fontSize:fontSize}} onClick={changeFontSize}>Enlargen Text</button>   ;              
+      return <button className="button-3" id="container" style={{fontSize:fontSize}} onClick={largeFontSize}>Enlargen Text</button>   ;              
     }
 
     function showSmallText() {
-      return <button className="button-3" id="container" style={{fontSize:fontSize}} onClick={changeFontSize}>Shrink Text</button>                 
+      return <button className="button-3" id="container" style={{fontSize:fontSize}} onClick={smallFontSize}>Shrink Text</button>                 
     }
 
     return (
@@ -375,7 +377,7 @@ import { useNavigate } from 'react-router-dom';
                    {tag ? showForm() : null}
                    <br/>
                    <br/> 
-                   {fontSize =="250%" ? showSmallText() : showLargeText()}
+                   {(fontSize === "250%") ? showSmallText() : showLargeText()}
                </div>
            </div>
        </div>

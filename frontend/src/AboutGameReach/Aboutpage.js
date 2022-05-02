@@ -5,12 +5,13 @@ import "./AboutGameReach.css";
 import gameReachLogo from "./Reach_heading_logo.png";
 
 function AboutPage() {
+  const [fontSize, setFont] = React.useState(sessionStorage.getItem("size"));
   return (
     <React.Fragment>
       <NavigationBar />
       <div className="background p-16">
         <div id="container">
-          <h1 className="text-purple-400 underline">
+          <h1 className="text-purple-400 underline" style={{fontSize:fontSize}} >
             EVOLVE YOUR <br />
             GAMING EXPERIENCE
           </h1>
@@ -21,14 +22,14 @@ function AboutPage() {
           ></img>
         </div>
         <br />
-        <h3 className="italic text-purple-400">
+        <h3 className="italic text-purple-400" style={{fontSize:fontSize}} >
           "I have found my limit a thousand times, and I still press further" ~
           Pantheon, League of Legends
         </h3>
         <br />
         <br />
         <br />
-        <p className="px-20 text-lg">
+        <p className="px-20 text-lg spacing" style={{fontSize:fontSize}} >
           You’ve been there. We’ve been there. You start a new multiplayer game
           and starting just seems impossible. You don't understand its mechanics
           and you are afraid of letting your teammates down. Or you’re just so
@@ -37,7 +38,7 @@ function AboutPage() {
           teams that you will be playing with.
         </p>
         <br />
-        <p className="px-20 text-lg">
+        <p className="px-20 text-lg spacing" style={{fontSize:fontSize}} >
           Find, Connect, and View different players for your specified video
           game. See a detailed list of their statistics and understand them and
           their playstyle before making connection choices. Do they play PUBG
@@ -46,7 +47,7 @@ function AboutPage() {
           they have a great win/loss ratio… Lets Connect!
         </p>
         <br />
-        <p className="px-20 text-lg">
+        <p className="px-20 text-lg spacing" style={{fontSize:fontSize}} >
           GameReach alleviates the stresses that beginners and advanced gamers
           often endure, especially those without a large network to play with.
           By providing and displaying transparency amongst each gamer, you can
@@ -57,7 +58,7 @@ function AboutPage() {
           seems impossible.
         </p>
         <br />
-        <p className="px-20 text-lg">
+        <p className="px-20 text-lg spacing" style={{fontSize:fontSize}} >
           Found a team already? Or are you a beginner seeking mentorship from a
           gamer of extensive knowledge? Change your status to “Open”, “Closed”,
           or “Open to mentoring” to let others know your status. What’s your
@@ -65,7 +66,7 @@ function AboutPage() {
           different ways.
         </p>
         <br />
-        <p className="px-20 text-lg">
+        <p className="px-20 text-lg spacing" style={{fontSize:fontSize}} >
           It is your choice and your path to create the ultimate team for your
           personal journey. And that journey starts here, with GameReach!
         </p>

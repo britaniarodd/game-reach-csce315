@@ -41,7 +41,7 @@ export default function LoginPage(props) {
                 sessionStorage.setItem("email", result.data.email);
                 sessionStorage.setItem("nickname", result.data.nickname);
                 sessionStorage.setItem("loggedIn", true);
-                sessionStorage.setItem("size", "150%");
+                sessionStorage.setItem("size", "125%");
                 console.log("tried to naviagte");
                 console.log("User ID: ", sessionStorage.getItem("user_id"));
                 console.log("Email: ", sessionStorage.getItem("email"));
