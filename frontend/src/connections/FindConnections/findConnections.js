@@ -81,7 +81,6 @@ class FindConnections extends Component {
             }
           });
         alert("Connection Created");
-    
     }
 
     printNoresults() {
