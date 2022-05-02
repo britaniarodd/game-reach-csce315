@@ -34,7 +34,11 @@ function getRankFromPoint(bestRankPoint){
 function getGameNames () {
     axios
         .get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-            sessionStorage.setItem("leagueName", res.data.gamename);
+            if (res.data.gamename == undefined) {
+                sessionStorage.setItem("leagueName", "");
+              }  else {
+                sessionStorage.setItem("leagueName", res.data.gamename);
+              }
             console.log("League Name: ", sessionStorage.getItem("leagueName"));
         }).catch((err) => {
             if(err.response && err.response.status === 400) {
@@ -44,7 +48,11 @@ function getGameNames () {
         }); 
     axios
         .get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-            sessionStorage.setItem("pubgName", res.data.gamename);
+            if (res.data.gamename == undefined) {
+                sessionStorage.setItem("pubgName", "");
+              }  else {
+                sessionStorage.setItem("pubgName", res.data.gamename);
+              }
             
             console.log("Pubg Name upon load: ", sessionStorage.getItem("pubgName"));
             var name = sessionStorage.getItem("pubgName");
@@ -95,8 +103,11 @@ function getGameNames () {
             }
         });
     axios.get(getBackendAddress() + "/smite/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+        if (res.data.gamename == undefined) {
+            sessionStorage.setItem("smiteName", "");
+          }  else {
             sessionStorage.setItem("smiteName", res.data.gamename);
-            
+          }
             console.log("Smite Name: ", sessionStorage.getItem("smiteName"));
             
           }).catch((err) => {

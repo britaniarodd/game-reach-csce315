@@ -43,11 +43,19 @@ import { useNavigate } from 'react-router-dom';
 
         //----------- Get League INFO -----------------//
         axios.get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-            setLeagueName(res.data.gamename);
-            leagueUpdate(res.data.gamename);
-            setleagueRank(res.data.rank);
-            sessionStorage.setItem("leagueName", res.data.gamename);
-            console.log("League Name: ", res.data);
+           
+            if (res.data.gamename == undefined) {
+              sessionStorage.setItem("leagueName", "");
+              setLeagueName("");
+              leagueUpdate("");
+              setleagueRank("");
+            }  else {
+              setLeagueName(res.data.gamename);
+              leagueUpdate(res.data.gamename);
+              setleagueRank(res.data.rank);
+              sessionStorage.setItem("leagueName", res.data.gamename);
+            }
+            console.log("League Name: ", res.data.gamename);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
               sessionStorage.setItem("leagueName", "");
@@ -60,10 +68,17 @@ import { useNavigate } from 'react-router-dom';
 
         //----------- Get PUBG INFO -----------------//
         axios.get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-          setPUBGName(res.data.gamename);
-          pubgUpdate(res.data.gamename);
-          setpubgRank(res.data.rank);
-          sessionStorage.setItem("pubgName", res.data.gamename);
+          if (res.data.gamename == undefined) {
+            sessionStorage.setItem("pubgName", "");
+            setLeagueName("");
+            leagueUpdate("");
+            setleagueRank("");
+          }  else {
+            setPUBGName(res.data.gamename);
+            pubgUpdate(res.data.gamename);
+            setpubgRank(res.data.rank);
+            sessionStorage.setItem("pubgName", res.data.gamename);
+          }
           console.log("Pubg Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
@@ -77,10 +92,17 @@ import { useNavigate } from 'react-router-dom';
 
         //----------- Get SMITE INFO -----------------//
         axios.get(getBackendAddress() + "/smite/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-          setSmiteName(res.data.gamename);
-          smiteUpdate(res.data.gamename);
-          setsmiteRank(res.data.rank);
-          sessionStorage.setItem("smiteName", res.data.gamename);
+          if (res.data.gamename == undefined) {
+            sessionStorage.setItem("smiteName", "");
+            setSmiteName("");
+            smiteUpdate("");
+            setsmiteRank("");
+          }  else {
+            setSmiteName(res.data.gamename);
+            smiteUpdate(res.data.gamename);
+            setsmiteRank(res.data.rank);
+            sessionStorage.setItem("smiteName", res.data.gamename);
+          }
           console.log("Smite Name: ", res.data);
         }).catch((err) => {
           if(err.response && err.response.status === 400) {
