@@ -79,9 +79,11 @@ function PUBGStats() {
   const [squadFPPRevive, setsquadFPPRevive] = useState(0);
   const [squadFPPKD, setsquadFPPKD] = useState(0);
 
-  const [bestrankpoint, setBestRankPoint] = useState(0);
+  //const [bestrankpoint, setBestRankPoint] = useState(0);
+  const [Rank, setRank] = useState("");
 
   const [error, setError] = useState(false);
+  var displayRank = "";
 
   const handleClick = () => {
     //GET ID
@@ -235,7 +237,10 @@ function PUBGStats() {
 
 
             //get bestrankpoint
-            setBestRankPoint(data.data.attributes.bestRankPoint);
+            //setBestRankPoint(data.data.attributes.bestRankPoint);
+            displayRank = getRankFromPoint(data.data.attributes.bestRankPoint);
+            console.log(displayRank);
+            setRank(displayRank);
             
           });
       })
@@ -272,8 +277,9 @@ function PUBGStats() {
               Showing Stats for {displayName}
             </h1>
             {/* <h1>{sessionStorage.getItem("pubgName")}</h1> */}
+            
             <br/>
-            <h2 className="flex justify-center text-gray-200 font-bold font-mono">Best Rank Point: {bestrankpoint}</h2>
+            <h2 className="flex justify-center text-gray-200 font-bold font-mono">Best Rank: {Rank}</h2>
             <br />
             <TeamStatsComponent
               kills={squadKills}
@@ -359,6 +365,29 @@ function handleDivideByZero(stat1, stat2) {
     return stat1;
   }
   return Math.round(100 * (stat1 / stat2)) / 100;
+}
+
+function getRankFromPoint(bestRankPoint){
+  var PUBGRank = "";
+  if (bestRankPoint < 1500){
+    PUBGRank = "Bronze";
+  }
+  else if (bestRankPoint >= 1500 && bestRankPoint < 2000){
+    PUBGRank = "Silver";
+  }
+  else if (bestRankPoint >= 2000 && bestRankPoint < 2500){
+    PUBGRank = "Gold";
+  }
+  else if (bestRankPoint >= 2500 && bestRankPoint < 3000){
+    PUBGRank = "Platinum";
+  }
+  else if (bestRankPoint >= 3000 && bestRankPoint < 3500){
+    PUBGRank = "Diamond";
+  }
+  else{
+    PUBGRank = "Master";
+  }
+  return PUBGRank;
 }
 
 export default PUBGStats;
