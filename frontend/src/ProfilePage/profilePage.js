@@ -18,103 +18,80 @@ import { useNavigate } from 'react-router-dom';
     const [discord, discordUpdate] = React.useState("");
     const [form, setform] = React.useState(null);
     const [tag, setTags] = React.useState(null);
-    const [leagueName, setLeagueName] = React.useState("");
-    const [newLeagueName, leagueUpdate] = React.useState("");
+    const [leagueName, setLeagueName] = React.useState(null);
+    const [newLeagueName, leagueUpdate] = React.useState(null);
     const [leagueRank, setleagueRank] = React.useState("");
-    const [smiteName, setSmiteName] = React.useState("");
-    const [newSmiteName, smiteUpdate] = React.useState("");
+    const [smiteName, setSmiteName] = React.useState(null);
+    const [newSmiteName, smiteUpdate] = React.useState(null);
     const [smiteRank, setsmiteRank] = React.useState("");
-    const [pubgName, setPUBGName] = React.useState("");
-    const [newPUBGName, pubgUpdate] = React.useState("");
+    const [pubgName, setPUBGName] = React.useState(null);
+    const [newPUBGName, pubgUpdate] = React.useState(null);
     const [pubgRank, setpubgRank] = React.useState("");
    
 
     React.useEffect(() => {
       //----------- Get USER INFO -----------------//
-        console.log("User ID: ", sessionStorage.getItem("user_id"));
-        axios.get(getBackendAddress() + "/users/get/by-email/" + sessionStorage.getItem("email")).then((response) => {
-          setuser(response.data);
-          nicknameUpdate(response.data.nickname);
-          statusUpdate(response.data.status);
-          bioUpdate(response.data.bio);
-          discordUpdate(response.data.discord);
-          console.log("User Info: ", response.data);
-        });
+      console.log("User ID: ", sessionStorage.getItem("user_id"));
+      axios.get(getBackendAddress() + "/users/get/by-email/" + sessionStorage.getItem("email")).then((response) => {
+        setuser(response.data);
+        nicknameUpdate(response.data.nickname);
+        statusUpdate(response.data.status);
+        bioUpdate(response.data.bio);
+        discordUpdate(response.data.discord);
+        console.log("User Info: ", response.data);
+      });
 
-        //----------- Get League INFO -----------------//
-        axios.get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-           
-            if (res.data.gamename == undefined) {
-              sessionStorage.setItem("leagueName", "");
-              setLeagueName("");
-              leagueUpdate("");
-              setleagueRank("");
-            }  else {
-              setLeagueName(res.data.gamename);
-              leagueUpdate(res.data.gamename);
-              setleagueRank(res.data.rank);
-              sessionStorage.setItem("leagueName", res.data.gamename);
-            }
-            console.log("League Name: ", res.data.gamename);
-        }).catch((err) => {
-          if(err.response && err.response.status === 400) {
-              sessionStorage.setItem("leagueName", "");
-              setLeagueName("");
-              leagueUpdate("");
-              setleagueRank("");
-              console.log("No LeagueName found")
-          }
-        }); 
-
-        //----------- Get PUBG INFO -----------------//
-        axios.get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-          if (res.data.gamename == undefined) {
-            sessionStorage.setItem("pubgName", "");
+      //----------- Get League INFO -----------------//
+      axios.get(getBackendAddress() + "/league/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+          setLeagueName(res.data.gamename);
+          leagueUpdate(res.data.gamename);
+          setleagueRank(res.data.rank);
+          sessionStorage.setItem("leagueName", res.data.gamename);
+          console.log("League Name: ", res.data);
+      }).catch((err) => {
+        if(err.response && err.response.status === 400) {
+            sessionStorage.setItem("leagueName", "");
             setLeagueName("");
             leagueUpdate("");
             setleagueRank("");
-          }  else {
-            setPUBGName(res.data.gamename);
-            pubgUpdate(res.data.gamename);
-            setpubgRank(res.data.rank);
-            sessionStorage.setItem("pubgName", res.data.gamename);
-          }
-          console.log("Pubg Name: ", res.data);
-        }).catch((err) => {
-          if(err.response && err.response.status === 400) {
-            sessionStorage.setItem("pubgName", "");
-              setPUBGName("");
-              pubgUpdate("");
-              setpubgRank("");
-              console.log("No PUBGName found")
-          }
-        });
+            console.log("No LeagueName found")
+        }
+      }); 
 
-        //----------- Get SMITE INFO -----------------//
-        axios.get(getBackendAddress() + "/smite/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
-          if (res.data.gamename == undefined) {
-            sessionStorage.setItem("smiteName", "");
+      //----------- Get PUBG INFO -----------------//
+      axios.get(getBackendAddress() + "/pubg/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+        setPUBGName(res.data.gamename);
+        pubgUpdate(res.data.gamename);
+        setpubgRank(res.data.rank);
+        sessionStorage.setItem("pubgName", res.data.gamename);
+        console.log("Pubg Name: ", res.data);
+      }).catch((err) => {
+        if(err.response && err.response.status === 400) {
+          sessionStorage.setItem("pubgName", "");
+            setPUBGName("");
+            pubgUpdate("");
+            setpubgRank("");
+            console.log("No PUBGName found")
+        }
+      });
+
+      //----------- Get SMITE INFO -----------------//
+      axios.get(getBackendAddress() + "/smite/get/by-email/" + sessionStorage.getItem("email")).then((res) => {
+        setSmiteName(res.data.gamename);
+        smiteUpdate(res.data.gamename);
+        setsmiteRank(res.data.rank);
+        sessionStorage.setItem("smiteName", res.data.gamename);
+        console.log("Smite Name: ", res.data);
+      }).catch((err) => {
+        if(err.response && err.response.status === 400) {
+          sessionStorage.setItem("smiteName", "");
             setSmiteName("");
             smiteUpdate("");
             setsmiteRank("");
-          }  else {
-            setSmiteName(res.data.gamename);
-            smiteUpdate(res.data.gamename);
-            setsmiteRank(res.data.rank);
-            sessionStorage.setItem("smiteName", res.data.gamename);
-          }
-          console.log("Smite Name: ", res.data);
-        }).catch((err) => {
-          if(err.response && err.response.status === 400) {
-            sessionStorage.setItem("smiteName", "");
-              setSmiteName("");
-              smiteUpdate("");
-              setsmiteRank("");
-              console.log("No SmiteName found")
-          }
-        });
-      }, []);
-    
+            console.log("No SmiteName found")
+        }
+      });
+    }, []);
     if (!user) return null;
    
     //---------------------------- Saving /Setting User Profile Info ------------------------ //
@@ -190,12 +167,9 @@ import { useNavigate } from 'react-router-dom';
     function showForm() {
 
       function saveGameNames(e) {
-      
         console.log(sessionStorage.getItem("user_id"));
         if(leagueName != null) {
-          if (leagueRank == null) { var rank = "";} 
-          else if (sessionStorage.getItem("leagueName") != newLeagueName) { rank = ""; } 
-          else{ rank = leagueRank;}
+          if (leagueRank == null) { var rank = "";} else{ rank = leagueRank;}
           axios
           .patch(getBackendAddress() + "/league/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -216,9 +190,7 @@ import { useNavigate } from 'react-router-dom';
         }
 
         if(pubgName != null) { 
-          if (pubgRank == null) { rank = "";} 
-          else if (sessionStorage.getItem("pubgName") != newPUBGName) { rank = ""; } 
-          else{ rank = pubgRank;}
+          if (pubgRank == null) { rank = "";} else{ rank = pubgRank;}
           axios
           .patch(getBackendAddress() + "/pubg/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -239,9 +211,7 @@ import { useNavigate } from 'react-router-dom';
         }
 
         if(smiteName != null) { 
-          if (smiteRank == null) { rank = "";} 
-          else if (sessionStorage.getItem("smiteName") != newSmiteName) { rank = ""; } 
-          else{ rank = smiteRank;}
+          if (smiteRank == null) { rank = "";} else{ rank = smiteRank;}
           axios
           .patch(getBackendAddress() + "/smite/update", {
               user_id: sessionStorage.getItem("user_id"),
@@ -268,13 +238,27 @@ import { useNavigate } from 'react-router-dom';
         }
         
         setTags(false);
-        
         setLeagueName(newLeagueName);
-        sessionStorage.setItem("leagueName", leagueName);
+        if (leagueName == undefined) {
+          sessionStorage.setItem("leagueName", "");
+        } else {
+          sessionStorage.setItem("leagueName", leagueName);
+        }
+        
         setPUBGName(newPUBGName);
-        sessionStorage.setItem("pubgName", pubgName);
+        if (pubgName == undefined) {
+          sessionStorage.setItem("pubgName", "");
+        } else {
+          sessionStorage.setItem("pubgName", pubgName);
+        }
+        
         setSmiteName(newSmiteName);
-        sessionStorage.setItem("smiteName", smiteName);
+        if (smiteName == undefined) {
+          sessionStorage.setItem("pubgName", "");
+        } else {
+          sessionStorage.setItem("smiteName", smiteName);
+        }
+        
         return;
       };
 
