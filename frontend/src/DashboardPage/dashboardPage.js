@@ -218,9 +218,9 @@ function DashboardPage() {
             <React.Fragment>
             <NavigationBar />
             <div className="background">
-            <h1 >  Welcome, {sessionStorage.getItem("nickname")}!</h1>
+            <h1 className="title">  Welcome, {sessionStorage.getItem("nickname")}!</h1>
             <br/>
-            <h3 style={{fontSize:fontSize}}>  Select "View Stats" for a game below:</h3>
+            <h3 className="indent" style={{fontSize:fontSize}}>  Select "View Stats" for a game below:</h3>
             <div className="row1">
                 <div className="column1 box--league center">
                     <label>League of Legends</label>
