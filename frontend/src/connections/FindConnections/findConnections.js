@@ -128,11 +128,13 @@ class FindConnections extends Component {
                     {this.state.users.map((user) => {
                         return (
                             <React.Fragment key={user.email}>
-                                 <div className='connection-box'>
+                                <div className='connection-box'>
                                 <h2 className='nickname' style={{fontSize:this.state.fontSize}}>Nickname: {user.nickname}</h2>
-                                <h3 className='description' style={{fontSize:this.state.fontSize}}>Status: {user.status}</h3>
-                                <h4 className='description' style={{fontSize:this.state.fontSize}}>Discord: {user.discord}</h4>
-                                <p style={{fontSize:this.state.fontSize}}>Bio: {user.bio}</p>
+                                <h3 className='statsConnect' style={{fontSize:this.state.fontSize}}>Status: {user.status}</h3>
+                                <h4 className='statsConnect' style={{fontSize:this.state.fontSize}}>Discord: {user.dicord}</h4>
+                                <h4 className='statsConnect' style={{fontSize:this.state.fontSize}}>Game Name: {user.gamename}</h4>
+                                <h4 className='statsConnect' style={{fontSize:this.state.fontSize}}>Rank: {user.rank}</h4>
+                                <p className="bioUP" style={{fontSize:this.state.fontSize}}>Bio: {user.bio}</p>
                                 <button  key={user} className="button-3" onClick={() => this.addConnection(user)}> Add Connection </button>
                                 </div>
                                 <br/>

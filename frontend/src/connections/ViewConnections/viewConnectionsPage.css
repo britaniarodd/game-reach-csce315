@@ -9,3 +9,8 @@
 .label-color {
     color: rgb(167, 85, 243);
 }
+.stats {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: rgba(158, 182, 243, 0.7);
+}
