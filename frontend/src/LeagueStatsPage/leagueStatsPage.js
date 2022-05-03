@@ -115,13 +115,13 @@ class LeagueStatsPage extends Component {
                                         <StatElement title="Game Info" value={this.matchInfo(match)} description="" />
                                         <StatElement title="Player" value={this.getStat(match, "summonerName")} description="" />
                                         <StatElement title="Champion" value={this.getStat(match, "championName")} description="" />
-                                        <StatElement title="Role" value={this.getStat(match, "teamPosition")} description="" />
+                                        <StatElement title={<button onClick={() => alert("Role in League of Legends is which lane you are assigned to play")} className="bg-transparent border-none text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Role</button>} value={this.getStat(match, "teamPosition")} description="" />
                                         <StatElement title="Kills" value={this.getStat(match, "kills")} description="" />
                                         <StatElement title="Deaths" value={this.getStat(match, "deaths")} description="" />
                                         <StatElement title="Assists" value={this.getStat(match, "assists")} description="" />
                                         <StatElement title="Dmg Done" value={this.getStat(match, "totalDamageDealtToChampions")} description="" />
-                                        <StatElement title="Phys Dmg Taken" value={this.getStat(match, "physicalDamageTaken")} description="" />
-                                        <StatElement title="Magic Dmg Taken" value={this.getStat(match, "magicDamageTaken")} description="" />
+                                        <StatElement title={<button onClick={() => alert("Physcial Damage taken from other players")} className="bg-transparent border-none text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Phys Dmg Taken</button>} value={this.getStat(match, "physicalDamageTaken")} description="" />
+                                        <StatElement title={<button onClick={() => alert("Magical Damage taken from other players")} className="bg-transparent border-none text-orange-500 hover:text-white transition ease-in-out duration-200 hover:underline">Magic Dmg Taken</button>} value={this.getStat(match, "magicDamageTaken")} description="" />
                                     </StatBox>
                                     <br />
                                 </div>
