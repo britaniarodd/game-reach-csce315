@@ -51,6 +51,9 @@ export default function SmiteStatsPage(props) {
         return (
             <div style={{ fontSize: "1rem" }}>
                 {Object.keys(match).map(playerKey => {
+                    if(match[playerKey] === null) {
+                        return <React.Fragment key={playerKey}/>
+                    }
                     return (
                         <p key={playerKey}>{lambda(match[playerKey])}</p>
                     );
